@@ -1,0 +1,57 @@
+const { ipcMain, dialog } = require('electron');
+const path = require('path');
+const fm = require('./file-manager');
+
+function registerHandlers() {
+  ipcMain.handle('app:get-data-dir', () => fm.getDataDir());
+
+  ipcMain.handle('app:set-data-dir', async (event) => {
+    const result = await dialog.showOpenDialog({
+      title: 'Choose Checklists Folder',
+      properties: ['openDirectory', 'createDirectory'],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    const dirPath = result.filePaths[0];
+    fm.setDataDir(dirPath);
+    return dirPath;
+  });
+
+  ipcMain.handle('checklist:list', (event, dirPath) => {
+    return fm.listChecklists(dirPath);
+  });
+
+  ipcMain.handle('checklist:read', (event, filePath) => {
+    return fm.readChecklist(filePath);
+  });
+
+  ipcMain.handle('checklist:write', (event, filePath, content) => {
+    fm.writeChecklist(filePath, content);
+  });
+
+  ipcMain.handle('checklist:delete', (event, filePath) => {
+    fm.deleteChecklist(filePath);
+  });
+
+  ipcMain.handle('checklist:rename', (event, oldPath, newName) => {
+    const dir = path.dirname(oldPath);
+    const newPath = path.join(dir, newName + '.md');
+    fm.renameChecklist(oldPath, newPath);
+    return newPath;
+  });
+
+  ipcMain.handle('checklist:create', (event, dirPath, name) => {
+    return fm.createChecklist(dirPath, name);
+  });
+
+  ipcMain.handle('app:show-confirm', (event, message) => {
+    const result = dialog.showMessageBoxSync({
+      type: 'question',
+      buttons: ['Cancel', 'Delete'],
+      defaultId: 0,
+      message,
+    });
+    return result === 1;
+  });
+}
+
+module.exports = { registerHandlers };

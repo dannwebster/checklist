@@ -1,0 +1,14 @@
+{
+  "name": "checklist",
+  "version": "1.0.0",
+  "description": "Electron checklist app with markdown file storage",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --exec \"electron .\" --watch main --watch renderer --watch preload --ext js,html,css --ignore node_modules"
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "nodemon": "^3.1.14"
+  }
+}

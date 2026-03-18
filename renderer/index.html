@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <span class="sidebar-title">Checklists</span>
+        <button id="btn-new" title="New checklist (Ctrl+N)">+</button>
+      </div>
+      <ul id="checklist-list"></ul>
+      <div id="sidebar-footer">
+        <button id="btn-folder" title="Change checklists folder">Change folder</button>
+        <span id="folder-path"></span>
+      </div>
+    </aside>
+
+    <main id="editor">
+      <div id="empty-state">
+        <p>Select or create a checklist</p>
+      </div>
+      <div id="editor-content" hidden>
+        <h1 id="editor-title" contenteditable="true" spellcheck="false"></h1>
+        <ul id="item-list"></ul>
+        <div id="add-item-row">
+          <input id="add-item-input" type="text" placeholder="Add an item..." autocomplete="off">
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="parser.js"></script>
+  <script src="sidebar.js"></script>
+  <script src="editor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
