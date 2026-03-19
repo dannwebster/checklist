@@ -60,22 +60,6 @@ body {
   color: var(--text-dim);
 }
 
-#btn-new {
-  width: 24px;
-  height: 24px;
-  border: none;
-  background: none;
-  color: var(--text-dim);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#btn-new:hover { background: var(--bg-hover); color: var(--text); }
 
 #checklist-list {
   flex: 1;
@@ -87,11 +71,37 @@ body {
 .tree-dir-header {
   display: flex;
   align-items: center;
-  padding: 5px 12px 5px 16px;
+  padding: 5px 4px 5px 16px;
   cursor: pointer;
   gap: 5px;
   user-select: none;
 }
+
+.tree-dir-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.tree-dir-header:hover .tree-dir-actions { opacity: 1; }
+
+.tree-dir-add,
+.tree-dir-remove {
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.tree-dir-add:hover { color: var(--text); background: var(--bg-hover); }
+.tree-dir-remove:hover { color: var(--danger); background: rgba(244,71,71,0.1); }
 
 .tree-dir-header:hover { background: var(--bg-hover); }
 
@@ -186,15 +196,6 @@ body {
 
 #btn-folder:hover { color: var(--text); }
 
-#folder-path {
-  font-size: 11px;
-  color: var(--text-dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  direction: rtl;
-  text-align: left;
-}
 
 /* SIDEBAR RESIZE HANDLE */
 #sidebar-resize-handle {

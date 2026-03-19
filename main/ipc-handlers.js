@@ -16,6 +16,21 @@ function registerHandlers() {
     return dirPath;
   });
 
+  ipcMain.handle('app:get-data-dirs', () => fm.getDataDirs());
+
+  ipcMain.handle('app:add-data-dir', async (event) => {
+    const result = await dialog.showOpenDialog({
+      title: 'Add Checklists Folder',
+      properties: ['openDirectory', 'createDirectory'],
+    });
+    if (result.canceled || result.filePaths.length === 0) return null;
+    return fm.addDataDir(result.filePaths[0]);
+  });
+
+  ipcMain.handle('app:remove-data-dir', (event, dirPath) => {
+    return fm.removeDataDir(dirPath);
+  });
+
   ipcMain.handle('checklist:list', (event, dirPath) => {
     return fm.listChecklists(dirPath);
   });

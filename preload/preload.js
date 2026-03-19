@@ -3,6 +3,9 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('checklistAPI', {
   getDataDir: () => ipcRenderer.invoke('app:get-data-dir'),
   setDataDir: () => ipcRenderer.invoke('app:set-data-dir'),
+  getDataDirs: () => ipcRenderer.invoke('app:get-data-dirs'),
+  addDataDir: () => ipcRenderer.invoke('app:add-data-dir'),
+  removeDataDir: (dir) => ipcRenderer.invoke('app:remove-data-dir', dir),
 
   list: (dirPath) => ipcRenderer.invoke('checklist:list', dirPath),
   read: (filePath) => ipcRenderer.invoke('checklist:read', filePath),

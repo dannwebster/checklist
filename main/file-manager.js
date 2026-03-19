@@ -39,6 +39,36 @@ function setDataDir(dirPath) {
   writeSettings(settings);
 }
 
+function getDataDirs() {
+  const settings = readSettings();
+  if (settings.dataDirs && Array.isArray(settings.dataDirs) && settings.dataDirs.length > 0) {
+    return settings.dataDirs;
+  }
+  // Legacy migration: single dataDir -> dataDirs array
+  const dir = settings.dataDir || DEFAULT_DATA_DIR;
+  return [dir];
+}
+
+function addDataDir(dirPath) {
+  const settings = readSettings();
+  const dirs = settings.dataDirs || [settings.dataDir || DEFAULT_DATA_DIR];
+  if (!dirs.includes(dirPath)) dirs.push(dirPath);
+  settings.dataDirs = dirs;
+  delete settings.dataDir;
+  writeSettings(settings);
+  return dirs;
+}
+
+function removeDataDir(dirPath) {
+  const settings = readSettings();
+  const dirs = settings.dataDirs || [settings.dataDir || DEFAULT_DATA_DIR];
+  const updated = dirs.filter(d => d !== dirPath);
+  settings.dataDirs = updated;
+  delete settings.dataDir;
+  writeSettings(settings);
+  return updated;
+}
+
 function ensureDataDir(dirPath) {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
@@ -99,6 +129,9 @@ function createChecklist(dirPath, name) {
 module.exports = {
   getDataDir,
   setDataDir,
+  getDataDirs,
+  addDataDir,
+  removeDataDir,
   listChecklists,
   readChecklist,
   writeChecklist,

@@ -1,7 +1,7 @@
 // App entry point: initializes the app on load
 (async () => {
-  const dataDir = await window.checklistAPI.getDataDir();
-  await Sidebar.load(dataDir);
+  const dataDirs = await window.checklistAPI.getDataDirs();
+  await Sidebar.load(dataDirs);
 })();
 
 // Sidebar resize
