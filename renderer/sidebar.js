@@ -331,5 +331,7 @@ const Sidebar = (() => {
 
   window.checklistAPI.onMenuOpenFolder(() => addRoot());
 
+  window.checklistAPI.onDirChanged(() => Sidebar.refresh());
+
   return { load, refresh, updateName, setActive };
 })();

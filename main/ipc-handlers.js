@@ -1,6 +1,7 @@
 const { ipcMain, dialog } = require('electron');
 const path = require('path');
 const fm = require('./file-manager');
+const watcher = require('./watcher');
 
 function registerHandlers() {
   ipcMain.handle('app:get-data-dir', () => fm.getDataDir());
@@ -24,11 +25,15 @@ function registerHandlers() {
       properties: ['openDirectory', 'createDirectory'],
     });
     if (result.canceled || result.filePaths.length === 0) return null;
-    return fm.addDataDir(result.filePaths[0]);
+    const updated = fm.addDataDir(result.filePaths[0]);
+    watcher.setWatchedDirs(updated);
+    return updated;
   });
 
   ipcMain.handle('app:remove-data-dir', (event, dirPath) => {
-    return fm.removeDataDir(dirPath);
+    const updated = fm.removeDataDir(dirPath);
+    watcher.setWatchedDirs(updated);
+    return updated;
   });
 
   ipcMain.handle('checklist:list', (event, dirPath) => {
@@ -40,6 +45,7 @@ function registerHandlers() {
   });
 
   ipcMain.handle('checklist:write', (event, filePath, content) => {
+    watcher.markOwnWrite(filePath);
     fm.writeChecklist(filePath, content);
   });
 

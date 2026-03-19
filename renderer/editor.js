@@ -232,8 +232,24 @@ const Editor = (() => {
     }
   });
 
+  // --- Reload from disk ---
+  async function reloadCurrent() {
+    if (!currentPath || saveTimer) return;
+    const markdown = await window.checklistAPI.read(currentPath);
+    const parsed = parse(markdown);
+    currentTitle = parsed.title;
+    items = parsed.items;
+    titleEl.textContent = currentTitle;
+    document.title = currentTitle + ' — Checklist';
+    render();
+  }
+
   // --- Listen for selection ---
   window.addEventListener('checklist-selected', (e) => loadChecklist(e.detail));
+
+  window.checklistAPI.onFileChanged((filePath) => {
+    if (filePath === currentPath) reloadCurrent();
+  });
 
   return {};
 })();

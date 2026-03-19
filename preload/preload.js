@@ -18,4 +18,7 @@ contextBridge.exposeInMainWorld('checklistAPI', {
 
   onMenuNewChecklist: (cb) => ipcRenderer.on('menu:new-checklist', cb),
   onMenuOpenFolder: (cb) => ipcRenderer.on('menu:open-folder', cb),
+
+  onDirChanged:  (cb) => ipcRenderer.on('watcher:dir-changed', cb),
+  onFileChanged: (cb) => ipcRenderer.on('watcher:file-changed', (_event, filePath) => cb(filePath)),
 });

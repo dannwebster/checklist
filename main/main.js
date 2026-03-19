@@ -1,6 +1,8 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const { registerHandlers } = require('./ipc-handlers');
+const watcher = require('./watcher');
+const fm = require('./file-manager');
 
 let mainWindow;
 
@@ -72,6 +74,8 @@ function buildMenu() {
 app.whenReady().then(() => {
   registerHandlers();
   createWindow();
+  watcher.setMainWindow(mainWindow);
+  watcher.setWatchedDirs(fm.getDataDirs());
 });
 
 app.on('window-all-closed', () => {
