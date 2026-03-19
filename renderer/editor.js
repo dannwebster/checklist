@@ -20,6 +20,7 @@ const Editor = (() => {
       items = [];
       titleEl.textContent = '';
       document.title = 'Checklist';
+      addH1Btn.style.display = 'none';
       render();
       return;
     }
@@ -28,17 +29,115 @@ const Editor = (() => {
     const parsed = parse(markdown);
     currentTitle = parsed.title;
     items = parsed.items;
+    for (const item of items) {
+      if (item.type === 'section') {
+        item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
+      }
+    }
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Checklist';
+    addH1Btn.style.display = '';
     render();
+    if (parsed.hadMissingIds) scheduleSave();
   }
 
   // --- Render ---
   function render() {
     itemListEl.innerHTML = '';
+    let collapsedLevel = Infinity;
     items.forEach((item, i) => {
-      itemListEl.appendChild(buildItemRow(item, i));
+      if (item.type === 'section') {
+        if (item.level <= collapsedLevel) {
+          collapsedLevel = item.collapsed ? item.level : Infinity;
+          itemListEl.appendChild(buildSectionHeader(item, i));
+        }
+      } else {
+        if (collapsedLevel === Infinity) {
+          itemListEl.appendChild(buildItemRow(item, i));
+        }
+      }
     });
+  }
+
+  function buildSectionHeader(item, index) {
+    const li = document.createElement('li');
+    li.className = 'section-header level-' + item.level;
+    li.dataset.secId = item.id;
+
+    const toggle = document.createElement('button');
+    toggle.className = 'section-toggle';
+    toggle.textContent = item.collapsed ? '▶' : '▼';
+    toggle.title = item.collapsed ? 'Expand' : 'Collapse';
+    toggle.addEventListener('click', () => toggleSection(index));
+
+    const tag = ['h1', 'h2', 'h3'][item.level - 1];
+    const secTitleEl = document.createElement(tag);
+    secTitleEl.className = 'section-title';
+    secTitleEl.contentEditable = 'true';
+    secTitleEl.spellcheck = true;
+    secTitleEl.textContent = item.text;
+    secTitleEl.addEventListener('input', () => {
+      items[index].text = secTitleEl.textContent;
+      scheduleSave();
+    });
+    secTitleEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); addInput.focus(); }
+    });
+
+    li.appendChild(toggle);
+    li.appendChild(secTitleEl);
+
+    if (item.level < 3) {
+      const addBtn = document.createElement('button');
+      addBtn.className = 'section-add-child';
+      addBtn.textContent = item.level === 1 ? '+ Section' : '+ Subsection';
+      addBtn.title = item.level === 1 ? 'Add a section (H2)' : 'Add a subsection (H3)';
+      addBtn.addEventListener('click', () => addChildSection(index, item.level + 1));
+      li.appendChild(addBtn);
+    }
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'item-delete';
+    delBtn.textContent = '×';
+    delBtn.title = 'Delete section (items remain)';
+    delBtn.addEventListener('click', () => {
+      items.splice(index, 1);
+      render();
+      scheduleSave();
+    });
+    li.appendChild(delBtn);
+    return li;
+  }
+
+  function getInsertionIndex(headerIndex) {
+    const level = items[headerIndex].level;
+    for (let i = headerIndex + 1; i < items.length; i++) {
+      if (items[i].type === 'section' && items[i].level <= level) {
+        return i;
+      }
+    }
+    return items.length;
+  }
+
+  function addChildSection(parentIndex, childLevel) {
+    if (!currentPath) return;
+    const insertAt = getInsertionIndex(parentIndex);
+    const newSection = { type: 'section', id: genId(), level: childLevel, text: 'New Section', collapsed: false };
+    items.splice(insertAt, 0, newSection);
+    render();
+    scheduleSave();
+    const newLi = itemListEl.querySelector(`[data-sec-id="${newSection.id}"]`);
+    if (newLi) newLi.querySelector('.section-title').focus();
+  }
+
+  function toggleSection(index) {
+    items[index].collapsed = !items[index].collapsed;
+    if (items[index].collapsed) {
+      localStorage.setItem('sec-collapsed:' + items[index].id, '1');
+    } else {
+      localStorage.removeItem('sec-collapsed:' + items[index].id);
+    }
+    render();
   }
 
   function buildItemRow(item, index) {
@@ -141,7 +240,7 @@ const Editor = (() => {
   // --- Item mutations ---
   function toggleItem(index) {
     items[index].checked = !items[index].checked;
-    const row = itemListEl.children[index];
+    const row = itemListEl.querySelector(`[data-id="${items[index].id}"]`);
     if (row) {
       row.classList.toggle('checked', items[index].checked);
       row.querySelector('.item-checkbox').checked = items[index].checked;
@@ -220,6 +319,23 @@ const Editor = (() => {
     }
   });
 
+  // --- H1 section button ---
+  const addH1Btn = document.createElement('button');
+  addH1Btn.id = 'add-h1-section-btn';
+  addH1Btn.textContent = '+ add header';
+  addH1Btn.title = 'Add a top-level section (H1)';
+  addH1Btn.style.display = 'none';
+  addH1Btn.addEventListener('click', () => {
+    if (!currentPath) return;
+    const newSection = { type: 'section', id: genId(), level: 1, text: 'New Section', collapsed: false };
+    items.push(newSection);
+    render();
+    scheduleSave();
+    const newLi = itemListEl.querySelector(`[data-sec-id="${newSection.id}"]`);
+    if (newLi) newLi.querySelector('.section-title').focus();
+  });
+  document.getElementById('title-row').appendChild(addH1Btn);
+
   // --- Add item input ---
   addInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && addInput.value.trim()) {
@@ -239,9 +355,15 @@ const Editor = (() => {
     const parsed = parse(markdown);
     currentTitle = parsed.title;
     items = parsed.items;
+    for (const item of items) {
+      if (item.type === 'section') {
+        item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
+      }
+    }
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Checklist';
     render();
+    if (parsed.hadMissingIds) scheduleSave();
   }
 
   // --- Listen for selection ---
