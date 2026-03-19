@@ -10,7 +10,6 @@ const Editor = (() => {
 
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
-  const addInput = document.getElementById('add-item-input');
 
   // --- Load ---
   async function loadChecklist(cl) {
@@ -45,10 +44,17 @@ const Editor = (() => {
   function render() {
     itemListEl.innerHTML = '';
     let collapsedLevel = Infinity;
+    let currentZoneId = 'root';
+
     items.forEach((item, i) => {
       if (item.type === 'section') {
         if (item.level <= collapsedLevel) {
+          // Zone boundary: emit add-row for the zone that just ended (only if visible)
+          if (collapsedLevel === Infinity) {
+            itemListEl.appendChild(buildAddRow(i, currentZoneId));
+          }
           collapsedLevel = item.collapsed ? item.level : Infinity;
+          currentZoneId = item.id;
           itemListEl.appendChild(buildSectionHeader(item, i));
         }
       } else {
@@ -57,6 +63,11 @@ const Editor = (() => {
         }
       }
     });
+
+    // Emit add-row for the last visible zone
+    if (collapsedLevel === Infinity) {
+      itemListEl.appendChild(buildAddRow(items.length, currentZoneId));
+    }
   }
 
   function buildSectionHeader(item, index) {
@@ -81,7 +92,7 @@ const Editor = (() => {
       scheduleSave();
     });
     secTitleEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') { e.preventDefault(); addInput.focus(); }
+      if (e.key === 'Enter') { e.preventDefault(); }
     });
 
     li.appendChild(toggle);
@@ -189,7 +200,6 @@ const Editor = (() => {
       }
       if (e.key === 'Enter') {
         e.preventDefault();
-        addInput.focus();
       }
       if (e.key === 'Backspace' && textEl.textContent === '') {
         e.preventDefault();
@@ -211,12 +221,12 @@ const Editor = (() => {
     });
     li.addEventListener('dragend', () => {
       li.classList.remove('dragging');
-      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
     });
     li.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
-      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
       li.classList.add('drag-over');
     });
     li.addEventListener('drop', (e) => {
@@ -254,16 +264,69 @@ const Editor = (() => {
     scheduleSave();
   }
 
-  function addItem(text) {
+  function addItemAt(text, insertAt, zoneId) {
     if (!text.trim()) return;
-    items.push({ id: genId(), checked: false, text: text.trim() });
+    const newItem = { id: genId(), checked: false, text: text.trim() };
+    items.splice(insertAt, 0, newItem);
     render();
     scheduleSave();
+    // Refocus the zone's add-row so the user can keep adding
+    const zoneInput = itemListEl.querySelector(`.add-item-row[data-zone-id="${zoneId}"] .add-item-input`);
+    if (zoneInput) zoneInput.focus();
+  }
+
+  function buildAddRow(insertAt, zoneId) {
+    const li = document.createElement('li');
+    li.className = 'add-item-row';
+    li.dataset.zoneId = zoneId;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'add-item-input';
+    input.placeholder = 'Add an item...';
+    input.autocomplete = 'off';
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (input.value.trim()) addItemAt(input.value, insertAt, zoneId);
+        else input.value = '';
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        moveFocus(input, -1);
+      }
+    });
+
+    li.addEventListener('dragover', (e) => {
+      if (dragSrcIndex === null) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
+      li.classList.add('drag-over');
+    });
+
+    li.addEventListener('drop', (e) => {
+      e.preventDefault();
+      li.classList.remove('drag-over');
+      if (dragSrcIndex === null) return;
+      let adjustedInsertAt = insertAt;
+      if (dragSrcIndex < insertAt) adjustedInsertAt--;
+      if (dragSrcIndex === adjustedInsertAt) { dragSrcIndex = null; return; }
+      const moved = items.splice(dragSrcIndex, 1)[0];
+      items.splice(adjustedInsertAt, 0, moved);
+      dragSrcIndex = null;
+      render();
+      scheduleSave();
+    });
+
+    li.appendChild(input);
+    return li;
   }
 
   // --- Focus navigation ---
   function getFocusableEls() {
-    return [titleEl, ...itemListEl.querySelectorAll('.item-text'), addInput];
+    return [titleEl, ...itemListEl.querySelectorAll('.item-text, .add-item-input')];
   }
 
   function moveFocus(currentEl, delta) {
@@ -311,7 +374,6 @@ const Editor = (() => {
     if (e.key === 'Enter') {
       e.preventDefault();
       titleEl.blur();
-      addInput.focus();
     }
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -335,18 +397,6 @@ const Editor = (() => {
     if (newLi) newLi.querySelector('.section-title').focus();
   });
   document.getElementById('title-row').appendChild(addH1Btn);
-
-  // --- Add item input ---
-  addInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && addInput.value.trim()) {
-      addItem(addInput.value);
-      addInput.value = '';
-    }
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      moveFocus(addInput, -1);
-    }
-  });
 
   // --- Reload from disk ---
   async function reloadCurrent() {
