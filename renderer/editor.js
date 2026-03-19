@@ -90,6 +90,14 @@ const Editor = (() => {
         scheduleSave();
         return;
       }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        moveFocus(textEl, -1);
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        moveFocus(textEl, 1);
+      }
       if (e.key === 'Enter') {
         e.preventDefault();
         addInput.focus();
@@ -164,6 +172,19 @@ const Editor = (() => {
     scheduleSave();
   }
 
+  // --- Focus navigation ---
+  function getFocusableEls() {
+    return [titleEl, ...itemListEl.querySelectorAll('.item-text'), addInput];
+  }
+
+  function moveFocus(currentEl, delta) {
+    const els = Array.from(getFocusableEls());
+    const i = els.indexOf(currentEl);
+    if (i === -1) return;
+    const target = els[i + delta];
+    if (target) target.focus();
+  }
+
   // --- Save ---
   function scheduleSave() {
     clearTimeout(saveTimer);
@@ -203,6 +224,10 @@ const Editor = (() => {
       titleEl.blur();
       addInput.focus();
     }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      moveFocus(titleEl, 1);
+    }
   });
 
   // --- Add item input ---
@@ -210,6 +235,10 @@ const Editor = (() => {
     if (e.key === 'Enter' && addInput.value.trim()) {
       addItem(addInput.value);
       addInput.value = '';
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      moveFocus(addInput, -1);
     }
   });
 
