@@ -8,7 +8,7 @@ function genId() {
 }
 
 function parse(markdown) {
-  const lines = markdown.split('\n');
+  const lines = markdown.split('\n').map(l => l.replace(/\r$/, ''));
   let title = '';
   const items = [];
 
