@@ -8,8 +8,6 @@ const Editor = (() => {
   let saveTimer = null;
   let dragSrcIndex = null;
 
-  const emptyState = document.getElementById('empty-state');
-  const editorContent = document.getElementById('editor-content');
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
   const addInput = document.getElementById('add-item-input');
@@ -17,7 +15,12 @@ const Editor = (() => {
   // --- Load ---
   async function loadChecklist(cl) {
     if (!cl) {
-      showEmpty();
+      currentPath = null;
+      currentTitle = '';
+      items = [];
+      titleEl.textContent = '';
+      document.title = 'Checklist';
+      render();
       return;
     }
     currentPath = cl.path;
@@ -25,22 +28,9 @@ const Editor = (() => {
     const parsed = parse(markdown);
     currentTitle = parsed.title;
     items = parsed.items;
-    render();
-    showEditor();
-  }
-
-  function showEmpty() {
-    currentPath = null;
-    emptyState.hidden = false;
-    editorContent.hidden = true;
-    document.title = 'Checklist';
-  }
-
-  function showEditor() {
-    emptyState.hidden = true;
-    editorContent.hidden = false;
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Checklist';
+    render();
   }
 
   // --- Render ---

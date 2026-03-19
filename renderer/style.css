@@ -186,14 +186,6 @@ body {
   background: var(--bg);
 }
 
-#empty-state {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dim);
-}
-
 #editor-content {
   flex: 1;
   display: flex;
