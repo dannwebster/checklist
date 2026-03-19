@@ -80,16 +80,50 @@ body {
 #checklist-list {
   flex: 1;
   overflow-y: auto;
-  list-style: none;
   padding: 4px 0;
 }
 
+/* File tree: directory nodes */
+.tree-dir-header {
+  display: flex;
+  align-items: center;
+  padding: 5px 12px 5px 16px;
+  cursor: pointer;
+  gap: 5px;
+  user-select: none;
+}
+
+.tree-dir-header:hover { background: var(--bg-hover); }
+
+.tree-toggle {
+  font-size: 9px;
+  color: var(--text-dim);
+  width: 10px;
+  flex-shrink: 0;
+}
+
+.tree-dir-name {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-dir-header.root .tree-dir-name {
+  color: var(--text);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* File tree: file nodes */
 .checklist-item {
   display: flex;
   align-items: center;
-  padding: 7px 12px 7px 16px;
+  padding: 6px 12px 6px 16px;
   cursor: pointer;
-  border-radius: 0;
   position: relative;
   gap: 6px;
 }
