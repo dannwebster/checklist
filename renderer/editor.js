@@ -200,6 +200,13 @@ const Editor = (() => {
       }
       if (e.key === 'Enter') {
         e.preventDefault();
+        // Find the zone this item belongs to
+        let zoneId = 'root';
+        for (let j = index - 1; j >= 0; j--) {
+          if (items[j].type === 'section') { zoneId = items[j].id; break; }
+        }
+        const zoneInput = itemListEl.querySelector(`.add-item-row[data-zone-id="${zoneId}"] .add-item-input`);
+        if (zoneInput) zoneInput.focus();
       }
       if (e.key === 'Backspace' && textEl.textContent === '') {
         e.preventDefault();
@@ -264,9 +271,10 @@ const Editor = (() => {
     scheduleSave();
   }
 
-  function addItemAt(text, insertAt, zoneId) {
+  function addItemAt(text, insertAt, zoneId, indent = 0) {
     if (!text.trim()) return;
     const newItem = { id: genId(), checked: false, text: text.trim() };
+    if (indent) newItem.indent = indent;
     items.splice(insertAt, 0, newItem);
     render();
     scheduleSave();
@@ -280,6 +288,15 @@ const Editor = (() => {
     li.className = 'add-item-row';
     li.dataset.zoneId = zoneId;
 
+    // Determine default indent: one level deeper than last item in zone
+    let indent = 0;
+    for (let j = insertAt - 1; j >= 0; j--) {
+      if (items[j].type === 'section') break;
+      indent = Math.min(6, (items[j].indent || 0) + 1);
+      break;
+    }
+    li.style.paddingLeft = (6 + indent * 20) + 'px';
+
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'add-item-input';
@@ -287,9 +304,16 @@ const Editor = (() => {
     input.autocomplete = 'off';
 
     input.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        if (e.shiftKey) indent = Math.max(0, indent - 1);
+        else indent = Math.min(6, indent + 1);
+        li.style.paddingLeft = (6 + indent * 20) + 'px';
+        return;
+      }
       if (e.key === 'Enter') {
         e.preventDefault();
-        if (input.value.trim()) addItemAt(input.value, insertAt, zoneId);
+        if (input.value.trim()) addItemAt(input.value, insertAt, zoneId, indent);
         else input.value = '';
       }
       if (e.key === 'ArrowUp') {

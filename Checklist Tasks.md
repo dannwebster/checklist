@@ -17,8 +17,6 @@
 - [x] Move Add item into each section <!-- id:7fa8edf8 -->
 - [x] move +H1 Section to beside the title <!-- id:81bea86c -->
 
-## New Section <!-- sec:bfe11a08 -->
-
 ### Multiple Headers <!-- sec:6b58d286 -->
 - [ ] autoscroll to last item <!-- id:23461968 -->
 - [x] items should be able to live at all levels (sections, H1s, and subsections), even when empty. <!-- id:18c0741b -->
@@ -28,5 +26,8 @@
 - [ ] tab and untab headers to move up and down the hiearchy <!-- id:e774e0e9 -->
 - [ ] drag tasks between todos (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [ ] add .cl. to new files if they aren't in the list of file types <!-- id:bcfaa89f -->
-- [ ] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
+- [x] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
 - [ ] when you move a ticket, tickets below it should move with it <!-- id:475a5d49 -->
+  - [ ] foo <!-- id:2edc153f -->
+    - [ ] bar <!-- id:9913c6a9 -->
+      - [ ] baz <!-- id:108c5d4e -->
