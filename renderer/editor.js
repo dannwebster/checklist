@@ -288,14 +288,14 @@ const Editor = (() => {
     li.className = 'add-item-row';
     li.dataset.zoneId = zoneId;
 
-    // Determine default indent: one level deeper than last item in zone
+    // Determine default indent from last item in zone
     let indent = 0;
     for (let j = insertAt - 1; j >= 0; j--) {
       if (items[j].type === 'section') break;
-      indent = Math.min(6, (items[j].indent || 0) + 1);
+      indent = items[j].indent || 0;
       break;
     }
-    li.style.paddingLeft = (6 + indent * 20) + 'px';
+    li.style.paddingLeft = indent ? (6 + indent * 20) + 'px' : '';
 
     const input = document.createElement('input');
     input.type = 'text';
@@ -308,7 +308,7 @@ const Editor = (() => {
         e.preventDefault();
         if (e.shiftKey) indent = Math.max(0, indent - 1);
         else indent = Math.min(6, indent + 1);
-        li.style.paddingLeft = (6 + indent * 20) + 'px';
+        li.style.paddingLeft = indent ? (6 + indent * 20) + 'px' : '';
         return;
       }
       if (e.key === 'Enter') {

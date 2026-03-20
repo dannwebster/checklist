@@ -28,6 +28,3 @@
 - [ ] add .cl. to new files if they aren't in the list of file types <!-- id:bcfaa89f -->
 - [x] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
 - [ ] when you move a ticket, tickets below it should move with it <!-- id:475a5d49 -->
-  - [ ] foo <!-- id:2edc153f -->
-    - [ ] bar <!-- id:9913c6a9 -->
-      - [ ] baz <!-- id:108c5d4e -->
