@@ -26,7 +26,7 @@ const Editor = (() => {
     currentPath = cl.path;
     const markdown = await window.checklistAPI.read(cl.path);
     const parsed = parse(markdown);
-    currentTitle = parsed.title;
+    currentTitle = cl.path.replace(/.*[/\\]/, '');
     items = parsed.items;
     for (const item of items) {
       if (item.type === 'section') {
@@ -360,13 +360,15 @@ const Editor = (() => {
     const newName = titleEl.textContent.trim();
     if (!newName || !currentPath) return;
     const oldName = currentPath.replace(/.*[/\\]/, '').replace(/\.md$/, '');
-    if (newName !== oldName) {
-      const newPath = await window.checklistAPI.rename(currentPath, newName);
+    const newBaseName = newName.replace(/\.md$/i, '');
+    if (newBaseName !== oldName) {
+      const newPath = await window.checklistAPI.rename(currentPath, newBaseName);
       const oldPath = currentPath;
       currentPath = newPath;
-      currentTitle = newName;
-      await Sidebar.updateName(oldPath, newName);
-      document.title = newName + ' — Checklist';
+      currentTitle = newBaseName + '.md';
+      titleEl.textContent = currentTitle;
+      await Sidebar.updateName(oldPath, newBaseName);
+      document.title = currentTitle + ' — Checklist';
     }
   });
 
@@ -403,7 +405,7 @@ const Editor = (() => {
     if (!currentPath || saveTimer) return;
     const markdown = await window.checklistAPI.read(currentPath);
     const parsed = parse(markdown);
-    currentTitle = parsed.title;
+    currentTitle = currentPath.replace(/.*[/\\]/, '');
     items = parsed.items;
     for (const item of items) {
       if (item.type === 'section') {

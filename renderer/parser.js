@@ -15,10 +15,6 @@ function parse(markdown) {
   let hadMissingIds = false;
 
   for (const line of lines) {
-    if (!title && line.startsWith('# ')) {
-      title = line.slice(2).trim();
-      continue;
-    }
     const s = line.match(SECTION_RE);
     if (s) {
       const id = s[3] || (hadMissingIds = true, genId());
@@ -41,7 +37,7 @@ function parse(markdown) {
 }
 
 function serialize(title, items) {
-  let md = `# ${title}\n\n`;
+  let md = '';
   for (const item of items) {
     if (item.type === 'section') {
       const hashes = '#'.repeat(item.level);
