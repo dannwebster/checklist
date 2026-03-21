@@ -137,6 +137,20 @@ const Editor = (() => {
       if (e.key === 'Enter') { e.preventDefault(); }
       if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(secTitleEl, -1); }
       if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(secTitleEl, 1); }
+      if (e.key === 'Backspace' && e.ctrlKey) {
+        e.preventDefault();
+        items.splice(index, 1);
+        render();
+        scheduleSave();
+        return;
+      }
+      if (e.key === 'Backspace' && secTitleEl.textContent === '') {
+        e.preventDefault();
+        items.splice(index, 1);
+        render();
+        scheduleSave();
+        return;
+      }
       if (e.key === 'Tab') {
         e.preventDefault();
         if (e.shiftKey) {
@@ -345,17 +359,17 @@ const Editor = (() => {
       }
       if (e.key === 'Enter' && e.ctrlKey) {
         e.preventDefault();
-        toggleContext();
-      }
-      if (e.key === ':' && e.ctrlKey) {
-        e.preventDefault();
-        if (items[index].contextExpanded) toggleContext();
-        return;
+        if (!items[index].contextExpanded) toggleContext();
+        else contextTextEl.focus();
       }
       if (e.key === ':') {
         e.preventDefault();
         items[index].text = textEl.textContent;
-        if (!items[index].contextExpanded) toggleContext();
+        toggleContext();
+      }
+      if (e.key === ' ' && e.ctrlKey) {
+        e.preventDefault();
+        toggleItem(index);
       }
       if (e.key === 'Backspace' && e.ctrlKey) {
         e.preventDefault();

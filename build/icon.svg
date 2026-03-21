@@ -1,57 +1,47 @@
-<svg width="662" height="696" viewBox="180 152 662 696" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="180" y="152" width="662" height="696" rx="40" fill="white" stroke="#D3C7B6" stroke-width="2"/>
-<rect x="291" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="357" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="415" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="472" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="531" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="589" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="702" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="760" y="196" width="28" height="42" fill="#0A3052"/>
-<rect x="348" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="415" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="461" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="519" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="646" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="704" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="760" y="249" width="28" height="42" fill="#0A3052"/>
-<rect x="292" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="348" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="404" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="461" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="519" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="589" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="646" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="704" y="302" width="28" height="42" fill="#0A3052"/>
-<rect x="760" y="302" width="28" height="42" fill="#0A3052"/>
-<circle cx="341.5" cy="401.5" r="39.5" fill="#008EA5"/>
-<path d="M317 401.5L333 417.5L366 384.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="341.5" cy="491.5" r="39.5" fill="#008EA5"/>
-<path d="M317 491.5L333 507.5L366 474.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="341.5" cy="581.5" r="39.5" fill="#008EA5"/>
-<path d="M317 581.5L333 597.5L366 564.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="341.5" cy="671.5" r="39.5" fill="#008EA5"/>
-<path d="M317 671.5L333 687.5L366 654.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-<rect x="406" y="394" width="379" height="15" rx="7.5" fill="#008EA5"/>
-<rect x="406" y="490" width="379" height="15" rx="7.5" fill="#008EA5"/>
-<rect x="406" y="582" width="379" height="15" rx="7.5" fill="#008EA5"/>
-<rect x="406" y="678" width="379" height="15" rx="7.5" fill="#008EA5"/>
-<circle cx="341" cy="773" r="36" stroke="#008EA5" stroke-width="8"/>
-<line x1="406" y1="778.5" x2="433" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="456" y1="778.5" x2="483" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="506" y1="778.5" x2="533" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="556" y1="778.5" x2="583" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="606" y1="778.5" x2="633" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="656" y1="778.5" x2="683" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="706" y1="778.5" x2="733" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<line x1="756" y1="778.5" x2="783" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
-<rect x="223" y="202" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="291" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="380" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="471" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="563" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="658" width="28" height="42" fill="#D3C7B6"/>
-<rect x="223" y="763" width="28" height="42" fill="#D3C7B6"/>
-<line x1="277.5" y1="152" x2="277.5" y2="848" stroke="#D3C7B6" stroke-width="1"/>
-<line x1="180" y1="351.5" x2="842" y2="351.5" stroke="#D3C7B6" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="80" fill="#0D2B45"/>
+
+  <!-- Punchcard body (cream/parchment) with top-right corner notch -->
+  <path d="M 88 108 L 400 108 L 436 144 L 436 392 Q 436 404 424 404 L 88 404 Q 76 404 76 392 L 76 120 Q 76 108 88 108 Z" fill="#F7EDD0"/>
+
+  <!-- Corner notch fold shadow -->
+  <path d="M 400 108 L 436 144 L 400 144 Z" fill="#C8B88A"/>
+
+  <!-- Sprocket holes along top of card (7 small rectangles) -->
+  <rect x="102" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="142" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="182" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="222" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="262" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="302" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+  <rect x="342" y="118" width="20" height="13" rx="3" fill="#0D2B45"/>
+
+  <!-- Row 1: all 3 checked (y=192) -->
+  <circle cx="148" cy="192" r="30" fill="#0D2B45"/>
+  <polyline points="132,192 144,206 166,174" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="256" cy="192" r="30" fill="#0D2B45"/>
+  <polyline points="240,192 252,206 274,174" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="364" cy="192" r="30" fill="#0D2B45"/>
+  <polyline points="348,192 360,206 382,174" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Row 2: 2 checked, 1 unchecked (y=280) -->
+  <circle cx="148" cy="280" r="30" fill="#0D2B45"/>
+  <polyline points="132,280 144,294 166,262" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="256" cy="280" r="30" fill="#0D2B45"/>
+  <polyline points="240,280 252,294 274,262" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="364" cy="280" r="30" fill="none" stroke="#B0A080" stroke-width="5"/>
+
+  <!-- Row 3: 1 checked, 2 unchecked (y=368) -->
+  <circle cx="148" cy="368" r="30" fill="#0D2B45"/>
+  <polyline points="132,368 144,382 166,350" fill="none" stroke="#F7EDD0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="256" cy="368" r="30" fill="none" stroke="#B0A080" stroke-width="5"/>
+  <circle cx="364" cy="368" r="30" fill="none" stroke="#B0A080" stroke-width="5"/>
+
 </svg>
