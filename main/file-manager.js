@@ -120,7 +120,12 @@ function renameChecklist(oldPath, newPath) {
 
 function createChecklist(dirPath, name) {
   ensureDataDir(dirPath);
-  const filePath = path.join(dirPath, name + '.md');
+  const settings = readSettings();
+  const patterns = settings.filePatterns || DEFAULT_FILE_PATTERNS;
+  const defaultExt = settings.defaultExt || 'cl';
+  const candidate = name + '.md';
+  const filename = matchesAnyPattern(candidate, patterns) ? candidate : name + '.' + defaultExt + '.md';
+  const filePath = path.join(dirPath, filename);
   const content = `# ${name}\n\n`;
   writeChecklist(filePath, content);
   return filePath;
