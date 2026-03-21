@@ -11,7 +11,8 @@
     "dist": "electron-builder",
     "dist:win": "electron-builder --win",
     "dist:mac": "electron-builder --mac",
-    "dist:linux": "electron-builder --linux"
+    "dist:linux": "electron-builder --linux",
+    "icons": "node scripts/generate-icons.js"
   },
   "build": {
     "appId": "com.dannwebster.checklist",
@@ -21,16 +22,24 @@
       "output": "dist"
     },
     "win": {
-      "target": ["nsis", "portable"],
+      "target": [
+        "nsis",
+        "portable"
+      ],
       "icon": "build/icon.ico"
     },
     "mac": {
-      "target": ["dmg"],
+      "target": [
+        "dmg"
+      ],
       "icon": "build/icon.icns",
       "category": "public.app-category.productivity"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "build/icons",
       "category": "Utility"
     },
@@ -45,6 +54,7 @@
     "electron": "^34.0.0",
     "electron-builder": "^25.1.8",
     "electron-icon-builder": "^2.0.1",
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "sharp": "^0.34.5"
   }
 }

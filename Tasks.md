@@ -3,8 +3,8 @@
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
-- [ ] add an icon <!-- id:3b20c602 -->
-- [ ] make it a standalone app <!-- id:9c87e6ea -->
+- [x] add an icon <!-- id:3b20c602 -->
+- [x] make it a standalone app <!-- id:9c87e6ea -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] add multiple headings <!-- id:a1b2c3d4 -->

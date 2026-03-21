@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d9e6b"/>
+      <stop offset="100%" style="stop-color:#1a7a52"/>
+    </linearGradient>
+  </defs>
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="80" ry="80" fill="url(#bg)"/>
+  <!-- Row 1: checkbox + line -->
+  <rect x="80" y="140" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18"/>
+  <polyline points="98,181 116,200 144,164" fill="none" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="196" y="168" width="236" height="24" rx="12" fill="white" opacity="0.9"/>
+  <!-- Row 2: checkbox + line -->
+  <rect x="80" y="260" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18" opacity="0.7"/>
+  <rect x="196" y="288" width="180" height="24" rx="12" fill="white" opacity="0.6"/>
+  <!-- Row 3: checkbox + line -->
+  <rect x="80" y="380" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18" opacity="0.5"/>
+  <rect x="196" y="408" width="210" height="24" rx="12" fill="white" opacity="0.45"/>
+</svg>
