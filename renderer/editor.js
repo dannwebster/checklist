@@ -222,7 +222,7 @@ const Editor = (() => {
     const delBtn = document.createElement('button');
     delBtn.className = 'item-delete';
     delBtn.textContent = '×';
-    delBtn.title = 'Delete section (items remain)';
+    delBtn.title = 'Delete section — items remain (Ctrl+Backspace)';
     delBtn.addEventListener('click', () => {
       items.splice(index, 1);
       render();
@@ -410,7 +410,7 @@ const Editor = (() => {
     const delBtn = document.createElement('button');
     delBtn.className = 'item-delete';
     delBtn.textContent = '×';
-    delBtn.title = 'Delete item';
+    delBtn.title = 'Delete item (Ctrl+Backspace)';
     delBtn.addEventListener('click', () => removeItem(index));
 
     // --- Context area ---
@@ -609,7 +609,7 @@ const Editor = (() => {
   const addH1Btn = document.createElement('button');
   addH1Btn.id = 'add-h1-section-btn';
   addH1Btn.textContent = '+ add header';
-  addH1Btn.title = 'Add top-level section header';
+  addH1Btn.title = 'Add top-level section (Ctrl+H)';
   addH1Btn.style.display = 'none';
   addH1Btn.addEventListener('click', () => {
     if (!currentPath) return;
@@ -650,7 +650,7 @@ const Editor = (() => {
   const gitCommitBtn = document.createElement('button');
   gitCommitBtn.id = 'git-commit-btn';
   gitCommitBtn.textContent = 'commit';
-  gitCommitBtn.title = 'Commit this file to git';
+  gitCommitBtn.title = 'Commit this file to git (Ctrl+Shift+G)';
   gitCommitBtn.style.display = 'none';
   gitCommitBtn.addEventListener('click', async () => {
     if (!currentPath || isCommitting) return;
@@ -670,7 +670,7 @@ const Editor = (() => {
   const gitRevertBtn = document.createElement('button');
   gitRevertBtn.id = 'git-revert-btn';
   gitRevertBtn.textContent = 'revert';
-  gitRevertBtn.title = 'Revert file to last committed state';
+  gitRevertBtn.title = 'Revert file to last committed state (Ctrl+Shift+Z)';
   gitRevertBtn.style.display = 'none';
   gitRevertBtn.addEventListener('click', async () => {
     if (!currentPath || isCommitting) return;
