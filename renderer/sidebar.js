@@ -101,6 +101,7 @@ const Sidebar = (() => {
       () => createNew(rootDir, childrenEl, 1));
     const removeBtn = makeIconBtn('tree-dir-remove', '×', 'Remove this root folder',
       async () => {
+        if (!await window.checklistAPI.showDialog(`Remove folder "${rootDir}" from your collection?`, 'Remove from Collection')) return;
         const updated = await window.checklistAPI.removeDataDir(rootDir);
         dataDirs = updated;
         checklistsByRoot.delete(rootDir);
