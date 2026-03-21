@@ -112,7 +112,7 @@ const Editor = (() => {
     const toggle = document.createElement('button');
     toggle.className = 'section-toggle';
     toggle.textContent = item.collapsed ? '▶' : '▼';
-    toggle.title = item.collapsed ? 'Expand' : 'Collapse';
+    toggle.title = item.collapsed ? 'Expand (Ctrl+E)' : 'Collapse (Ctrl+E)';
     toggle.addEventListener('click', () => toggleSection(index));
 
     const cf = item.completedFilter || 'default';
@@ -135,8 +135,8 @@ const Editor = (() => {
     });
     secTitleEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); }
-      if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(secTitleEl, -1); }
-      if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(secTitleEl, 1); }
+      if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(secTitleEl, -1); }
+      if (e.key === 'ArrowDown' && !e.shiftKey) { e.preventDefault(); moveFocus(secTitleEl, 1); }
       if (e.key === 'Backspace' && e.ctrlKey) {
         e.preventDefault();
         items.splice(index, 1);
@@ -340,11 +340,11 @@ const Editor = (() => {
         itemListEl.querySelector(`[data-id="${block[0].id}"] .item-text`)?.focus();
         return;
       }
-      if (e.key === 'ArrowUp') {
+      if (e.key === 'ArrowUp' && !e.shiftKey) {
         e.preventDefault();
         moveFocus(textEl, -1);
       }
-      if (e.key === 'ArrowDown') {
+      if (e.key === 'ArrowDown' && !e.shiftKey) {
         e.preventDefault();
         moveFocus(textEl, 1);
       }
@@ -445,8 +445,8 @@ const Editor = (() => {
         textEl.focus();
         scheduleSave();
       }
-      if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(contextTextEl, -1); }
-      if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(contextTextEl, 1); }
+      if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, -1); }
+      if (e.key === 'ArrowDown' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, 1); }
     });
     contextArea.appendChild(contextTextEl);
 
@@ -630,7 +630,7 @@ const Editor = (() => {
 
   function updateDocFilterBtn() {
     docFilterBtn.textContent = CF_LABELS[docCompletedFilter];
-    docFilterBtn.title = CF_TITLES[docCompletedFilter];
+    docFilterBtn.title = CF_TITLES[docCompletedFilter] + ' (Ctrl+Shift+H)';
     docFilterBtn.dataset.state = docCompletedFilter;
   }
 
@@ -739,6 +739,23 @@ const Editor = (() => {
   }
 
   // --- Global hotkeys ---
+  function findSectionIndexForFocus() {
+    const active = document.activeElement;
+    if (!active) return -1;
+    const secLi = active.closest('[data-sec-id]');
+    if (secLi) {
+      return items.findIndex(it => it.type === 'section' && it.id === secLi.dataset.secId);
+    }
+    const itemLi = active.closest('[data-id]');
+    if (itemLi) {
+      const itemIdx = items.findIndex(it => it.id === itemLi.dataset.id);
+      for (let i = itemIdx - 1; i >= 0; i--) {
+        if (items[i].type === 'section') return i;
+      }
+    }
+    return -1;
+  }
+
   window.addEventListener('keydown', (e) => {
     if (e.key === 'G' && e.ctrlKey && e.shiftKey) {
       e.preventDefault();
@@ -747,6 +764,20 @@ const Editor = (() => {
     if (e.key === 'Z' && e.ctrlKey && e.shiftKey) {
       e.preventDefault();
       if (gitRevertBtn.style.display !== 'none' && !gitRevertBtn.disabled) gitRevertBtn.click();
+    }
+    if (e.key === 'e' && e.ctrlKey && !e.shiftKey) {
+      e.preventDefault();
+      const idx = findSectionIndexForFocus();
+      if (idx !== -1) toggleSection(idx);
+    }
+    if (e.key === 'H' && e.ctrlKey && e.shiftKey) {
+      e.preventDefault();
+      if (!currentPath) return;
+      const states = ['default', 'show', 'hide'];
+      docCompletedFilter = states[(states.indexOf(docCompletedFilter) + 1) % 3];
+      updateDocFilterBtn();
+      render();
+      scheduleSave();
     }
   });
 

@@ -97,7 +97,7 @@ const Sidebar = (() => {
     if (isCollapsed) childrenEl.style.display = 'none';
     dirContainers.set(rootDir, childrenEl);
 
-    const addBtn = makeIconBtn('tree-dir-add', '+', 'New checklist in this folder',
+    const addBtn = makeIconBtn('tree-dir-add', '+', 'New checklist in this folder (Ctrl+N)',
       () => createNew(rootDir, childrenEl, 1));
     const removeBtn = makeIconBtn('tree-dir-remove', '×', 'Remove this root folder',
       async () => {
