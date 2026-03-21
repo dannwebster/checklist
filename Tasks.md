@@ -3,8 +3,6 @@
 - [ ] fix URLs: when a URL is typed into a todo, it breaks over the : in the URL. We should except the : in common url patterns (http:// and https:// case insensitive) from being the delemiter  Additionally, we should bring back the functionality where the typing the delimiter (:) automatically moves to the context (exempting a preceeding http or https) <!-- id:a1c9f4d5 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
-- [ ]  <!-- id:9d0d7eae -->
-- [ ]  <!-- id:19f7108c -->
 
 # Completed <!-- sec:582c2227 -->
 - [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
