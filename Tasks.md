@@ -2,7 +2,6 @@
 # Checklist Tasks <!-- sec:582c2227 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
-- [ ] autoscroll to last item <!-- id:23461968 -->
 - [ ] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
 
