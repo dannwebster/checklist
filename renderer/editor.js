@@ -153,6 +153,7 @@ const Editor = (() => {
       dragSrcIndex = index;
       li.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('application/x-checklist-editor', 'true');
     });
     li.addEventListener('dragend', () => {
       li.classList.remove('dragging');
@@ -328,6 +329,7 @@ const Editor = (() => {
       dragSrcIndex = index;
       li.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('application/x-checklist-editor', 'true');
     });
     li.addEventListener('dragend', () => {
       li.classList.remove('dragging');
@@ -537,8 +539,67 @@ const Editor = (() => {
     if (parsed.hadMissingIds) scheduleSave();
   }
 
+  function showCrossFileDragDialog(destName) {
+    let modal = document.getElementById('cfd-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'cfd-modal';
+      modal.innerHTML = `
+        <div class="cfd-box">
+          <p class="cfd-msg">Add to <strong class="cfd-dest"></strong>?</p>
+          <div class="cfd-btns">
+            <button class="cfd-btn" data-action="copy">Copy</button>
+            <button class="cfd-btn" data-action="move">Move</button>
+            <button class="cfd-btn cfd-cancel" data-action="cancel">Cancel</button>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+    }
+    modal.querySelector('.cfd-dest').textContent = destName;
+    modal.style.display = 'flex';
+    return new Promise((resolve) => {
+      function handler(ev) {
+        const action = ev.target.closest('[data-action]')?.dataset.action;
+        if (!action) return;
+        modal.style.display = 'none';
+        modal.removeEventListener('click', handler);
+        resolve(action);
+      }
+      modal.addEventListener('click', handler);
+    });
+  }
+
   // --- Listen for selection ---
   window.addEventListener('checklist-selected', (e) => loadChecklist(e.detail));
+
+  window.addEventListener('editor-to-sidebar-drop', async (e) => {
+    if (dragSrcIndex === null) return;
+    const { destPath, destName } = e.detail;
+
+    const src = items[dragSrcIndex];
+    const blockEnd = src.type === 'section'
+      ? getInsertionIndex(dragSrcIndex)
+      : getItemBlockEnd(dragSrcIndex);
+    const block = items.slice(dragSrcIndex, blockEnd);
+    const srcStart = dragSrcIndex;
+    const srcEnd = blockEnd;
+
+    const action = await showCrossFileDragDialog(destName);
+    if (action === 'cancel') return;
+
+    const blockCopy = block.map(item => ({ ...item, id: genId() }));
+
+    const destMarkdown = await window.checklistAPI.read(destPath);
+    const destParsed = parse(destMarkdown);
+    destParsed.items.push(...blockCopy);
+    await window.checklistAPI.write(destPath, serialize('', destParsed.items, destParsed.docCompletedFilter));
+
+    if (action === 'move') {
+      items.splice(srcStart, srcEnd - srcStart);
+      render();
+      scheduleSave();
+    }
+  });
 
   window.checklistAPI.onFileChanged((filePath) => {
     if (filePath === currentPath) reloadCurrent();

@@ -225,6 +225,23 @@ const Sidebar = (() => {
     el.appendChild(nameSpan);
     el.appendChild(delBtn);
     el.addEventListener('click', () => openCl(cl));
+    el.addEventListener('dragover', (e) => {
+      if (!e.dataTransfer.types.includes('application/x-checklist-editor')) return;
+      if (cl.path === activePath) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      el.classList.add('drag-over');
+    });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      if (!e.dataTransfer.types.includes('application/x-checklist-editor')) return;
+      if (cl.path === activePath) return;
+      window.dispatchEvent(new CustomEvent('editor-to-sidebar-drop', {
+        detail: { destPath: cl.path, destName: node.name }
+      }));
+    });
     container.appendChild(el);
   }
 

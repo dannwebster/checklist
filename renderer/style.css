@@ -485,3 +485,49 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Sidebar file drag-over highlight */
+.checklist-item.drag-over {
+  background: var(--bg-active);
+  outline: 1px solid var(--accent);
+}
+
+/* Cross-file drag dialog */
+#cfd-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.cfd-box {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 260px;
+}
+
+.cfd-msg { color: var(--text); font-size: 14px; }
+
+.cfd-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+.cfd-btn {
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font);
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cfd-btn:hover { border-color: var(--accent); color: var(--text-title); }
+.cfd-cancel { color: var(--text-dim); }
