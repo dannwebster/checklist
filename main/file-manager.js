@@ -6,6 +6,7 @@ const { app } = require('electron');
 const SETTINGS_FILE = path.join(app.getPath('userData'), 'settings.json');
 const DEFAULT_DATA_DIR = path.join(os.homedir(), 'Documents', 'Checklists');
 const DEFAULT_FILE_PATTERNS = ['*Tasks*.md', '*Checklist*.md', '*.cl.md'];
+const DEFAULT_IGNORE_DIR_PATTERNS = ['.*'];
 
 function globToRegex(pattern) {
   const escaped = pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*');
@@ -77,7 +78,9 @@ function ensureDataDir(dirPath) {
 
 function listChecklists(dirPath) {
   ensureDataDir(dirPath);
-  const patterns = readSettings().filePatterns || DEFAULT_FILE_PATTERNS;
+  const settings = readSettings();
+  const patterns = settings.filePatterns || DEFAULT_FILE_PATTERNS;
+  const ignoreDirs = settings.ignoreDirPatterns || DEFAULT_IGNORE_DIR_PATTERNS;
   const results = [];
 
   function walk(dir) {
@@ -86,7 +89,7 @@ function listChecklists(dirPath) {
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        walk(fullPath);
+        if (!matchesAnyPattern(entry.name, ignoreDirs)) walk(fullPath);
       } else if (entry.isFile() && matchesAnyPattern(entry.name, patterns)) {
         const stat = fs.statSync(fullPath);
         const relPath = path.relative(dirPath, fullPath).replace(/\\/g, '/');

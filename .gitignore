@@ -2,6 +2,7 @@ node_modules/
 dist/
 *.tmp
 .DS_Store
+.claude/worktrees/
 build/icon.png
 build/icon.ico
 build/icon.icns
