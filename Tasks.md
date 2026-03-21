@@ -4,12 +4,12 @@
 - [ ] add a context expandable section <!-- id:b15f9845 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
 - [ ] autoscroll to last item <!-- id:23461968 -->
-- [ ] Sections should be able to be moved <!-- id:7472d1d9 -->
 - [ ] drag tasks between todos (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [ ] moving an item should move all items beneath it <!-- id:7869288b -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] add multiple headings <!-- id:a1b2c3d4 -->
+- [x] Sections should be able to be moved <!-- id:7472d1d9 -->
 - [x] make it a standalone app <!-- id:9c87e6ea -->
 - [x] add an icon <!-- id:3b20c602 -->
 - [x] add "show/hide completed" at the section/subsection/and global level <!-- id:d2f89a50 -->
