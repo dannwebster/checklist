@@ -18,6 +18,7 @@ function createWindow() {
       nodeIntegration: false,
     },
     title: 'Checklist',
+    icon: path.join(__dirname, '../build/icons/png/256x256.png'),
   });
 
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
