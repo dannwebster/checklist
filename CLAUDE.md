@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Workflow
+
+Always use git worktrees for any code changes. Use the Agent tool with `isolation: "worktree"` when delegating work, then merge the resulting branch back into main.
+
 ## Commands
 
 ```bash

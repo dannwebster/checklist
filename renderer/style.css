@@ -379,14 +379,6 @@ body {
 .section-header .item-delete { opacity: 0; }
 .section-header:hover .item-delete { opacity: 1; }
 
-.add-item-row {
-  padding: 4px 6px;
-  margin-top: 2px;
-}
-
-.add-item-row.drag-over {
-  border-top: 2px solid var(--accent);
-}
 
 .section-add-child {
   border: none;
@@ -422,25 +414,6 @@ body {
 #title-row:hover #add-h1-section-btn { opacity: 1; }
 #add-h1-section-btn:hover { color: var(--text); background: var(--bg-hover); }
 
-.add-item-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-dim);
-  font-family: var(--font);
-  font-size: 14px;
-  padding: 4px 2px;
-  outline: none;
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.add-item-input:focus {
-  border-bottom-color: var(--accent);
-  color: var(--text);
-}
-
-.add-item-input::placeholder { color: var(--text-dim); }
 
 /* Completed-filter cycle button on section headers */
 .section-cf-btn {

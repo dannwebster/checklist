@@ -129,7 +129,7 @@ function createChecklist(dirPath, name) {
   const candidate = name + '.md';
   const filename = matchesAnyPattern(candidate, patterns) ? candidate : name + '.' + defaultExt + '.md';
   const filePath = path.join(dirPath, filename);
-  const content = `# ${name}\n\n`;
+  const content = `# ${name}\n- [ ]  \n`;
   writeChecklist(filePath, content);
   return filePath;
 }

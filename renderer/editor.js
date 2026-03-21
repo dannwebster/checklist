@@ -63,10 +63,6 @@ const Editor = (() => {
     items.forEach((item, i) => {
       if (item.type === 'section') {
         if (item.level <= collapsedLevel) {
-          // Zone boundary: emit add-row for the zone that just ended (only if visible)
-          if (collapsedLevel === Infinity) {
-            itemListEl.appendChild(buildAddRow(i, currentZoneId));
-          }
           collapsedLevel = item.collapsed ? item.level : Infinity;
           currentZoneId = item.id;
           itemListEl.appendChild(buildSectionHeader(item, i));
@@ -85,10 +81,6 @@ const Editor = (() => {
       }
     });
 
-    // Emit add-row for the last visible zone
-    if (collapsedLevel === Infinity) {
-      itemListEl.appendChild(buildAddRow(items.length, currentZoneId));
-    }
   }
 
   const CF_LABELS = { default: '·', show: 'show ✓', hide: 'hide ✓' };
@@ -179,7 +171,8 @@ const Editor = (() => {
     if (!currentPath) return;
     const insertAt = getInsertionIndex(parentIndex);
     const newSection = { type: 'section', id: genId(), level: childLevel, text: 'New Section', collapsed: false, completedFilter: 'default' };
-    items.splice(insertAt, 0, newSection);
+    const newItem = { id: genId(), checked: false, text: '', indent: 0 };
+    items.splice(insertAt, 0, newSection, newItem);
     render();
     scheduleSave();
     const newLi = itemListEl.querySelector(`[data-sec-id="${newSection.id}"]`);
@@ -272,12 +265,12 @@ const Editor = (() => {
     });
     li.addEventListener('dragend', () => {
       li.classList.remove('dragging');
-      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
     });
     li.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
-      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
       li.classList.add('drag-over');
     });
     li.addEventListener('drop', (e) => {
@@ -315,86 +308,9 @@ const Editor = (() => {
     scheduleSave();
   }
 
-  function addItemAt(text, insertAt, zoneId, indent = 0) {
-    if (!text.trim()) return;
-    const newItem = { id: genId(), checked: false, text: text.trim() };
-    if (indent) newItem.indent = indent;
-    items.splice(insertAt, 0, newItem);
-    render();
-    scheduleSave();
-    // Refocus the zone's add-row so the user can keep adding
-    const zoneInput = itemListEl.querySelector(`.add-item-row[data-zone-id="${zoneId}"] .add-item-input`);
-    if (zoneInput) zoneInput.focus();
-  }
-
-  function buildAddRow(insertAt, zoneId) {
-    const li = document.createElement('li');
-    li.className = 'add-item-row';
-    li.dataset.zoneId = zoneId;
-
-    // Determine default indent from last item in zone
-    let indent = 0;
-    for (let j = insertAt - 1; j >= 0; j--) {
-      if (items[j].type === 'section') break;
-      indent = items[j].indent || 0;
-      break;
-    }
-    li.style.paddingLeft = indent ? (6 + indent * 20) + 'px' : '';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'add-item-input';
-    input.placeholder = 'Add an item...';
-    input.autocomplete = 'off';
-
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        if (e.shiftKey) indent = Math.max(0, indent - 1);
-        else indent = Math.min(6, indent + 1);
-        li.style.paddingLeft = indent ? (6 + indent * 20) + 'px' : '';
-        return;
-      }
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        if (input.value.trim()) addItemAt(input.value, insertAt, zoneId, indent);
-        else input.value = '';
-      }
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        moveFocus(input, -1);
-      }
-    });
-
-    li.addEventListener('dragover', (e) => {
-      if (dragSrcIndex === null) return;
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      document.querySelectorAll('.item-row, .add-item-row').forEach(r => r.classList.remove('drag-over'));
-      li.classList.add('drag-over');
-    });
-
-    li.addEventListener('drop', (e) => {
-      e.preventDefault();
-      li.classList.remove('drag-over');
-      if (dragSrcIndex === null) return;
-      let adjustedInsertAt = insertAt;
-      if (dragSrcIndex < insertAt) adjustedInsertAt--;
-      if (dragSrcIndex === adjustedInsertAt) { dragSrcIndex = null; return; }
-      const moved = items.splice(dragSrcIndex, 1)[0];
-      items.splice(adjustedInsertAt, 0, moved);
-      dragSrcIndex = null;
-      render();
-      scheduleSave();
-    });
-
-    li.appendChild(input);
-    return li;
-  }
-
   // --- Focus navigation ---
   function getFocusableEls() {
-    return [titleEl, ...itemListEl.querySelectorAll('.item-text, .add-item-input')];
+    return [titleEl, ...itemListEl.querySelectorAll('.item-text')];
   }
 
   function moveFocus(currentEl, delta) {
@@ -477,7 +393,8 @@ const Editor = (() => {
   addH1Btn.addEventListener('click', () => {
     if (!currentPath) return;
     const newSection = { type: 'section', id: genId(), level: 1, text: 'New Section', collapsed: false, completedFilter: 'default' };
-    items.push(newSection);
+    const newItem = { id: genId(), checked: false, text: '', indent: 0 };
+    items.push(newSection, newItem);
     render();
     scheduleSave();
     const newLi = itemListEl.querySelector(`[data-sec-id="${newSection.id}"]`);
