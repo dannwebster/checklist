@@ -1,5 +1,5 @@
 
-# Open Tasks <!-- sec:582c2227 -->
+# Open Tasks <!-- sec:582c2227 cf:hide -->
 - [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
   - [x] add file <!-- id:8ee5d9c9 -->
   - [x] delete file <!-- id:23defee0 -->
