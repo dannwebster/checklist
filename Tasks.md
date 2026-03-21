@@ -1,14 +1,5 @@
 
 # Open Tasks <!-- sec:582c2227 -->
-- [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
-  - [x] add file <!-- id:8ee5d9c9 -->
-  - [x] delete file <!-- id:23defee0 -->
-  - [x] remove folder <!-- id:df2984e3 -->
-- [x] add missing hotkeys <!-- id:02c46200 -->
-  - [x] show/hide completed (Ctrl+Shift+H) <!-- id:e4f6f447 -->
-  - [x] expand/collapse section (Ctrl+E) <!-- id:9d40b0f6 -->
-  - [x] add/delete document <!-- id:ef1fcb2c -->
-  - [x] remove folder <!-- id:25bdaeaf -->
 - [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
 - [x] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
   - [x] expand/collapse section <!-- id:6e8adb22 -->
@@ -20,7 +11,7 @@
   - [x] delete document <!-- id:ad2a38a6 -->
   - [x] expand/collapse context <!-- id:c2c4da59 -->
   - [x] remove folder <!-- id:19045eed -->
-- [ ] Mousewheel fix? how to move with mousehweel: Currently, the mouse wheel works inconsistently when trying to move an item. This makes it difficult to moves items with the mouse beyond the current screen <!-- id:4b6b10d9 -->
+- [x] Mousewheel fix? how to move with mousehweel: Currently, the mouse wheel works inconsistently when trying to move an item. This makes it difficult to moves items with the mouse beyond the current screen <!-- id:4b6b10d9 -->
   - [x] better navigation between context and non-context sections <!-- id:e0e6b52d -->
   - [x] indicate when a section has context and when it doesn't <!-- id:be409522 -->
 - [x] allow keyboard navigation to sidebar/pl <!-- id:9168dd20 -->
@@ -29,6 +20,15 @@
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 
 # Completed <!-- sec:9734bd11 -->
+- [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
+  - [x] add file <!-- id:8ee5d9c9 -->
+  - [x] delete file <!-- id:23defee0 -->
+  - [x] remove folder <!-- id:df2984e3 -->
+- [x] add missing hotkeys <!-- id:02c46200 -->
+  - [x] show/hide completed (Ctrl+Shift+H) <!-- id:e4f6f447 -->
+  - [x] expand/collapse section (Ctrl+E) <!-- id:9d40b0f6 -->
+  - [x] add/delete document <!-- id:ef1fcb2c -->
+  - [x] remove folder <!-- id:25bdaeaf -->
 - [x] add a context expandable section <!-- id:b15f9845 -->
 - [x] add hotkeys for everything <!-- id:cf0f805b -->
   - [x] next item (down) <!-- id:d84dc90c -->
