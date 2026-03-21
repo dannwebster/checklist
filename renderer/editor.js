@@ -433,7 +433,7 @@ const Editor = (() => {
       if (e.key === 'Enter' && e.ctrlKey) {
         e.preventDefault();
         if (items[index].contextExpanded) toggleContext();
-        textEl.focus();
+        focusAtEnd(textEl);
       }
       if (e.key === 'Backspace' && (e.ctrlKey || contextTextEl.value === '')) {
         e.preventDefault();
@@ -442,7 +442,7 @@ const Editor = (() => {
         items[index].text = (items[index].text || '').replace(/:+$/, '').trimEnd();
         if (items[index].contextExpanded) toggleContext();
         textEl.textContent = items[index].text;
-        textEl.focus();
+        focusAtEnd(textEl);
         scheduleSave();
       }
       if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, -1); }
@@ -450,12 +450,26 @@ const Editor = (() => {
     });
     contextArea.appendChild(contextTextEl);
 
+    function focusAtEnd(el) {
+      el.focus();
+      if (el.tagName === 'TEXTAREA') {
+        el.selectionStart = el.selectionEnd = el.value.length;
+      } else {
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+
     function toggleContext() {
       items[index].contextExpanded = !items[index].contextExpanded;
       contextArea.hidden = !items[index].contextExpanded;
       contextBtn.textContent = items[index].contextExpanded ? '▾' : '▸';
       li.classList.toggle('has-context', items[index].contextExpanded || !!items[index].context);
-      if (items[index].contextExpanded) contextTextEl.focus();
+      if (items[index].contextExpanded) focusAtEnd(contextTextEl);
     }
 
     // Drag events
