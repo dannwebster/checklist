@@ -359,12 +359,6 @@ const Editor = (() => {
       }
       if (e.key === 'Enter' && e.ctrlKey) {
         e.preventDefault();
-        if (!items[index].contextExpanded) toggleContext();
-        else contextTextEl.focus();
-      }
-      if (e.key === ':') {
-        e.preventDefault();
-        items[index].text = textEl.textContent;
         toggleContext();
       }
       if (e.key === ' ' && e.ctrlKey) {
@@ -394,6 +388,15 @@ const Editor = (() => {
         scheduleSave();
         const newEl = itemListEl.querySelector(`[data-sec-id="${newSection.id}"] .section-title`);
         if (newEl) newEl.focus();
+      }
+    });
+    textEl.addEventListener('keyup', (e) => {
+      if (e.key === ':') {
+        const count = (textEl.textContent.match(/:/g) || []).length;
+        if (count === 1 && !items[index].contextExpanded) {
+          items[index].text = textEl.textContent;
+          toggleContext();
+        }
       }
     });
 
@@ -427,7 +430,21 @@ const Editor = (() => {
       scheduleSave();
     });
     contextTextEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); textEl.focus(); }
+      if (e.key === 'Enter' && e.ctrlKey) {
+        e.preventDefault();
+        if (items[index].contextExpanded) toggleContext();
+        textEl.focus();
+      }
+      if (e.key === 'Backspace' && (e.ctrlKey || contextTextEl.value === '')) {
+        e.preventDefault();
+        items[index].context = undefined;
+        contextTextEl.value = '';
+        items[index].text = (items[index].text || '').replace(/:+$/, '').trimEnd();
+        if (items[index].contextExpanded) toggleContext();
+        textEl.textContent = items[index].text;
+        textEl.focus();
+        scheduleSave();
+      }
       if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(contextTextEl, -1); }
       if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(contextTextEl, 1); }
     });

@@ -1,25 +1,32 @@
 
-# Punchcard Tasks <!-- sec:582c2227 -->
-- [ ] make sure it doesn't overwrite files: see how it reacts to <!-- id:98a69187 -->
+# Punchcard Tasks <!-- sec:582c2227 cf:hide -->
+- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
+- [ ] visual redesign of buttons and usability: buttons should always be visible, not invisible, (specifically and add header. commit, revert, and show/hid completed). even if they are visible, the have a clear enabled/disabled state). Buttons shoudl also be right-justified. All buttons should have correct tooltips that shows what they do, and the hotkey <!-- id:2d071dbc -->
+  - [ ] expand/collapse <!-- id:6e8adb22 -->
+  - [ ] revert <!-- id:2ced9cde -->
+  - [ ] commit <!-- id:d3926b23 -->
+  - [ ] show/hide <!-- id:8a7e2ee9 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
   - [ ] better navigation between context and non-context sections <!-- id:e0e6b52d -->
   - [ ] indicate when a section has context and when it doesn't <!-- id:be409522 -->
-- [ ] add a revert button <!-- id:faa9e91c -->
-- [ ] add hotkeys for everything <!-- id:cf0f805b -->
+- [ ] Mousewheel fix? how to move with mousehweel <!-- id:4b6b10d9 -->
+  - [ ]  <!-- id:a29e0367 -->
+
+# Completed <!-- sec:9734bd11 -->
+- [x] add hotkeys for everything <!-- id:cf0f805b -->
   - [x] next item (down) <!-- id:d84dc90c -->
   - [x] previous item (up) <!-- id:4d6a6056 -->
   - [x] indent item (tab) <!-- id:91e3d008 -->
   - [x] unindent item (shift tab) <!-- id:74a1974f -->
   - [x] delete current item <!-- id:812384c8 -->
   - [x] commit <!-- id:19583fd9 -->
-  - [x] revert: move <!-- id:281c517f -->
-  - [ ] expand context section (colon anywhere on the line): any pressing of the "colon" key while on a line should expand the context section, and move the u currsor into it. <!-- id:ad0b88fe -->
-  - [ ] collapse context section for current item: control-colon should move back the the parent item <!-- id:5e2755b6 -->
+  - [x] revert <!-- id:281c517f -->
+  - [x] expand context section (colon anywhere on the line) <!-- id:ad0b88fe -->
+  - [x] collapse context section for current item <!-- id:5e2755b6 -->
   - [x] move current item up <!-- id:256fe993 -->
   - [x] move current item down <!-- id:2cf1ddd6 -->
-  - [ ] add header: the add header would add a new header below the current item, defaulting to the header level of the header of the current section, or H1 if the current section doesn't have a header <!-- id:e7ab9fdb -->
-
-# Completed <!-- sec:9734bd11 -->
+  - [x] add header: the add header would add a new header below the current item, defaulting to the header level of the header of the current section, or H1 if the current section doesn't have a header <!-- id:e7ab9fdb -->
+- [x] add a revert button <!-- id:faa9e91c -->
 - [x] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [x] Sections should be able to be moved <!-- id:7472d1d9 -->
 - [x] moving an item should move all items beneath it <!-- id:7869288b -->
