@@ -393,9 +393,11 @@ const Editor = (() => {
     });
     textEl.addEventListener('keyup', (e) => {
       if (e.key === ':') {
-        const count = (textEl.textContent.match(/:/g) || []).length;
-        if (count === 1 && !items[index].contextExpanded) {
-          items[index].text = textEl.textContent;
+        const text = textEl.textContent;
+        const stripped = text.replace(/https?:\/\//gi, '');
+        const nonUrlColons = (stripped.match(/:/g) || []).length;
+        if (nonUrlColons === 1 && !items[index].contextExpanded) {
+          items[index].text = text;
           toggleContext();
         }
       }
