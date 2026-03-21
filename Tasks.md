@@ -1,5 +1,5 @@
 
-# Open Tasks <!-- sec:582c2227 cf:hide -->
+# Open Tasks <!-- sec:582c2227 -->
 - [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
   - [x] add file <!-- id:8ee5d9c9 -->
   - [x] delete file <!-- id:23defee0 -->
@@ -20,16 +20,16 @@
   - [x] delete document <!-- id:ad2a38a6 -->
   - [x] expand/collapse context <!-- id:c2c4da59 -->
   - [x] remove folder <!-- id:19045eed -->
-- [ ] Mousewheel fix? how to move with mousehweel <!-- id:4b6b10d9 -->
-- [ ] allow keyboard navigation to sidebar/pl <!-- id:9168dd20 -->
+- [ ] Mousewheel fix? how to move with mousehweel: Currently, the mouse wheel works inconsistently when trying to move an item. This makes it difficult to moves items with the mouse beyond the current screen <!-- id:4b6b10d9 -->
+  - [x] better navigation between context and non-context sections <!-- id:e0e6b52d -->
+  - [x] indicate when a section has context and when it doesn't <!-- id:be409522 -->
+- [x] allow keyboard navigation to sidebar/pl <!-- id:9168dd20 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
 - [x] control-enter should toggle to the end of the item or text, not the beginning <!-- id:86231912 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] add a context expandable section <!-- id:b15f9845 -->
-  - [x] better navigation between context and non-context sections <!-- id:e0e6b52d -->
-  - [x] indicate when a section has context and when it doesn't <!-- id:be409522 -->
 - [x] add hotkeys for everything <!-- id:cf0f805b -->
   - [x] next item (down) <!-- id:d84dc90c -->
   - [x] previous item (up) <!-- id:4d6a6056 -->

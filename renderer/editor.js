@@ -11,6 +11,7 @@ const Editor = (() => {
   let isGitRepo = false;
   let isGitDirty = false;
   let isCommitting = false;
+  let lastEditorFocusEl = null;
 
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
@@ -585,6 +586,10 @@ const Editor = (() => {
     titleEl.classList.toggle('git-dirty', isGitRepo && isGitDirty);
   }
 
+  document.getElementById('editor-content').addEventListener('focusin', (e) => {
+    lastEditorFocusEl = e.target;
+  });
+
   // --- Title editing ---
   titleEl.addEventListener('input', () => {
     currentTitle = titleEl.textContent.trim();
@@ -771,6 +776,14 @@ const Editor = (() => {
   }
 
   window.addEventListener('keydown', (e) => {
+    if (e.key === 'b' && e.ctrlKey && !e.shiftKey) {
+      e.preventDefault();
+      if (document.activeElement?.closest('#sidebar')) {
+        (lastEditorFocusEl || titleEl).focus();
+      } else {
+        Sidebar.focusSidebar();
+      }
+    }
     if (e.key === 'G' && e.ctrlKey && e.shiftKey) {
       e.preventDefault();
       if (!gitCommitBtn.disabled) gitCommitBtn.click();

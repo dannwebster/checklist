@@ -11,6 +11,32 @@ const Sidebar = (() => {
 
   const listEl = document.getElementById('checklist-list');
 
+  function getSidebarFocusableEls() {
+    return Array.from(document.querySelectorAll(
+      '#checklist-list .tree-dir-header, #checklist-list .checklist-item'
+    )).filter(el => el.offsetParent !== null);
+  }
+
+  function moveSidebarFocus(current, delta) {
+    const els = getSidebarFocusableEls();
+    const i = els.indexOf(current);
+    if (i === -1) return;
+    const target = els[i + delta];
+    if (target) target.focus();
+  }
+
+  function focusSidebar() {
+    const active = document.querySelector('#checklist-list .checklist-item.active');
+    if (active) { active.focus(); return; }
+    const first = getSidebarFocusableEls()[0];
+    if (first) first.focus();
+  }
+
+  function returnToEditor() {
+    const editorTitle = document.getElementById('editor-title');
+    if (editorTitle) editorTitle.focus();
+  }
+
   async function load(dirs) {
     dataDirs = dirs.slice();
     for (const dir of dataDirs) {
@@ -123,6 +149,7 @@ const Sidebar = (() => {
     renderChildren(node, childrenEl, rootDir, '', 1);
     dirEl.appendChild(childrenEl);
 
+    headerEl.tabIndex = 0;
     headerEl.addEventListener('click', () => {
       if (collapsedDirs.has(collapseKey)) {
         collapsedDirs.delete(collapseKey);
@@ -134,6 +161,12 @@ const Sidebar = (() => {
         toggleEl.textContent = '▶';
       }
       localStorage.setItem('collapsedDirs', JSON.stringify([...collapsedDirs]));
+    });
+    headerEl.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSidebarFocus(headerEl, 1); }
+      if (e.key === 'ArrowUp')   { e.preventDefault(); moveSidebarFocus(headerEl, -1); }
+      if (e.key === 'Enter')     { e.preventDefault(); headerEl.click(); }
+      if (e.key === 'Escape')    { e.preventDefault(); returnToEditor(); }
     });
 
     listEl.appendChild(dirEl);
@@ -186,6 +219,7 @@ const Sidebar = (() => {
     renderChildren(node, childrenEl, rootDir, relPath, depth + 1);
     dirEl.appendChild(childrenEl);
 
+    headerEl.tabIndex = 0;
     headerEl.addEventListener('click', () => {
       if (collapsedDirs.has(collapseKey)) {
         collapsedDirs.delete(collapseKey);
@@ -197,6 +231,12 @@ const Sidebar = (() => {
         toggleEl.textContent = '▶';
       }
       localStorage.setItem('collapsedDirs', JSON.stringify([...collapsedDirs]));
+    });
+    headerEl.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSidebarFocus(headerEl, 1); }
+      if (e.key === 'ArrowUp')   { e.preventDefault(); moveSidebarFocus(headerEl, -1); }
+      if (e.key === 'Enter')     { e.preventDefault(); headerEl.click(); }
+      if (e.key === 'Escape')    { e.preventDefault(); returnToEditor(); }
     });
 
     container.appendChild(dirEl);
@@ -225,7 +265,14 @@ const Sidebar = (() => {
 
     el.appendChild(nameSpan);
     el.appendChild(delBtn);
+    el.tabIndex = 0;
     el.addEventListener('click', () => openCl(cl));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveSidebarFocus(el, 1); }
+      if (e.key === 'ArrowUp')   { e.preventDefault(); moveSidebarFocus(el, -1); }
+      if (e.key === 'Enter')     { e.preventDefault(); openCl(cl); }
+      if (e.key === 'Escape')    { e.preventDefault(); returnToEditor(); }
+    });
     el.addEventListener('dragover', (e) => {
       if (!window._editorDragging) return;
       if (cl.path === activePath) return;
@@ -360,5 +407,5 @@ const Sidebar = (() => {
     render();
   }
 
-  return { load, refresh, updateName, setActive, setGitDirty };
+  return { load, refresh, updateName, setActive, setGitDirty, focusSidebar };
 })();

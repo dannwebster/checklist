@@ -59,6 +59,7 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 | Check/uncheck item | Ctrl+Space |
 | Toggle context open/closed | Ctrl+Enter |
 | Return to item (closes context) | Ctrl+Enter (in context) |
+| Focus sidebar | Ctrl+B |
 | Commit | Ctrl+Shift+G |
 | Revert | Ctrl+Shift+Z |
 

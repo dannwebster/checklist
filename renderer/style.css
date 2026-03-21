@@ -137,6 +137,8 @@ body {
 
 .checklist-item:hover { background: var(--bg-hover); }
 .checklist-item.active { background: var(--bg-active); }
+.checklist-item:focus { background: var(--bg-active); outline: 1px solid var(--accent); }
+.tree-dir-header:focus { background: var(--bg-hover); outline: 1px solid var(--accent); }
 
 .checklist-item-name {
   flex: 1;
