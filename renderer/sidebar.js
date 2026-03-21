@@ -226,7 +226,7 @@ const Sidebar = (() => {
     el.appendChild(delBtn);
     el.addEventListener('click', () => openCl(cl));
     el.addEventListener('dragover', (e) => {
-      if (!e.dataTransfer.types.includes('application/x-checklist-editor')) return;
+      if (!window._editorDragging) return;
       if (cl.path === activePath) return;
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
@@ -236,7 +236,7 @@ const Sidebar = (() => {
     el.addEventListener('drop', (e) => {
       e.preventDefault();
       el.classList.remove('drag-over');
-      if (!e.dataTransfer.types.includes('application/x-checklist-editor')) return;
+      if (!window._editorDragging) return;
       if (cl.path === activePath) return;
       window.dispatchEvent(new CustomEvent('editor-to-sidebar-drop', {
         detail: { destPath: cl.path, destName: node.name }

@@ -151,11 +151,12 @@ const Editor = (() => {
 
     li.addEventListener('dragstart', (e) => {
       dragSrcIndex = index;
+      window._editorDragging = true;
       li.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('application/x-checklist-editor', 'true');
     });
     li.addEventListener('dragend', () => {
+      window._editorDragging = false;
       li.classList.remove('dragging');
       document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
     });
@@ -327,11 +328,12 @@ const Editor = (() => {
     // Drag events
     li.addEventListener('dragstart', (e) => {
       dragSrcIndex = index;
+      window._editorDragging = true;
       li.classList.add('dragging');
       e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('application/x-checklist-editor', 'true');
     });
     li.addEventListener('dragend', () => {
+      window._editorDragging = false;
       li.classList.remove('dragging');
       document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
     });
