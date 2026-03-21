@@ -85,9 +85,9 @@ const Editor = (() => {
 
   const CF_LABELS = { default: '·', show: 'show ✓', hide: 'hide ✓' };
   const CF_TITLES = {
-    default: 'Completed: inherit — click to show all',
-    show: 'Completed: shown — click to hide',
-    hide: 'Completed: hidden — click to inherit',
+    default: 'Completed: inherit — click to show all (Ctrl+Shift+H)',
+    show: 'Completed: shown — click to hide (Ctrl+Shift+H)',
+    hide: 'Completed: hidden — click to inherit (Ctrl+Shift+H)',
   };
 
   function cycleCompletedFilter(index) {
@@ -644,7 +644,7 @@ const Editor = (() => {
 
   function updateDocFilterBtn() {
     docFilterBtn.textContent = CF_LABELS[docCompletedFilter];
-    docFilterBtn.title = CF_TITLES[docCompletedFilter] + ' (Ctrl+Shift+H)';
+    docFilterBtn.title = CF_TITLES[docCompletedFilter];
     docFilterBtn.dataset.state = docCompletedFilter;
   }
 
@@ -782,15 +782,37 @@ const Editor = (() => {
     if (e.key === 'e' && e.ctrlKey && !e.shiftKey) {
       e.preventDefault();
       const idx = findSectionIndexForFocus();
-      if (idx !== -1) toggleSection(idx);
+      if (idx === -1) return;
+      const secId = items[idx].id;
+      toggleSection(idx);
+      const secTitleEl = itemListEl.querySelector(`[data-sec-id="${secId}"] .section-title`);
+      if (secTitleEl) secTitleEl.focus();
     }
     if (e.key === 'H' && e.ctrlKey && e.shiftKey) {
       e.preventDefault();
       if (!currentPath) return;
       const states = ['default', 'show', 'hide'];
-      docCompletedFilter = states[(states.indexOf(docCompletedFilter) + 1) % 3];
-      updateDocFilterBtn();
+      const secIdx = findSectionIndexForFocus();
+      // Save focus identity before render destroys the DOM
+      const active = document.activeElement;
+      const focusSecId = active?.closest('[data-sec-id]')?.dataset.secId;
+      const focusItemId = active?.closest('[data-id]')?.dataset.id;
+      const focusIsContext = active?.classList.contains('item-context-text');
+      if (secIdx !== -1) {
+        const cur = items[secIdx].completedFilter || 'default';
+        items[secIdx].completedFilter = states[(states.indexOf(cur) + 1) % 3];
+      } else {
+        docCompletedFilter = states[(states.indexOf(docCompletedFilter) + 1) % 3];
+        updateDocFilterBtn();
+      }
       render();
+      // Restore focus
+      if (focusSecId) {
+        itemListEl.querySelector(`[data-sec-id="${focusSecId}"] .section-title`)?.focus();
+      } else if (focusItemId) {
+        const li = itemListEl.querySelector(`[data-id="${focusItemId}"]`);
+        li?.querySelector(focusIsContext ? '.item-context-text' : '.item-text')?.focus();
+      }
       scheduleSave();
     }
   });
