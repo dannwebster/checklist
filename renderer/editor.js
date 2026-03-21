@@ -153,7 +153,8 @@ const Editor = (() => {
       dragSrcIndex = index;
       window._editorDragging = true;
       li.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.effectAllowed = 'copyMove';
+      console.log('[editor section dragstart]', { index, _editorDragging: window._editorDragging });
     });
     li.addEventListener('dragend', () => {
       window._editorDragging = false;
@@ -330,12 +331,14 @@ const Editor = (() => {
       dragSrcIndex = index;
       window._editorDragging = true;
       li.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.effectAllowed = 'copyMove';
+      console.log('[editor item dragstart]', { index, _editorDragging: window._editorDragging });
     });
     li.addEventListener('dragend', () => {
       window._editorDragging = false;
       li.classList.remove('dragging');
       document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
+      console.log('[editor item dragend]');
     });
     li.addEventListener('dragover', (e) => {
       e.preventDefault();
