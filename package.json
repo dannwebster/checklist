@@ -17,7 +17,7 @@
   "build": {
     "appId": "com.dannwebster.punchcard",
     "productName": "Punchcard",
-    "icon": "build/icon",
+    "icon": "build/icons/png/512x512.png",
     "directories": {
       "output": "dist"
     },
@@ -26,13 +26,13 @@
         "nsis",
         "portable"
       ],
-      "icon": "build/icon.ico"
+      "icon": "build/icons/win/icon.ico"
     },
     "mac": {
       "target": [
         "dmg"
       ],
-      "icon": "build/icon.icns",
+      "icon": "build/icons/mac/icon.icns",
       "category": "public.app-category.productivity"
     },
     "linux": {
@@ -40,7 +40,7 @@
         "AppImage",
         "deb"
       ],
-      "icon": "build/icons",
+      "icon": "build/icons/png",
       "category": "Utility"
     },
     "nsis": {

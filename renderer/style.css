@@ -338,16 +338,16 @@ body {
   border: none;
   background: none;
   color: var(--text-dim);
-  font-size: 11px;
+  font-size: 22px;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 0 4px;
   border-radius: 3px;
   flex-shrink: 0;
   line-height: 1;
   transition: opacity 0.1s;
 }
 .item-row:hover .item-context-btn { opacity: 1; }
-.item-row.has-context .item-context-btn { opacity: 0.6; }
+.item-row.has-context .item-context-btn { opacity: 1; color: var(--accent); }
 .item-context-btn:hover { color: var(--text); background: var(--bg-hover); }
 
 .item-context-area {

@@ -367,6 +367,8 @@ const Editor = (() => {
     });
     contextTextEl.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { toggleContext(); textEl.focus(); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(contextTextEl, -1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(contextTextEl, 1); }
     });
     contextArea.appendChild(contextTextEl);
 
