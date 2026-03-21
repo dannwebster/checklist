@@ -11,14 +11,14 @@ A desktop checklist manager built with Electron. Checklists are stored as standa
 - Press Enter on any item to insert a new item immediately below it
 - Check items off; checked items display with strikethrough
 - Indent items up to 6 levels deep with Tab / Shift+Tab
-- Drag and drop to reorder items within a section
+- Drag and drop to reorder items within a section; drag section headers to reorder entire sections (with all their items)
 - Navigate between items with arrow keys
 
 ### Sections and hierarchy
 
 - Organize items under H1, H2, and H3 section headers
 - Collapse and expand sections; collapsed state persists across restarts
-- Add sections at any level; each section has its own "Add an item" input
+- Add sections at any level; new sections start with a blank item ready to type
 
 ### Show/hide completed
 

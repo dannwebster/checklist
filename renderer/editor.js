@@ -102,6 +102,12 @@ const Editor = (() => {
     const li = document.createElement('li');
     li.className = 'section-header level-' + item.level;
     li.dataset.secId = item.id;
+    li.draggable = true;
+
+    const secHandle = document.createElement('span');
+    secHandle.className = 'drag-handle';
+    secHandle.textContent = '⠿';
+    secHandle.title = 'Drag to reorder section';
 
     const toggle = document.createElement('button');
     toggle.className = 'section-toggle';
@@ -143,6 +149,44 @@ const Editor = (() => {
       }
     });
 
+    li.addEventListener('dragstart', (e) => {
+      dragSrcIndex = index;
+      li.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    li.addEventListener('dragend', () => {
+      li.classList.remove('dragging');
+      document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
+    });
+    li.addEventListener('dragover', (e) => {
+      if (dragSrcIndex === null) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
+      li.classList.add('drag-over');
+    });
+    li.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (dragSrcIndex === null || dragSrcIndex === index) { dragSrcIndex = null; return; }
+      const src = items[dragSrcIndex];
+      if (src.type === 'section') {
+        const blockEnd = getInsertionIndex(dragSrcIndex);
+        const block = items.splice(dragSrcIndex, blockEnd - dragSrcIndex);
+        let targetIdx = index;
+        if (dragSrcIndex < index) targetIdx -= block.length;
+        items.splice(targetIdx, 0, ...block);
+      } else {
+        const moved = items.splice(dragSrcIndex, 1)[0];
+        let targetIdx = index;
+        if (dragSrcIndex < index) targetIdx--;
+        items.splice(targetIdx, 0, moved);
+      }
+      dragSrcIndex = null;
+      render();
+      scheduleSave();
+    });
+
+    li.appendChild(secHandle);
     li.appendChild(toggle);
     li.appendChild(cfBtn);
     li.appendChild(secTitleEl);
@@ -277,23 +321,26 @@ const Editor = (() => {
     });
     li.addEventListener('dragend', () => {
       li.classList.remove('dragging');
-      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
     });
     li.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
-      document.querySelectorAll('.item-row').forEach(r => r.classList.remove('drag-over'));
+      document.querySelectorAll('.section-header, .item-row').forEach(r => r.classList.remove('drag-over'));
       li.classList.add('drag-over');
     });
     li.addEventListener('drop', (e) => {
       e.preventDefault();
-      if (dragSrcIndex !== null && dragSrcIndex !== index) {
-        const moved = items.splice(dragSrcIndex, 1)[0];
-        items.splice(index, 0, moved);
+      if (dragSrcIndex === null || dragSrcIndex === index) return;
+      if (items[dragSrcIndex] && items[dragSrcIndex].type === 'section') {
         dragSrcIndex = null;
-        render();
-        scheduleSave();
+        return;
       }
+      const moved = items.splice(dragSrcIndex, 1)[0];
+      items.splice(index, 0, moved);
+      dragSrcIndex = null;
+      render();
+      scheduleSave();
     });
 
     li.appendChild(handle);

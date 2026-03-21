@@ -337,6 +337,9 @@ body {
   margin-bottom: 2px;
 }
 
+.section-header:hover .drag-handle { opacity: 1; }
+.section-header.drag-over { border-top: 2px solid var(--accent); }
+
 .section-toggle {
   border: none;
   background: none;

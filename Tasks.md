@@ -3,11 +3,15 @@
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
-- [x] add an icon <!-- id:3b20c602 -->
-- [x] make it a standalone app <!-- id:9c87e6ea -->
+- [ ] autoscroll to last item <!-- id:23461968 -->
+- [ ] Sections should be able to be moved <!-- id:7472d1d9 -->
+- [ ] drag tasks between todos (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
+- [ ] moving an item should move all items beneath it <!-- id:7869288b -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] add multiple headings <!-- id:a1b2c3d4 -->
+- [x] make it a standalone app <!-- id:9c87e6ea -->
+- [x] add an icon <!-- id:3b20c602 -->
 - [x] add "show/hide completed" at the section/subsection/and global level <!-- id:d2f89a50 -->
 - [x] add a "commit" button that commmits the change for this one file to git" <!-- id:e8421753 -->
 - [x] show folder tree <!-- id:e5f6a7b8 -->
@@ -24,11 +28,6 @@
 - [x] add .cl. to new files if they aren't in the list of file types <!-- id:bcfaa89f -->
 - [x] Correct visual level of indent functionality <!-- id:71167e57 -->
 - [x] tab on create to change indent level and shift tab <!-- id:297f8607 -->
+- [x] tab on create should add to current indent level <!-- id:6c51a576 -->
+- [x] tab and untab headers to move up and down the hiearchy <!-- id:e774e0e9 -->
 - [x] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
-
-### Multiple Headers <!-- sec:6b58d286 -->
-- [ ] autoscroll to last item <!-- id:23461968 -->
-- [ ] Sections should be able to be moved <!-- id:7472d1d9 -->
-- [ ] tab on create should add to current indent level <!-- id:6c51a576 -->
-- [ ] tab and untab headers to move up and down the hiearchy <!-- id:e774e0e9 -->
-- [ ] drag tasks between todos (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
