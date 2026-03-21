@@ -176,10 +176,11 @@ const Editor = (() => {
         if (dragSrcIndex < index) targetIdx -= block.length;
         items.splice(targetIdx, 0, ...block);
       } else {
-        const moved = items.splice(dragSrcIndex, 1)[0];
+        const blockEnd = getItemBlockEnd(dragSrcIndex);
+        const block = items.splice(dragSrcIndex, blockEnd - dragSrcIndex);
         let targetIdx = index;
-        if (dragSrcIndex < index) targetIdx--;
-        items.splice(targetIdx, 0, moved);
+        if (dragSrcIndex < index) targetIdx -= block.length;
+        items.splice(targetIdx, 0, ...block);
       }
       dragSrcIndex = null;
       render();
@@ -211,6 +212,15 @@ const Editor = (() => {
     });
     li.appendChild(delBtn);
     return li;
+  }
+
+  function getItemBlockEnd(itemIndex) {
+    const indent = items[itemIndex].indent;
+    for (let i = itemIndex + 1; i < items.length; i++) {
+      if (items[i].type === 'section') return i;
+      if (items[i].indent <= indent) return i;
+    }
+    return items.length;
   }
 
   function getInsertionIndex(headerIndex) {
@@ -336,8 +346,11 @@ const Editor = (() => {
         dragSrcIndex = null;
         return;
       }
-      const moved = items.splice(dragSrcIndex, 1)[0];
-      items.splice(index, 0, moved);
+      const blockEnd = getItemBlockEnd(dragSrcIndex);
+      const block = items.splice(dragSrcIndex, blockEnd - dragSrcIndex);
+      let targetIdx = index;
+      if (dragSrcIndex < index) targetIdx -= block.length;
+      items.splice(targetIdx, 0, ...block);
       dragSrcIndex = null;
       render();
       scheduleSave();
