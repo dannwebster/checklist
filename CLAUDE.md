@@ -5,9 +5,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm start        # Run the app
+npm install
 npm run dev      # Run with auto-restart on file changes (uses nodemon)
+npm start        # Single launch, no auto-restart
 ```
+
+## Generating the app icon
+
+Before building for the first time (or after editing the icon), generate platform icon formats from the source SVG:
+
+```bash
+npm run icons    # converts build/icon.svg to platform icon formats
+```
+
+## Building a standalone app
+
+The icons must be generated before running a build.
+
+```bash
+npm run dist:win    # Windows: NSIS installer + portable EXE → dist/
+npm run dist:mac    # macOS: DMG → dist/
+npm run dist:linux  # Linux: AppImage + .deb → dist/
+npm run dist        # all platforms
+```
+
+Output lands in `dist/`.
 
 ## Architecture
 
