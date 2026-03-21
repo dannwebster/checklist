@@ -2,7 +2,8 @@
 // No imports, no side effects.
 
 const ITEM_RE = /^(\s*)- \[(x| )\] (.+?)(?:\s*<!-- id:([a-f0-9]{8}) -->)?$/i;
-const SECTION_RE = /^(#{1,3}) (.+?)(?:\s*<!-- sec:([a-f0-9]{8}) -->)?$/;
+const SECTION_RE = /^(#{1,3}) (.+?)(?:\s*<!-- sec:([a-f0-9]{8})(?:\s+cf:(show|hide))? -->)?$/;
+const DOC_FILTER_RE = /^<!-- cf:(show|hide) -->$/;
 
 function genId() {
   return Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, '0');
@@ -13,12 +14,18 @@ function parse(markdown) {
   let title = '';
   const items = [];
   let hadMissingIds = false;
+  let docCompletedFilter = 'default';
 
   for (const line of lines) {
+    const d = line.match(DOC_FILTER_RE);
+    if (d) {
+      docCompletedFilter = d[1];
+      continue;
+    }
     const s = line.match(SECTION_RE);
     if (s) {
       const id = s[3] || (hadMissingIds = true, genId());
-      items.push({ type: 'section', id, level: s[1].length, text: s[2].trim(), collapsed: false });
+      items.push({ type: 'section', id, level: s[1].length, text: s[2].trim(), collapsed: false, completedFilter: s[4] || 'default' });
       continue;
     }
     const m = line.match(ITEM_RE);
@@ -33,15 +40,19 @@ function parse(markdown) {
     }
   }
 
-  return { title, items, hadMissingIds };
+  return { title, items, hadMissingIds, docCompletedFilter };
 }
 
-function serialize(title, items) {
+function serialize(title, items, docCompletedFilter) {
   let md = '';
+  if (docCompletedFilter === 'show' || docCompletedFilter === 'hide') {
+    md += `<!-- cf:${docCompletedFilter} -->\n`;
+  }
   for (const item of items) {
     if (item.type === 'section') {
       const hashes = '#'.repeat(item.level);
-      md += `\n${hashes} ${item.text} <!-- sec:${item.id} -->\n`;
+      const cf = item.completedFilter && item.completedFilter !== 'default' ? ` cf:${item.completedFilter}` : '';
+      md += `\n${hashes} ${item.text} <!-- sec:${item.id}${cf} -->\n`;
       continue;
     }
     const check = item.checked ? 'x' : ' ';

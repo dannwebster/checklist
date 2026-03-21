@@ -245,13 +245,12 @@ const Editor = (() => {
       }
       if (e.key === 'Enter') {
         e.preventDefault();
-        // Find the zone this item belongs to
-        let zoneId = 'root';
-        for (let j = index - 1; j >= 0; j--) {
-          if (items[j].type === 'section') { zoneId = items[j].id; break; }
-        }
-        const zoneInput = itemListEl.querySelector(`.add-item-row[data-zone-id="${zoneId}"] .add-item-input`);
-        if (zoneInput) zoneInput.focus();
+        const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
+        items.splice(index + 1, 0, newItem);
+        render();
+        scheduleSave();
+        const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
+        if (newRow) newRow.focus();
       }
       if (e.key === 'Backspace' && textEl.textContent === '') {
         e.preventDefault();
