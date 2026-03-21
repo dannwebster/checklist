@@ -21,7 +21,7 @@
   - [x] expand/collapse context <!-- id:c2c4da59 -->
   - [x] remove folder <!-- id:19045eed -->
 - [ ] Mousewheel fix? how to move with mousehweel <!-- id:4b6b10d9 -->
-- [ ] allow keyboard navigation to sidebar <!-- id:9168dd20 -->
+- [ ] allow keyboard navigation to sidebar/pl <!-- id:9168dd20 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
 - [x] control-enter should toggle to the end of the item or text, not the beginning <!-- id:86231912 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
