@@ -442,6 +442,68 @@ body {
 
 .add-item-input::placeholder { color: var(--text-dim); }
 
+/* Completed-filter cycle button on section headers */
+.section-cf-btn {
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.section-header:hover .section-cf-btn { opacity: 1; }
+.section-cf-btn[data-state="show"],
+.section-cf-btn[data-state="hide"] { opacity: 0.7; }
+.section-cf-btn:hover { color: var(--text); background: var(--bg-hover); }
+
+/* Document-level completed filter button in title row */
+#doc-completed-filter-btn {
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+#title-row:hover #doc-completed-filter-btn { opacity: 1; }
+#doc-completed-filter-btn[data-state="show"],
+#doc-completed-filter-btn[data-state="hide"] { opacity: 0.7; }
+#doc-completed-filter-btn:hover { color: var(--text); background: var(--bg-hover); }
+
+/* Git commit button in title row */
+#git-commit-btn {
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: color 0.15s, border-color 0.15s, opacity 0.15s;
+}
+#title-row:hover #git-commit-btn { opacity: 1; }
+#git-commit-btn:not(:disabled):hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+#git-commit-btn:disabled { cursor: default; opacity: 0.3; }
+
+/* Uncommitted changes indicator */
+#editor-title.git-dirty { color: #d7ba7d; }
+.checklist-item.git-dirty .checklist-item-name { color: #d7ba7d; }
+
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

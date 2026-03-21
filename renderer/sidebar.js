@@ -7,6 +7,7 @@ const Sidebar = (() => {
   let activePath = null;
   let collapsedDirs = new Set(JSON.parse(localStorage.getItem('collapsedDirs') || '[]'));
   let dirContainers = new Map(); // absPath -> childrenEl (populated during render)
+  let gitDirtyPaths = new Set();
 
   const listEl = document.getElementById('checklist-list');
 
@@ -203,7 +204,9 @@ const Sidebar = (() => {
   function renderFile(node, container, depth) {
     const cl = node.cl;
     const el = document.createElement('div');
-    el.className = 'checklist-item' + (cl.path === activePath ? ' active' : '');
+    el.className = 'checklist-item'
+      + (cl.path === activePath ? ' active' : '')
+      + (gitDirtyPaths.has(cl.path) ? ' git-dirty' : '');
     el.style.paddingLeft = (16 + depth * 16) + 'px';
 
     const nameSpan = document.createElement('span');
@@ -333,5 +336,11 @@ const Sidebar = (() => {
 
   window.checklistAPI.onDirChanged(() => Sidebar.refresh());
 
-  return { load, refresh, updateName, setActive };
+  function setGitDirty(filePath, isDirty) {
+    if (isDirty) gitDirtyPaths.add(filePath);
+    else gitDirtyPaths.delete(filePath);
+    render();
+  }
+
+  return { load, refresh, updateName, setActive, setGitDirty };
 })();

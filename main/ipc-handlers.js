@@ -2,6 +2,7 @@ const { ipcMain, dialog } = require('electron');
 const path = require('path');
 const fm = require('./file-manager');
 const watcher = require('./watcher');
+const git = require('./git-manager');
 
 function registerHandlers() {
   ipcMain.handle('app:get-data-dir', () => fm.getDataDir());
@@ -73,6 +74,9 @@ function registerHandlers() {
     });
     return result === 1;
   });
+
+  ipcMain.handle('git:status', (_, filePath) => git.getGitStatus(filePath));
+  ipcMain.handle('git:commit', (_, filePath) => git.gitCommit(filePath));
 }
 
 module.exports = { registerHandlers };

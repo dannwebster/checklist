@@ -7,6 +7,10 @@ const Editor = (() => {
   let items = [];
   let saveTimer = null;
   let dragSrcIndex = null;
+  let docCompletedFilter = 'default';
+  let isGitRepo = false;
+  let isGitDirty = false;
+  let isCommitting = false;
 
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
@@ -17,9 +21,13 @@ const Editor = (() => {
       currentPath = null;
       currentTitle = '';
       items = [];
+      docCompletedFilter = 'default';
+      isGitRepo = false;
+      isGitDirty = false;
       titleEl.textContent = '';
       document.title = 'Checklist';
       addH1Btn.style.display = 'none';
+      applyGitUI();
       render();
       return;
     }
@@ -28,6 +36,7 @@ const Editor = (() => {
     const parsed = parse(markdown);
     currentTitle = cl.path.replace(/.*[/\\]/, '');
     items = parsed.items;
+    docCompletedFilter = parsed.docCompletedFilter || 'default';
     for (const item of items) {
       if (item.type === 'section') {
         item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
@@ -36,8 +45,10 @@ const Editor = (() => {
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Checklist';
     addH1Btn.style.display = '';
+    updateDocFilterBtn();
     render();
     if (parsed.hadMissingIds) scheduleSave();
+    await refreshGitStatus();
   }
 
   // --- Render ---
@@ -45,6 +56,9 @@ const Editor = (() => {
     itemListEl.innerHTML = '';
     let collapsedLevel = Infinity;
     let currentZoneId = 'root';
+    const docEffective = docCompletedFilter === 'hide' ? 'hide' : 'show';
+    const effectiveByLevel = [docEffective];
+    let currentEffectiveFilter = docEffective;
 
     items.forEach((item, i) => {
       if (item.type === 'section') {
@@ -56,9 +70,16 @@ const Editor = (() => {
           collapsedLevel = item.collapsed ? item.level : Infinity;
           currentZoneId = item.id;
           itemListEl.appendChild(buildSectionHeader(item, i));
+          // Update filter inheritance stack
+          effectiveByLevel.length = item.level;
+          const parentFilter = effectiveByLevel[effectiveByLevel.length - 1];
+          const thisFilter = item.completedFilter === 'default' ? parentFilter : item.completedFilter;
+          effectiveByLevel.push(thisFilter);
+          currentEffectiveFilter = thisFilter;
         }
       } else {
         if (collapsedLevel === Infinity) {
+          if (item.checked && currentEffectiveFilter === 'hide') return;
           itemListEl.appendChild(buildItemRow(item, i));
         }
       }
@@ -68,6 +89,21 @@ const Editor = (() => {
     if (collapsedLevel === Infinity) {
       itemListEl.appendChild(buildAddRow(items.length, currentZoneId));
     }
+  }
+
+  const CF_LABELS = { default: '·', show: 'show ✓', hide: 'hide ✓' };
+  const CF_TITLES = {
+    default: 'Completed: inherit — click to show all',
+    show: 'Completed: shown — click to hide',
+    hide: 'Completed: hidden — click to inherit',
+  };
+
+  function cycleCompletedFilter(index) {
+    const states = ['default', 'show', 'hide'];
+    const current = items[index].completedFilter || 'default';
+    items[index].completedFilter = states[(states.indexOf(current) + 1) % 3];
+    render();
+    scheduleSave();
   }
 
   function buildSectionHeader(item, index) {
@@ -80,6 +116,14 @@ const Editor = (() => {
     toggle.textContent = item.collapsed ? '▶' : '▼';
     toggle.title = item.collapsed ? 'Expand' : 'Collapse';
     toggle.addEventListener('click', () => toggleSection(index));
+
+    const cf = item.completedFilter || 'default';
+    const cfBtn = document.createElement('button');
+    cfBtn.className = 'section-cf-btn';
+    cfBtn.textContent = CF_LABELS[cf];
+    cfBtn.title = CF_TITLES[cf];
+    cfBtn.dataset.state = cf;
+    cfBtn.addEventListener('click', () => cycleCompletedFilter(index));
 
     const tag = ['h1', 'h2', 'h3'][item.level - 1];
     const secTitleEl = document.createElement(tag);
@@ -96,6 +140,7 @@ const Editor = (() => {
     });
 
     li.appendChild(toggle);
+    li.appendChild(cfBtn);
     li.appendChild(secTitleEl);
 
     if (item.level < 3) {
@@ -133,7 +178,7 @@ const Editor = (() => {
   function addChildSection(parentIndex, childLevel) {
     if (!currentPath) return;
     const insertAt = getInsertionIndex(parentIndex);
-    const newSection = { type: 'section', id: genId(), level: childLevel, text: 'New Section', collapsed: false };
+    const newSection = { type: 'section', id: genId(), level: childLevel, text: 'New Section', collapsed: false, completedFilter: 'default' };
     items.splice(insertAt, 0, newSection);
     render();
     scheduleSave();
@@ -369,8 +414,25 @@ const Editor = (() => {
 
   async function save() {
     if (!currentPath) return;
-    const markdown = serialize(currentTitle, items);
+    const markdown = serialize(currentTitle, items, docCompletedFilter);
     await window.checklistAPI.write(currentPath, markdown);
+    await refreshGitStatus();
+  }
+
+  async function refreshGitStatus() {
+    if (!currentPath) return;
+    const status = await window.checklistAPI.gitStatus(currentPath);
+    isGitRepo = status.isGitRepo;
+    isGitDirty = status.isDirty;
+    applyGitUI();
+    Sidebar.setGitDirty(currentPath, isGitRepo && isGitDirty);
+  }
+
+  function applyGitUI() {
+    gitCommitBtn.style.display = isGitRepo ? '' : 'none';
+    gitCommitBtn.disabled = isCommitting || !isGitDirty;
+    gitCommitBtn.textContent = isCommitting ? 'committing\u2026' : 'commit';
+    titleEl.classList.toggle('git-dirty', isGitRepo && isGitDirty);
   }
 
   // --- Title editing ---
@@ -415,7 +477,7 @@ const Editor = (() => {
   addH1Btn.style.display = 'none';
   addH1Btn.addEventListener('click', () => {
     if (!currentPath) return;
-    const newSection = { type: 'section', id: genId(), level: 1, text: 'New Section', collapsed: false };
+    const newSection = { type: 'section', id: genId(), level: 1, text: 'New Section', collapsed: false, completedFilter: 'default' };
     items.push(newSection);
     render();
     scheduleSave();
@@ -424,6 +486,49 @@ const Editor = (() => {
   });
   document.getElementById('title-row').appendChild(addH1Btn);
 
+  // --- Document-level completed filter button ---
+  const docFilterBtn = document.createElement('button');
+  docFilterBtn.id = 'doc-completed-filter-btn';
+  docFilterBtn.dataset.state = 'default';
+
+  function updateDocFilterBtn() {
+    docFilterBtn.textContent = CF_LABELS[docCompletedFilter];
+    docFilterBtn.title = CF_TITLES[docCompletedFilter];
+    docFilterBtn.dataset.state = docCompletedFilter;
+  }
+
+  updateDocFilterBtn();
+
+  docFilterBtn.addEventListener('click', () => {
+    if (!currentPath) return;
+    const states = ['default', 'show', 'hide'];
+    docCompletedFilter = states[(states.indexOf(docCompletedFilter) + 1) % 3];
+    updateDocFilterBtn();
+    render();
+    scheduleSave();
+  });
+  document.getElementById('title-row').appendChild(docFilterBtn);
+
+  // --- Git commit button ---
+  const gitCommitBtn = document.createElement('button');
+  gitCommitBtn.id = 'git-commit-btn';
+  gitCommitBtn.textContent = 'commit';
+  gitCommitBtn.title = 'Commit this file to git';
+  gitCommitBtn.style.display = 'none';
+  gitCommitBtn.addEventListener('click', async () => {
+    if (!currentPath || isCommitting) return;
+    isCommitting = true;
+    applyGitUI();
+    const result = await window.checklistAPI.gitCommit(currentPath);
+    isCommitting = false;
+    if (result.success) {
+      await refreshGitStatus();
+    } else {
+      applyGitUI();
+    }
+  });
+  document.getElementById('title-row').appendChild(gitCommitBtn);
+
   // --- Reload from disk ---
   async function reloadCurrent() {
     if (!currentPath || saveTimer) return;
@@ -431,6 +536,7 @@ const Editor = (() => {
     const parsed = parse(markdown);
     currentTitle = currentPath.replace(/.*[/\\]/, '');
     items = parsed.items;
+    docCompletedFilter = parsed.docCompletedFilter || 'default';
     for (const item of items) {
       if (item.type === 'section') {
         item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
@@ -438,6 +544,7 @@ const Editor = (() => {
     }
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Checklist';
+    updateDocFilterBtn();
     render();
     if (parsed.hadMissingIds) scheduleSave();
   }
