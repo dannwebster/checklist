@@ -239,6 +239,7 @@ body {
 }
 
 #editor-title {
+  flex: 1;
   font-size: 26px;
   font-weight: 600;
   color: var(--text-title);
@@ -318,20 +319,19 @@ body {
 }
 
 .item-delete {
-  opacity: 0;
-  border: none;
+  border: 1px solid var(--border);
   background: none;
   color: var(--text-dim);
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 2px 6px;
   border-radius: 3px;
   line-height: 1;
   flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.item-row:hover .item-delete { opacity: 1; }
-.item-delete:hover { color: var(--danger); background: rgba(244,71,71,0.1); }
+.item-delete:hover { color: var(--danger); border-color: var(--danger); background: rgba(244,71,71,0.1); }
 
 .item-context-btn {
   opacity: 0;
@@ -424,12 +424,10 @@ body {
 
 .section-header .section-title:focus { border-bottom-color: var(--accent); }
 
-.section-header .item-delete { opacity: 0; }
-.section-header:hover .item-delete { opacity: 1; }
 
 
 .section-add-child {
-  border: none;
+  border: 1px solid var(--border);
   background: none;
   color: var(--text-dim);
   font-size: 11px;
@@ -438,34 +436,30 @@ body {
   border-radius: 3px;
   white-space: nowrap;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.1s;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.section-header:hover .section-add-child { opacity: 1; }
-.section-add-child:hover { color: var(--text); background: var(--bg-hover); }
+.section-add-child:hover { color: var(--text); border-color: var(--accent); }
 
 #add-h1-section-btn {
-  border: none;
+  border: 1px solid var(--border);
   background: none;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 3px;
   white-space: nowrap;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.1s;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-#title-row:hover #add-h1-section-btn { opacity: 1; }
-#add-h1-section-btn:hover { color: var(--text); background: var(--bg-hover); }
+#add-h1-section-btn:hover { color: var(--text); border-color: var(--accent); }
 
 
 /* Completed-filter cycle button on section headers */
 .section-cf-btn {
-  border: none;
+  border: 1px solid var(--border);
   background: none;
   color: var(--text-dim);
   font-size: 11px;
@@ -474,32 +468,28 @@ body {
   border-radius: 3px;
   white-space: nowrap;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.1s;
+  transition: color 0.15s, border-color 0.15s;
 }
-.section-header:hover .section-cf-btn { opacity: 1; }
 .section-cf-btn[data-state="show"],
-.section-cf-btn[data-state="hide"] { opacity: 0.7; }
-.section-cf-btn:hover { color: var(--text); background: var(--bg-hover); }
+.section-cf-btn[data-state="hide"] { color: var(--text); border-color: var(--accent); }
+.section-cf-btn:hover { color: var(--text); border-color: var(--accent); }
 
 /* Document-level completed filter button in title row */
 #doc-completed-filter-btn {
-  border: none;
+  border: 1px solid var(--border);
   background: none;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 3px;
   white-space: nowrap;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.1s;
+  transition: color 0.15s, border-color 0.15s;
 }
-#title-row:hover #doc-completed-filter-btn { opacity: 1; }
 #doc-completed-filter-btn[data-state="show"],
-#doc-completed-filter-btn[data-state="hide"] { opacity: 0.7; }
-#doc-completed-filter-btn:hover { color: var(--text); background: var(--bg-hover); }
+#doc-completed-filter-btn[data-state="hide"] { color: var(--text); border-color: var(--accent); }
+#doc-completed-filter-btn:hover { color: var(--text); border-color: var(--accent); }
 
 /* Git commit button in title row */
 #git-commit-btn {
@@ -511,10 +501,8 @@ body {
   padding: 3px 8px;
   border-radius: 3px;
   flex-shrink: 0;
-  opacity: 0;
-  transition: color 0.15s, border-color 0.15s, opacity 0.15s;
+  transition: color 0.15s, border-color 0.15s;
 }
-#title-row:hover #git-commit-btn { opacity: 1; }
 #git-commit-btn:not(:disabled):hover {
   color: var(--text);
   border-color: var(--accent);

@@ -562,11 +562,12 @@ const Editor = (() => {
   }
 
   function applyGitUI() {
-    gitCommitBtn.style.display = isGitRepo ? '' : 'none';
+    const show = isGitRepo && !!currentPath;
+    gitCommitBtn.style.display = show ? '' : 'none';
     gitCommitBtn.disabled = isCommitting || !isGitDirty;
     gitCommitBtn.textContent = isCommitting ? 'committing\u2026' : 'commit';
-    gitRevertBtn.style.display = isGitRepo && isGitDirty ? '' : 'none';
-    gitRevertBtn.disabled = isCommitting;
+    gitRevertBtn.style.display = show ? '' : 'none';
+    gitRevertBtn.disabled = isCommitting || !isGitDirty;
     titleEl.classList.toggle('git-dirty', isGitRepo && isGitDirty);
   }
 
@@ -608,7 +609,7 @@ const Editor = (() => {
   const addH1Btn = document.createElement('button');
   addH1Btn.id = 'add-h1-section-btn';
   addH1Btn.textContent = '+ add header';
-  addH1Btn.title = 'Add a top-level section (H1)';
+  addH1Btn.title = 'Add top-level section header';
   addH1Btn.style.display = 'none';
   addH1Btn.addEventListener('click', () => {
     if (!currentPath) return;

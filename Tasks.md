@@ -1,18 +1,22 @@
 
-# Punchcard Tasks <!-- sec:582c2227 cf:hide -->
+# Punchcard Tasks <!-- sec:582c2227 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] visual redesign of buttons and usability: buttons should always be visible, not invisible, (specifically and add header. commit, revert, and show/hid completed). even if they are visible, the have a clear enabled/disabled state). Buttons shoudl also be right-justified. All buttons should have correct tooltips that shows what they do, and the hotkey <!-- id:2d071dbc -->
-  - [ ] expand/collapse <!-- id:6e8adb22 -->
-  - [ ] revert <!-- id:2ced9cde -->
-  - [ ] commit <!-- id:d3926b23 -->
-  - [ ] show/hide <!-- id:8a7e2ee9 -->
-- [ ] add a context expandable section <!-- id:b15f9845 -->
-  - [ ] better navigation between context and non-context sections <!-- id:e0e6b52d -->
-  - [ ] indicate when a section has context and when it doesn't <!-- id:be409522 -->
+  - [x] expand/collapse section <!-- id:6e8adb22 -->
+  - [x] revert <!-- id:2ced9cde -->
+  - [x] commit <!-- id:d3926b23 -->
+  - [x] show/hide completed <!-- id:8a7e2ee9 -->
+  - [x] delete item <!-- id:bd554cfd -->
+  - [ ] add document <!-- id:4315d21e -->
+  - [ ] delete document <!-- id:ad2a38a6 -->
+  - [ ] expand/collapse context <!-- id:c2c4da59 -->
+  - [ ] remove folder <!-- id:19045eed -->
 - [ ] Mousewheel fix? how to move with mousehweel <!-- id:4b6b10d9 -->
-  - [ ]  <!-- id:a29e0367 -->
 
 # Completed <!-- sec:9734bd11 -->
+- [x] add a context expandable section <!-- id:b15f9845 -->
+  - [x] better navigation between context and non-context sections <!-- id:e0e6b52d -->
+  - [x] indicate when a section has context and when it doesn't <!-- id:be409522 -->
 - [x] add hotkeys for everything <!-- id:cf0f805b -->
   - [x] next item (down) <!-- id:d84dc90c -->
   - [x] previous item (up) <!-- id:4d6a6056 -->
