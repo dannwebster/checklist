@@ -1,4 +1,3 @@
-<!-- cf:show -->
 
 # Open Tasks <!-- sec:582c2227 -->
 - [ ] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
@@ -8,10 +7,10 @@
 - [x] add missing hotkeys <!-- id:02c46200 -->
   - [x] show/hide completed (Ctrl+Shift+H) <!-- id:e4f6f447 -->
   - [x] expand/collapse section (Ctrl+E) <!-- id:9d40b0f6 -->
-  - [ ] add/delete document <!-- id:ef1fcb2c -->
-  - [ ] remove folder <!-- id:25bdaeaf -->
-- [ ] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
-- [ ] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
+  - [x] add/delete document <!-- id:ef1fcb2c -->
+  - [x] remove folder <!-- id:25bdaeaf -->
+- [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
+- [x] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
   - [x] expand/collapse section <!-- id:6e8adb22 -->
   - [x] revert <!-- id:2ced9cde -->
   - [x] commit <!-- id:d3926b23 -->
@@ -24,7 +23,7 @@
 - [ ] Mousewheel fix? how to move with mousehweel <!-- id:4b6b10d9 -->
 - [ ] allow keyboard navigation to sidebar <!-- id:9168dd20 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
-- [ ] control-enter should toggle to the end of the item or text, not the beginning <!-- id:86231912 -->
+- [x] control-enter should toggle to the end of the item or text, not the beginning <!-- id:86231912 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 
 # Completed <!-- sec:9734bd11 -->
