@@ -830,6 +830,19 @@ const Editor = (() => {
     }
   });
 
+  // --- Auto-scroll during drag ---
+  itemListEl.addEventListener('dragover', (e) => {
+    if (dragSrcIndex === null) return;
+    const rect = itemListEl.getBoundingClientRect();
+    const ZONE = 60;
+    const SPEED = 10;
+    if (e.clientY < rect.top + ZONE) {
+      itemListEl.scrollBy(0, -SPEED);
+    } else if (e.clientY > rect.bottom - ZONE) {
+      itemListEl.scrollBy(0, SPEED);
+    }
+  });
+
   // --- Listen for selection ---
   window.addEventListener('checklist-selected', (e) => loadChecklist(e.detail));
 

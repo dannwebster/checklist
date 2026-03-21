@@ -1,5 +1,9 @@
 
-# Open Tasks <!-- sec:582c2227 -->
+# To do <!-- sec:e91b0cfa -->
+- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
+- [ ] get a good icon <!-- id:c9c8953c -->
+
+# Completed <!-- sec:582c2227 -->
 - [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
 - [x] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
   - [x] expand/collapse section <!-- id:6e8adb22 -->
@@ -15,11 +19,7 @@
   - [x] better navigation between context and non-context sections <!-- id:e0e6b52d -->
   - [x] indicate when a section has context and when it doesn't <!-- id:be409522 -->
 - [x] allow keyboard navigation to sidebar/pl <!-- id:9168dd20 -->
-- [ ] get a good icon <!-- id:c9c8953c -->
 - [x] control-enter should toggle to the end of the item or text, not the beginning <!-- id:86231912 -->
-- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
-
-# Completed <!-- sec:9734bd11 -->
 - [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
   - [x] add file <!-- id:8ee5d9c9 -->
   - [x] delete file <!-- id:23defee0 -->
