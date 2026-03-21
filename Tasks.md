@@ -1,8 +1,11 @@
 
 # Punchcard Tasks <!-- sec:582c2227 -->
-- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
+- [ ] make sure it doesn't overwrite files: see how it reacts to  <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
+  - [ ] better navigation between context and non-context sections <!-- id:e0e6b52d -->
+  - [ ]  <!-- id:be409522 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
+- [ ]  <!-- id:cf0f805b -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->

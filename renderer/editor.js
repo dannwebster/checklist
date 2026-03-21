@@ -258,11 +258,17 @@ const Editor = (() => {
   }
 
   function buildItemRow(item, index) {
+    item.contextExpanded = item.contextExpanded ?? !!item.context;
+
     const li = document.createElement('li');
-    li.className = 'item-row' + (item.checked ? ' checked' : '');
+    li.className = 'item-row' + (item.checked ? ' checked' : '') + (item.context ? ' has-context' : '');
     li.dataset.id = item.id;
     li.draggable = true;
     if (item.indent) li.style.paddingLeft = (6 + item.indent * 20) + 'px';
+
+    // --- Main row ---
+    const itemMain = document.createElement('div');
+    itemMain.className = 'item-main';
 
     const handle = document.createElement('span');
     handle.className = 'drag-handle';
@@ -304,7 +310,7 @@ const Editor = (() => {
         e.preventDefault();
         moveFocus(textEl, 1);
       }
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && !e.ctrlKey) {
         e.preventDefault();
         const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
         items.splice(index + 1, 0, newItem);
@@ -313,17 +319,62 @@ const Editor = (() => {
         const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
         if (newRow) newRow.focus();
       }
+      if (e.key === 'Enter' && e.ctrlKey) {
+        e.preventDefault();
+        toggleContext();
+      }
+      if (e.key === ':') {
+        e.preventDefault();
+        items[index].text = textEl.textContent;
+        if (!items[index].contextExpanded) toggleContext();
+      }
       if (e.key === 'Backspace' && textEl.textContent === '') {
         e.preventDefault();
         removeItem(index);
       }
     });
 
+    // --- Context toggle button ---
+    const contextBtn = document.createElement('button');
+    contextBtn.className = 'item-context-btn';
+    contextBtn.title = 'Toggle context (Ctrl+Enter)';
+    contextBtn.textContent = item.contextExpanded ? '▾' : '▸';
+    contextBtn.addEventListener('click', () => toggleContext());
+
     const delBtn = document.createElement('button');
     delBtn.className = 'item-delete';
     delBtn.textContent = '×';
     delBtn.title = 'Delete item';
     delBtn.addEventListener('click', () => removeItem(index));
+
+    // --- Context area ---
+    const contextArea = document.createElement('div');
+    contextArea.className = 'item-context-area';
+    contextArea.hidden = !item.contextExpanded;
+
+    const contextTextEl = document.createElement('textarea');
+    contextTextEl.className = 'item-context-text';
+    contextTextEl.placeholder = 'Add context...';
+    contextTextEl.value = item.context || '';
+    contextTextEl.rows = 2;
+    contextTextEl.addEventListener('input', () => {
+      items[index].context = contextTextEl.value || undefined;
+      contextBtn.textContent = items[index].context ? '▾' : '▸';
+      li.classList.toggle('has-context', !!items[index].context);
+      scheduleSave();
+    });
+    contextTextEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { toggleContext(); textEl.focus(); }
+    });
+    contextArea.appendChild(contextTextEl);
+
+    function toggleContext() {
+      items[index].contextExpanded = !items[index].contextExpanded;
+      contextArea.hidden = !items[index].contextExpanded;
+      contextBtn.textContent = items[index].contextExpanded ? '▾' : '▸';
+      li.classList.toggle('has-context', items[index].contextExpanded || !!items[index].context);
+      if (items[index].contextExpanded) contextTextEl.focus();
+    }
 
     // Drag events
     li.addEventListener('dragstart', (e) => {
@@ -360,10 +411,13 @@ const Editor = (() => {
       scheduleSave();
     });
 
-    li.appendChild(handle);
-    li.appendChild(checkbox);
-    li.appendChild(textEl);
-    li.appendChild(delBtn);
+    itemMain.appendChild(handle);
+    itemMain.appendChild(checkbox);
+    itemMain.appendChild(textEl);
+    itemMain.appendChild(contextBtn);
+    itemMain.appendChild(delBtn);
+    li.appendChild(itemMain);
+    li.appendChild(contextArea);
     return li;
   }
 

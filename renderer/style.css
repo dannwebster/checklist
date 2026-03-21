@@ -259,12 +259,18 @@ body {
 
 .item-row {
   display: flex;
-  align-items: center;
-  padding: 5px 6px;
+  flex-direction: column;
+  padding: 2px 6px;
   border-radius: 5px;
-  gap: 10px;
   cursor: default;
   position: relative;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 0;
 }
 
 .item-row:hover { background: var(--bg-hover); }
@@ -326,6 +332,45 @@ body {
 
 .item-row:hover .item-delete { opacity: 1; }
 .item-delete:hover { color: var(--danger); background: rgba(244,71,71,0.1); }
+
+.item-context-btn {
+  opacity: 0;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: opacity 0.1s;
+}
+.item-row:hover .item-context-btn { opacity: 1; }
+.item-row.has-context .item-context-btn { opacity: 0.6; }
+.item-context-btn:hover { color: var(--text); background: var(--bg-hover); }
+
+.item-context-area {
+  padding: 0 0 4px 52px;
+}
+.item-context-text {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-left: 2px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  padding: 2px 6px;
+  box-sizing: border-box;
+}
+.item-context-text:focus {
+  color: var(--text);
+  border-left-color: var(--accent);
+}
 
 .section-header {
   display: flex;

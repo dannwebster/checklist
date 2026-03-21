@@ -31,12 +31,13 @@ function parse(markdown) {
     const m = line.match(ITEM_RE);
     if (m) {
       const id = m[4] || (hadMissingIds = true, genId());
-      items.push({
-        id,
-        checked: m[2].toLowerCase() === 'x',
-        text: m[3].trim(),
-        indent: Math.round(m[1].length / 2),
-      });
+      const rawText = m[3].trim();
+      const colonIdx = rawText.indexOf(':');
+      const itemText = colonIdx !== -1 ? rawText.slice(0, colonIdx).trimEnd() : rawText;
+      const itemContext = colonIdx !== -1 ? rawText.slice(colonIdx + 1).trimStart() : undefined;
+      const entry = { id, checked: m[2].toLowerCase() === 'x', text: itemText, indent: Math.round(m[1].length / 2) };
+      if (itemContext) entry.context = itemContext;
+      items.push(entry);
     }
   }
 
@@ -57,7 +58,8 @@ function serialize(title, items, docCompletedFilter) {
     }
     const check = item.checked ? 'x' : ' ';
     const prefix = '  '.repeat(item.indent || 0);
-    md += `${prefix}- [${check}] ${item.text} <!-- id:${item.id} -->\n`;
+    const fullText = item.context ? `${item.text}: ${item.context}` : item.text;
+    md += `${prefix}- [${check}] ${fullText} <!-- id:${item.id} -->\n`;
   }
   return md;
 }
