@@ -11,12 +11,12 @@
   - [x] indent item (tab) <!-- id:91e3d008 -->
   - [x] unindent item (shift tab) <!-- id:74a1974f -->
   - [x] delete current item <!-- id:812384c8 -->
-  - [ ] commit <!-- id:19583fd9 -->
-  - [ ] revert <!-- id:281c517f -->
+  - [x] commit <!-- id:19583fd9 -->
+  - [x] revert: move <!-- id:281c517f -->
   - [ ] expand context section (colon anywhere on the line): any pressing of the "colon" key while on a line should expand the context section, and move the u currsor into it. <!-- id:ad0b88fe -->
   - [ ] collapse context section for current item: control-colon should move back the the parent item <!-- id:5e2755b6 -->
-  - [ ] move current item up <!-- id:256fe993 -->
-  - [ ] move current item down <!-- id:2cf1ddd6 -->
+  - [x] move current item up <!-- id:256fe993 -->
+  - [x] move current item down <!-- id:2cf1ddd6 -->
   - [ ] add header: the add header would add a new header below the current item, defaulting to the header level of the header of the current section, or H1 if the current section doesn't have a header <!-- id:e7ab9fdb -->
 
 # Completed <!-- sec:9734bd11 -->

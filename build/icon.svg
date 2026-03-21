@@ -1,20 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2d9e6b"/>
-      <stop offset="100%" style="stop-color:#1a7a52"/>
-    </linearGradient>
-  </defs>
-  <!-- Background rounded square -->
-  <rect width="512" height="512" rx="80" ry="80" fill="url(#bg)"/>
-  <!-- Row 1: checkbox + line -->
-  <rect x="80" y="140" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18"/>
-  <polyline points="98,181 116,200 144,164" fill="none" stroke="white" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="196" y="168" width="236" height="24" rx="12" fill="white" opacity="0.9"/>
-  <!-- Row 2: checkbox + line -->
-  <rect x="80" y="260" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18" opacity="0.7"/>
-  <rect x="196" y="288" width="180" height="24" rx="12" fill="white" opacity="0.6"/>
-  <!-- Row 3: checkbox + line -->
-  <rect x="80" y="380" width="80" height="80" rx="14" ry="14" fill="none" stroke="white" stroke-width="18" opacity="0.5"/>
-  <rect x="196" y="408" width="210" height="24" rx="12" fill="white" opacity="0.45"/>
+<svg width="662" height="696" viewBox="180 152 662 696" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="180" y="152" width="662" height="696" rx="40" fill="white" stroke="#D3C7B6" stroke-width="2"/>
+<rect x="291" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="357" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="415" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="472" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="531" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="589" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="702" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="760" y="196" width="28" height="42" fill="#0A3052"/>
+<rect x="348" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="415" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="461" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="519" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="646" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="704" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="760" y="249" width="28" height="42" fill="#0A3052"/>
+<rect x="292" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="348" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="404" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="461" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="519" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="589" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="646" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="704" y="302" width="28" height="42" fill="#0A3052"/>
+<rect x="760" y="302" width="28" height="42" fill="#0A3052"/>
+<circle cx="341.5" cy="401.5" r="39.5" fill="#008EA5"/>
+<path d="M317 401.5L333 417.5L366 384.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="341.5" cy="491.5" r="39.5" fill="#008EA5"/>
+<path d="M317 491.5L333 507.5L366 474.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="341.5" cy="581.5" r="39.5" fill="#008EA5"/>
+<path d="M317 581.5L333 597.5L366 564.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="341.5" cy="671.5" r="39.5" fill="#008EA5"/>
+<path d="M317 671.5L333 687.5L366 654.5" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="406" y="394" width="379" height="15" rx="7.5" fill="#008EA5"/>
+<rect x="406" y="490" width="379" height="15" rx="7.5" fill="#008EA5"/>
+<rect x="406" y="582" width="379" height="15" rx="7.5" fill="#008EA5"/>
+<rect x="406" y="678" width="379" height="15" rx="7.5" fill="#008EA5"/>
+<circle cx="341" cy="773" r="36" stroke="#008EA5" stroke-width="8"/>
+<line x1="406" y1="778.5" x2="433" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="456" y1="778.5" x2="483" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="506" y1="778.5" x2="533" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="556" y1="778.5" x2="583" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="606" y1="778.5" x2="633" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="656" y1="778.5" x2="683" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="706" y1="778.5" x2="733" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<line x1="756" y1="778.5" x2="783" y2="778.5" stroke="#0A3052" stroke-width="15" stroke-linecap="round"/>
+<rect x="223" y="202" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="291" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="380" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="471" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="563" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="658" width="28" height="42" fill="#D3C7B6"/>
+<rect x="223" y="763" width="28" height="42" fill="#D3C7B6"/>
+<line x1="277.5" y1="152" x2="277.5" y2="848" stroke="#D3C7B6" stroke-width="1"/>
+<line x1="180" y1="351.5" x2="842" y2="351.5" stroke="#D3C7B6" stroke-width="1"/>
 </svg>
