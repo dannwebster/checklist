@@ -32,7 +32,7 @@ function parse(markdown) {
     if (m) {
       const id = m[4] || (hadMissingIds = true, genId());
       const rawText = m[3].trim();
-      const colonIdx = rawText.indexOf(':');
+      const colonIdx = rawText.search(/:(?!\/)/);
       const itemText = colonIdx !== -1 ? rawText.slice(0, colonIdx).trimEnd() : rawText;
       const itemContext = colonIdx !== -1 ? rawText.slice(colonIdx + 1).trimStart() : undefined;
       const entry = { id, checked: m[2].toLowerCase() === 'x', text: itemText, indent: Math.round(m[1].length / 2) };

@@ -308,6 +308,15 @@ const Editor = (() => {
       scheduleSave();
     });
     textEl.addEventListener('keydown', (e) => {
+      if (e.key === ':' && !items[index].contextExpanded) {
+        const currentText = textEl.textContent;
+        const stripped = currentText.replace(/https?:\/\/[^\s]*/gi, '');
+        const nonUrlColons = (stripped.match(/:/g) || []).length;
+        if (nonUrlColons === 0) {
+          e.preventDefault();
+          toggleContext();
+        }
+      }
       if (e.key === 'Tab') {
         e.preventDefault();
         if (e.shiftKey) {
@@ -389,17 +398,6 @@ const Editor = (() => {
         scheduleSave();
         const newEl = itemListEl.querySelector(`[data-sec-id="${newSection.id}"] .section-title`);
         if (newEl) newEl.focus();
-      }
-    });
-    textEl.addEventListener('keyup', (e) => {
-      if (e.key === ':') {
-        const text = textEl.textContent;
-        const stripped = text.replace(/https?:\/\//gi, '');
-        const nonUrlColons = (stripped.match(/:/g) || []).length;
-        if (nonUrlColons === 1 && !items[index].contextExpanded) {
-          items[index].text = text;
-          toggleContext();
-        }
       }
     });
 
