@@ -42,6 +42,26 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 - Saves 300 ms after you stop typing — no save button needed
 - Detects external file changes and reloads the file if there are no pending local edits
 
+### Keyboard shortcuts
+
+| Action | Key |
+|---|---|
+| New item below current | Enter |
+| Delete item (when empty) | Backspace |
+| Delete item (unconditional) | Ctrl+Backspace |
+| Indent item | Tab |
+| Unindent item | Shift+Tab |
+| Move item up | Alt+↑ |
+| Move item down | Alt+↓ |
+| Navigate up | ↑ |
+| Navigate down | ↓ |
+| Add section header below | Ctrl+H |
+| Expand context | `:` |
+| Toggle context | Ctrl+Enter |
+| Collapse context | Ctrl+: |
+| Commit | Ctrl+Shift+G |
+| Revert | Ctrl+Shift+Z |
+
 ## Data format
 
 Files use standard GFM task-list syntax:

@@ -304,6 +304,28 @@ const Editor = (() => {
         scheduleSave();
         return;
       }
+      if (e.key === 'ArrowUp' && e.altKey) {
+        e.preventDefault();
+        if (index === 0) return;
+        const blockEnd = getItemBlockEnd(index);
+        const block = items.splice(index, blockEnd - index);
+        items.splice(index - 1, 0, ...block);
+        render();
+        scheduleSave();
+        itemListEl.querySelector(`[data-id="${block[0].id}"] .item-text`)?.focus();
+        return;
+      }
+      if (e.key === 'ArrowDown' && e.altKey) {
+        e.preventDefault();
+        const blockEnd = getItemBlockEnd(index);
+        if (blockEnd >= items.length || items[blockEnd].type === 'section') return;
+        const block = items.splice(index, blockEnd - index);
+        items.splice(index + 1, 0, ...block);
+        render();
+        scheduleSave();
+        itemListEl.querySelector(`[data-id="${block[0].id}"] .item-text`)?.focus();
+        return;
+      }
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         moveFocus(textEl, -1);
@@ -325,14 +347,39 @@ const Editor = (() => {
         e.preventDefault();
         toggleContext();
       }
+      if (e.key === ':' && e.ctrlKey) {
+        e.preventDefault();
+        if (items[index].contextExpanded) toggleContext();
+        return;
+      }
       if (e.key === ':') {
         e.preventDefault();
         items[index].text = textEl.textContent;
         if (!items[index].contextExpanded) toggleContext();
       }
+      if (e.key === 'Backspace' && e.ctrlKey) {
+        e.preventDefault();
+        removeItem(index);
+        return;
+      }
       if (e.key === 'Backspace' && textEl.textContent === '') {
         e.preventDefault();
         removeItem(index);
+      }
+      if (e.key === 'h' && e.ctrlKey) {
+        e.preventDefault();
+        let level = 1;
+        for (let i = index - 1; i >= 0; i--) {
+          if (items[i].type === 'section') { level = items[i].level; break; }
+        }
+        const blockEnd = getItemBlockEnd(index);
+        const newSection = { type: 'section', id: genId(), level, text: '', collapsed: false, completedFilter: 'default' };
+        const newItem = { id: genId(), checked: false, text: '', indent: 0 };
+        items.splice(blockEnd, 0, newSection, newItem);
+        render();
+        scheduleSave();
+        const newEl = itemListEl.querySelector(`[data-sec-id="${newSection.id}"] .section-title`);
+        if (newEl) newEl.focus();
       }
     });
 
@@ -658,6 +705,18 @@ const Editor = (() => {
       modal.addEventListener('click', handler);
     });
   }
+
+  // --- Global hotkeys ---
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'G' && e.ctrlKey && e.shiftKey) {
+      e.preventDefault();
+      if (!gitCommitBtn.disabled) gitCommitBtn.click();
+    }
+    if (e.key === 'Z' && e.ctrlKey && e.shiftKey) {
+      e.preventDefault();
+      if (gitRevertBtn.style.display !== 'none' && !gitRevertBtn.disabled) gitRevertBtn.click();
+    }
+  });
 
   // --- Listen for selection ---
   window.addEventListener('checklist-selected', (e) => loadChecklist(e.detail));
