@@ -1,9 +1,9 @@
 
 # Open Tasks <!-- sec:582c2227 -->
-- [ ] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
-  - [ ] add file <!-- id:8ee5d9c9 -->
-  - [ ] delete file <!-- id:23defee0 -->
-  - [ ] remove folder <!-- id:df2984e3 -->
+- [x] align styling on buttons: all button style sshould match - they should be visible and have a visible border <!-- id:fabd28e1 -->
+  - [x] add file <!-- id:8ee5d9c9 -->
+  - [x] delete file <!-- id:23defee0 -->
+  - [x] remove folder <!-- id:df2984e3 -->
 - [x] add missing hotkeys <!-- id:02c46200 -->
   - [x] show/hide completed (Ctrl+Shift+H) <!-- id:e4f6f447 -->
   - [x] expand/collapse section (Ctrl+E) <!-- id:9d40b0f6 -->
