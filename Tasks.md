@@ -3,9 +3,18 @@
 - [ ] make sure it doesn't overwrite files: see how it reacts to  <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
   - [ ] better navigation between context and non-context sections <!-- id:e0e6b52d -->
-  - [ ]  <!-- id:be409522 -->
-- [ ] move to parallel workflows <!-- id:39b37dfe -->
-- [ ]  <!-- id:cf0f805b -->
+  - [ ] indicate when a section has context and when it doesn't <!-- id:be409522 -->
+- [ ] add a revert button <!-- id:faa9e91c -->
+- [ ] add hotkeys for everything <!-- id:cf0f805b -->
+  - [ ] next item (down)  <!-- id:d84dc90c -->
+  - [ ] previous item (up) <!-- id:4d6a6056 -->
+  - [ ] indent item (tab) <!-- id:91e3d008 -->
+  - [ ] unindent item (shift tab) <!-- id:74a1974f -->
+  - [ ] delete current item <!-- id:812384c8 -->
+  - [ ] commit <!-- id:19583fd9 -->
+  - [ ] revert <!-- id:281c517f -->
+  - [ ] expand context section:   <!-- id:ad0b88fe -->
+  - [ ] collapse context section for current item <!-- id:5e2755b6 -->
 
 # Completed <!-- sec:9734bd11 -->
 - [x] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->

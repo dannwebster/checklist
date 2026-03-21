@@ -75,8 +75,19 @@ function registerHandlers() {
     return result === 1;
   });
 
+  ipcMain.handle('app:show-dialog', (_, message, confirmLabel) => {
+    const result = dialog.showMessageBoxSync({
+      type: 'question',
+      buttons: ['Cancel', confirmLabel],
+      defaultId: 0,
+      message,
+    });
+    return result === 1;
+  });
+
   ipcMain.handle('git:status', (_, filePath) => git.getGitStatus(filePath));
   ipcMain.handle('git:commit', (_, filePath) => git.gitCommit(filePath));
+  ipcMain.handle('git:revert', (_, filePath) => git.gitRevert(filePath));
 }
 
 module.exports = { registerHandlers };

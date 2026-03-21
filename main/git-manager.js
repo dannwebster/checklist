@@ -34,4 +34,14 @@ async function gitCommit(filePath) {
   }
 }
 
-module.exports = { getGitStatus, gitCommit };
+async function gitRevert(filePath) {
+  const dir = path.dirname(filePath);
+  try {
+    await run(['restore', filePath], dir);
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: err.message || '' };
+  }
+}
+
+module.exports = { getGitStatus, gitCommit, gitRevert };

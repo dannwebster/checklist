@@ -521,6 +521,23 @@ body {
 }
 #git-commit-btn:disabled { cursor: default; opacity: 0.3; }
 
+#git-revert-btn {
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+#git-revert-btn:not(:disabled):hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+#git-revert-btn:disabled { cursor: default; opacity: 0.3; }
+
 /* Uncommitted changes indicator */
 #editor-title.git-dirty { color: #d7ba7d; }
 .checklist-item.git-dirty .checklist-item-name { color: #d7ba7d; }

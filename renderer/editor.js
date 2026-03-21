@@ -135,6 +135,8 @@ const Editor = (() => {
     });
     secTitleEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(secTitleEl, -1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(secTitleEl, 1); }
       if (e.key === 'Tab') {
         e.preventDefault();
         if (e.shiftKey) {
@@ -440,7 +442,13 @@ const Editor = (() => {
 
   // --- Focus navigation ---
   function getFocusableEls() {
-    return [titleEl, ...itemListEl.querySelectorAll('.item-text')];
+    const all = [titleEl, ...itemListEl.querySelectorAll('.section-title, .item-text, .item-context-text')];
+    return all.filter(el => {
+      if (el.classList.contains('item-context-text')) {
+        return !el.closest('.item-context-area').hidden;
+      }
+      return true;
+    });
   }
 
   function moveFocus(currentEl, delta) {
@@ -477,6 +485,8 @@ const Editor = (() => {
     gitCommitBtn.style.display = isGitRepo ? '' : 'none';
     gitCommitBtn.disabled = isCommitting || !isGitDirty;
     gitCommitBtn.textContent = isCommitting ? 'committing\u2026' : 'commit';
+    gitRevertBtn.style.display = isGitRepo && isGitDirty ? '' : 'none';
+    gitRevertBtn.disabled = isCommitting;
     titleEl.classList.toggle('git-dirty', isGitRepo && isGitDirty);
   }
 
@@ -574,6 +584,28 @@ const Editor = (() => {
     }
   });
   document.getElementById('title-row').appendChild(gitCommitBtn);
+
+  // --- Git revert button ---
+  const gitRevertBtn = document.createElement('button');
+  gitRevertBtn.id = 'git-revert-btn';
+  gitRevertBtn.textContent = 'revert';
+  gitRevertBtn.title = 'Revert file to last committed state';
+  gitRevertBtn.style.display = 'none';
+  gitRevertBtn.addEventListener('click', async () => {
+    if (!currentPath || isCommitting) return;
+    const basename = currentPath.replace(/.*[/\\]/, '');
+    const confirmed = await window.checklistAPI.showDialog(
+      `Revert "${basename}" to its last committed state? All unsaved changes will be lost.`,
+      'Revert'
+    );
+    if (!confirmed) return;
+    const result = await window.checklistAPI.gitRevert(currentPath);
+    if (result.success) {
+      await reloadCurrent();
+      await refreshGitStatus();
+    }
+  });
+  document.getElementById('title-row').appendChild(gitRevertBtn);
 
   // --- Reload from disk ---
   async function reloadCurrent() {

@@ -16,8 +16,11 @@ contextBridge.exposeInMainWorld('checklistAPI', {
 
   showConfirm: (message) => ipcRenderer.invoke('app:show-confirm', message),
 
+  showDialog: (message, confirmLabel) => ipcRenderer.invoke('app:show-dialog', message, confirmLabel),
+
   gitStatus: (filePath) => ipcRenderer.invoke('git:status', filePath),
   gitCommit: (filePath) => ipcRenderer.invoke('git:commit', filePath),
+  gitRevert: (filePath) => ipcRenderer.invoke('git:revert', filePath),
 
   onMenuNewChecklist: (cb) => ipcRenderer.on('menu:new-checklist', cb),
   onMenuOpenFolder: (cb) => ipcRenderer.on('menu:open-folder', cb),
