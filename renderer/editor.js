@@ -129,6 +129,18 @@ const Editor = (() => {
     });
     secTitleEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          items[index].level = Math.max(1, items[index].level - 1);
+        } else {
+          items[index].level = Math.min(3, items[index].level + 1);
+        }
+        render();
+        scheduleSave();
+        const newEl = itemListEl.querySelector(`[data-sec-id="${item.id}"] .section-title`);
+        if (newEl) newEl.focus();
+      }
     });
 
     li.appendChild(toggle);

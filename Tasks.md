@@ -21,14 +21,14 @@
 - [x] Move Add item into each section <!-- id:7fa8edf8 -->
 - [x] move +H1 Section to beside the title <!-- id:81bea86c -->
 - [x] items should be able to live at all levels (sections, H1s, and subsections), even when empty. <!-- id:18c0741b -->
+- [x] add .cl. to new files if they aren't in the list of file types <!-- id:bcfaa89f -->
+- [x] Correct visual level of indent functionality <!-- id:71167e57 -->
+- [x] tab on create to change indent level and shift tab <!-- id:297f8607 -->
 - [x] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
 
 ### Multiple Headers <!-- sec:6b58d286 -->
 - [ ] autoscroll to last item <!-- id:23461968 -->
 - [ ] Sections should be able to be moved <!-- id:7472d1d9 -->
-- [ ] tab on create to change indent level and shift tab <!-- id:297f8607 -->
 - [ ] tab on create should add to current indent level <!-- id:6c51a576 -->
 - [ ] tab and untab headers to move up and down the hiearchy <!-- id:e774e0e9 -->
 - [ ] drag tasks between todos (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
-- [ ] add .cl. to new files if they aren't in the list of file types <!-- id:bcfaa89f -->
-- [ ] Correct visual level of indent functionality <!-- id:71167e57 -->
