@@ -4,7 +4,7 @@ const os = require('os');
 const { app } = require('electron');
 
 const SETTINGS_FILE = path.join(app.getPath('userData'), 'settings.json');
-const DEFAULT_DATA_DIR = path.join(os.homedir(), 'Documents', 'Checklists');
+const DEFAULT_DATA_DIR = path.join(os.homedir(), 'Documents', 'Punchcard');
 const DEFAULT_FILE_PATTERNS = ['*Tasks*.md', '*Checklist*.md', '*.cl.md'];
 const DEFAULT_IGNORE_DIR_PATTERNS = ['.*'];
 

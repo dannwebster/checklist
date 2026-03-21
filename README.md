@@ -1,10 +1,10 @@
-# Checklist
+# Punchcard
 
-A desktop checklist manager built with Electron. Checklists are stored as standard GitHub Flavored Markdown files on your disk — no cloud, no accounts. Files are readable in any text editor and can be committed to git.
+A desktop task manager built with Electron. Lists are stored as standard GitHub Flavored Markdown files on your disk — no cloud, no accounts. Files are readable in any text editor and can be committed to git.
 
 ## Features
 
-### Checklists and items
+### Lists and items
 
 - Create, rename, and delete checklists
 - Add, edit, and delete items inline

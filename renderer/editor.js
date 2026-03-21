@@ -25,7 +25,7 @@ const Editor = (() => {
       isGitRepo = false;
       isGitDirty = false;
       titleEl.textContent = '';
-      document.title = 'Checklist';
+      document.title = 'Punchcard';
       addH1Btn.style.display = 'none';
       applyGitUI();
       render();
@@ -43,7 +43,7 @@ const Editor = (() => {
       }
     }
     titleEl.textContent = currentTitle;
-    document.title = currentTitle + ' — Checklist';
+    document.title = currentTitle + ' — Punchcard';
     addH1Btn.style.display = '';
     updateDocFilterBtn();
     render();
@@ -429,7 +429,7 @@ const Editor = (() => {
   // --- Title editing ---
   titleEl.addEventListener('input', () => {
     currentTitle = titleEl.textContent.trim();
-    document.title = currentTitle + ' — Checklist';
+    document.title = currentTitle + ' — Punchcard';
     scheduleSave();
   });
 
@@ -445,7 +445,7 @@ const Editor = (() => {
       currentTitle = newBaseName + '.md';
       titleEl.textContent = currentTitle;
       await Sidebar.updateName(oldPath, newBaseName);
-      document.title = currentTitle + ' — Checklist';
+      document.title = currentTitle + ' — Punchcard';
     }
   });
 
@@ -535,7 +535,7 @@ const Editor = (() => {
       }
     }
     titleEl.textContent = currentTitle;
-    document.title = currentTitle + ' — Checklist';
+    document.title = currentTitle + ' — Punchcard';
     updateDocFilterBtn();
     render();
     if (parsed.hadMissingIds) scheduleSave();

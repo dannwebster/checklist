@@ -9,7 +9,7 @@ function registerHandlers() {
 
   ipcMain.handle('app:set-data-dir', async (event) => {
     const result = await dialog.showOpenDialog({
-      title: 'Choose Checklists Folder',
+      title: 'Choose Punchcard Folder',
       properties: ['openDirectory', 'createDirectory'],
     });
     if (result.canceled || result.filePaths.length === 0) return null;
@@ -22,7 +22,7 @@ function registerHandlers() {
 
   ipcMain.handle('app:add-data-dir', async (event) => {
     const result = await dialog.showOpenDialog({
-      title: 'Add Checklists Folder',
+      title: 'Add Punchcard Folder',
       properties: ['openDirectory', 'createDirectory'],
     });
     if (result.canceled || result.filePaths.length === 0) return null;

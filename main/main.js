@@ -17,7 +17,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
     },
-    title: 'Checklist',
+    title: 'Punchcard',
     icon: path.join(__dirname, '../build/icons/png/256x256.png'),
   });
 

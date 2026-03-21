@@ -1,12 +1,11 @@
 
-# Checklist Tasks <!-- sec:582c2227 -->
+# Punchcard Tasks <!-- sec:582c2227 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] add a context expandable section <!-- id:b15f9845 -->
-- [ ] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [ ] move to parallel workflows <!-- id:39b37dfe -->
 
 # Completed <!-- sec:9734bd11 -->
-- [x] add multiple headings <!-- id:a1b2c3d4 -->
+- [x] drag tasks between checklist files (with "copy or move" semantics) <!-- id:5fc1d5a9 -->
 - [x] Sections should be able to be moved <!-- id:7472d1d9 -->
 - [x] moving an item should move all items beneath it <!-- id:7869288b -->
 - [x] make it a standalone app <!-- id:9c87e6ea -->
@@ -30,3 +29,4 @@
 - [x] tab on create should add to current indent level <!-- id:6c51a576 -->
 - [x] tab and untab headers to move up and down the hiearchy <!-- id:e774e0e9 -->
 - [x] add "return on last item" to move directly to the next checklist item <!-- id:4d496ab1 -->
+- [x] add multiple headings <!-- id:5055189d -->

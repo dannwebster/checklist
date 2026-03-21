@@ -2,10 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Workflow
-
-Always use git worktrees for any code changes. Use the Agent tool with `isolation: "worktree"` when delegating work, then merge the resulting branch back into main.
-
 ## Commands
 
 ```bash
@@ -25,7 +21,7 @@ The renderer communicates with the main process exclusively through `window.chec
 
 ### Data flow
 
-1. Checklists are stored as `.md` files in a user-chosen folder (default `~/Documents/Checklists`)
+1. Checklists are stored as `.md` files in a user-chosen folder (default `~/Documents/Punchcard`)
 2. The folder path is persisted in `settings.json` in Electron's `userData` directory
 3. Each file uses GFM task list syntax with inline HTML comments for item IDs:
    ```

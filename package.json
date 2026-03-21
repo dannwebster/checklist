@@ -1,8 +1,8 @@
 {
   "name": "checklist",
   "version": "1.0.0",
-  "description": "Checklist app with markdown file storage",
-  "productName": "Checklist",
+  "description": "Punchcard — a task manager with markdown file storage",
+  "productName": "Punchcard",
   "author": "Dann Webster",
   "main": "main/main.js",
   "scripts": {
@@ -15,8 +15,8 @@
     "icons": "node scripts/generate-icons.js"
   },
   "build": {
-    "appId": "com.dannwebster.checklist",
-    "productName": "Checklist",
+    "appId": "com.dannwebster.punchcard",
+    "productName": "Punchcard",
     "icon": "build/icon",
     "directories": {
       "output": "dist"
