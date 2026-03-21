@@ -56,9 +56,9 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 | Navigate up | ↑ |
 | Navigate down | ↓ |
 | Add section header below | Ctrl+H |
-| Expand context | `:` |
-| Toggle context | Ctrl+Enter |
-| Collapse context | Ctrl+: |
+| Check/uncheck item | Ctrl+Space |
+| Toggle context open/closed | `:` |
+| Open context / return to item | Ctrl+Enter |
 | Commit | Ctrl+Shift+G |
 | Revert | Ctrl+Shift+Z |
 
