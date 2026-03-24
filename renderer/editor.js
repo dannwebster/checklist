@@ -310,6 +310,8 @@ const Editor = (() => {
     textEl.addEventListener('keydown', (e) => {
       if (e.key === ':' && !items[index].contextExpanded) {
         const currentText = textEl.textContent;
+        // Don't trigger if the colon will complete a URL scheme (e.g. user is typing http://)
+        if (/https?$/i.test(currentText)) return;
         const stripped = currentText.replace(/https?:\/\/[^\s]*/gi, '');
         const nonUrlColons = (stripped.match(/:/g) || []).length;
         if (nonUrlColons === 0) {

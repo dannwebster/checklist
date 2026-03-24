@@ -1,10 +1,16 @@
 
 # To do <!-- sec:e91b0cfa -->
-- [x] fix URLs: when a URL is typed into a todo, it breaks over the : in the URL. We should except the : in common url patterns (http:// and https:// case insensitive) from being the delemiter  Additionally, we should bring back the functionality where the typing the delimiter (:) automatically moves to the context (exempting a preceeding http or https) <!-- id:a1c9f4d5 -->
+- [ ] add urLs: any http should create a link by default with the URL itself as a link. Any link following markdown standard link syntax [link text](URL) should show up the way it would show in markdown <!-- id:bb0f7537 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
+- [ ] add a test plan: how would I test this <!-- id:8024592b -->
+- [ ] bulk import/copy paste <!-- id:a2dce8cb -->
+  - [ ] csv <!-- id:0b2a21f5 -->
+  - [ ] enter-delimited text <!-- id:f8b442a1 -->
+- [ ] add due dates <!-- id:b2ee1645 -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] fix URLs: when a URL is typed into a todo, it breaks over the : in the URL. We should except the : in common url patterns (http:// and https:// case insensitive) from being the delemiter  Additionally, we should bring back the functionality where the typing the delimiter (:) automatically moves to the context (exempting a preceeding http or https) <!-- id:a1c9f4d5 -->
 - [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
 - [x] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
   - [x] expand/collapse section <!-- id:6e8adb22 -->
