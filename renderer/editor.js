@@ -390,12 +390,16 @@ const Editor = (() => {
         return;
       }
       if (e.key === 'ArrowUp' && !e.shiftKey) {
-        e.preventDefault();
-        moveFocus(textEl, -1);
+        if (isCaretOnFirstLine(textEl)) {
+          e.preventDefault();
+          moveFocus(textEl, -1);
+        }
       }
       if (e.key === 'ArrowDown' && !e.shiftKey) {
-        e.preventDefault();
-        moveFocus(textEl, 1);
+        if (isCaretOnLastLine(textEl)) {
+          e.preventDefault();
+          moveFocus(textEl, 1);
+        }
       }
       if (e.key === 'Enter' && !e.ctrlKey) {
         e.preventDefault();
@@ -462,11 +466,16 @@ const Editor = (() => {
     contextTextEl.className = 'item-context-text';
     contextTextEl.placeholder = 'Add context...';
     contextTextEl.value = item.context || '';
-    contextTextEl.rows = 2;
+    function autoResizeContext() {
+      contextTextEl.style.height = 'auto';
+      contextTextEl.style.height = contextTextEl.scrollHeight + 'px';
+    }
+    if (item.contextExpanded) requestAnimationFrame(autoResizeContext);
     contextTextEl.addEventListener('input', () => {
       items[index].context = contextTextEl.value || undefined;
       contextBtn.textContent = items[index].context ? '▾' : '▸';
       li.classList.toggle('has-context', !!items[index].context);
+      autoResizeContext();
       scheduleSave();
     });
     contextTextEl.addEventListener('keydown', (e) => {
@@ -509,7 +518,10 @@ const Editor = (() => {
       contextArea.hidden = !items[index].contextExpanded;
       contextBtn.textContent = items[index].contextExpanded ? '▾' : '▸';
       li.classList.toggle('has-context', items[index].contextExpanded || !!items[index].context);
-      if (items[index].contextExpanded) focusAtEnd(contextTextEl);
+      if (items[index].contextExpanded) {
+        autoResizeContext();
+        focusAtEnd(contextTextEl);
+      }
     }
 
     // Drag events
@@ -583,6 +595,26 @@ const Editor = (() => {
       }
       return true;
     });
+  }
+
+  function isCaretOnFirstLine(el) {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return true;
+    // getClientRects() returns a non-zero rect for collapsed ranges in Chromium;
+    // getBoundingClientRect() on a collapsed range returns zero and cannot be used.
+    const rects = sel.getRangeAt(0).getClientRects();
+    if (!rects.length) return true;
+    const caretRect = rects[0];
+    return caretRect.top < el.getBoundingClientRect().top + caretRect.height;
+  }
+
+  function isCaretOnLastLine(el) {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return true;
+    const rects = sel.getRangeAt(0).getClientRects();
+    if (!rects.length) return true;
+    const caretRect = rects[0];
+    return caretRect.bottom > el.getBoundingClientRect().bottom - caretRect.height;
   }
 
   function moveFocus(currentEl, delta) {
