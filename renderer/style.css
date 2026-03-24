@@ -586,3 +586,51 @@ body {
 
 .cfd-btn:hover { border-color: var(--accent); color: var(--text-title); }
 .cfd-cancel { color: var(--text-dim); }
+
+/* Due date badge */
+.item-due-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  background: transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
+}
+.item-due-badge.due-overdue { color: var(--danger); border-color: var(--danger); background: rgba(244,71,71,0.12); }
+.item-due-badge.due-today   { color: #d7ba7d; border-color: #d7ba7d; background: rgba(215,186,125,0.12); }
+.item-due-badge.due-future  { color: var(--check-color); border-color: var(--check-color); background: rgba(78,201,176,0.08); }
+
+/* Calendar button — hidden until hover or date exists */
+.item-cal-btn {
+  opacity: 0;
+  border: none;
+  background: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 3px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: opacity 0.1s;
+}
+.item-row:hover .item-cal-btn { opacity: 1; }
+.item-row:has(.item-due-badge:not([hidden])) .item-cal-btn { opacity: 1; }
+.item-cal-btn:hover { color: var(--text); background: var(--bg-hover); }
+
+/* Hidden native date picker anchor */
+.item-main { position: relative; }
+.item-date-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  top: 0;
+  left: 0;
+}

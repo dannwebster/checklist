@@ -4,6 +4,16 @@
 const ITEM_RE = /^(\s*)- \[(x| )\] (.+?)(?:\s*<!-- id:([a-f0-9]{8}) -->)?$/i;
 const SECTION_RE = /^(#{1,3}) (.+?)(?:\s*<!-- sec:([a-f0-9]{8})(?:\s+cf:(show|hide))? -->)?$/;
 const DOC_FILTER_RE = /^<!-- cf:(show|hide) -->$/;
+const ISO_DATE_RE = /\b(\d{4}-\d{2}-\d{2})\b/;
+
+function extractDueDate(text) {
+  const m = text.match(ISO_DATE_RE);
+  return m ? m[1] : null;
+}
+
+function stripDueDate(text) {
+  return text.replace(ISO_DATE_RE, '').replace(/\s{2,}/g, ' ').trim();
+}
 
 function genId() {
   return Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, '0');
@@ -66,5 +76,5 @@ function serialize(title, items, docCompletedFilter) {
 
 // Export for ES module usage in renderer
 if (typeof module !== 'undefined') {
-  module.exports = { parse, serialize, genId };
+  module.exports = { parse, serialize, genId, extractDueDate, stripDueDate };
 }

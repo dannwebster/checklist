@@ -274,8 +274,16 @@ const Editor = (() => {
     render();
   }
 
+  function applyDueDateStyling(badge, dateStr) {
+    const today = new Date().toISOString().slice(0, 10);
+    badge.classList.remove('due-overdue', 'due-today', 'due-future');
+    if (dateStr < today) badge.classList.add('due-overdue');
+    else if (dateStr === today) badge.classList.add('due-today');
+    else badge.classList.add('due-future');
+  }
+
   function renderItemText(el, text) {
-    let html = text
+    let html = stripDueDate(text)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
@@ -321,8 +329,58 @@ const Editor = (() => {
     textEl.contentEditable = 'true';
     textEl.spellcheck = true;
     renderItemText(textEl, item.text);
+
+    // --- Due date badge & calendar button ---
+    const dueDate = extractDueDate(item.text);
+
+    const dateBadge = document.createElement('span');
+    dateBadge.className = 'item-due-badge';
+    if (dueDate) {
+      dateBadge.textContent = dueDate;
+      applyDueDateStyling(dateBadge, dueDate);
+    } else {
+      dateBadge.hidden = true;
+    }
+
+    const calBtn = document.createElement('button');
+    calBtn.className = 'item-cal-btn';
+    calBtn.title = 'Set due date';
+    calBtn.textContent = '📅';
+
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date';
+    dateInput.className = 'item-date-input';
+    itemMain.appendChild(dateInput);
+
+    calBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const existing = extractDueDate(items[index].text);
+      if (existing) dateInput.value = existing;
+      dateInput.showPicker();
+    });
+
+    dateInput.addEventListener('change', () => {
+      const newDate = dateInput.value;
+      if (!newDate) return;
+      items[index].text = stripDueDate(items[index].text).trimEnd() + ' ' + newDate;
+      dateBadge.textContent = newDate;
+      dateBadge.hidden = false;
+      applyDueDateStyling(dateBadge, newDate);
+      renderItemText(textEl, items[index].text);
+      scheduleSave();
+      dateInput.value = '';
+    });
+
     textEl.addEventListener('input', () => {
       items[index].text = textEl.textContent;
+      const d = extractDueDate(items[index].text);
+      if (d) {
+        dateBadge.textContent = d;
+        dateBadge.hidden = false;
+        applyDueDateStyling(dateBadge, d);
+      } else {
+        dateBadge.hidden = true;
+      }
       scheduleSave();
     });
     textEl.addEventListener('focus', () => {
@@ -562,6 +620,8 @@ const Editor = (() => {
     itemMain.appendChild(handle);
     itemMain.appendChild(checkbox);
     itemMain.appendChild(textEl);
+    itemMain.appendChild(dateBadge);
+    itemMain.appendChild(calBtn);
     itemMain.appendChild(contextBtn);
     itemMain.appendChild(delBtn);
     li.appendChild(itemMain);
