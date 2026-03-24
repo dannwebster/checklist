@@ -375,12 +375,6 @@ body {
   color: var(--text);
   border-left-color: var(--accent);
 }
-.item-context-display {
-  cursor: text;
-  min-height: 1.5em;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
 
 .section-header {
   display: flex;

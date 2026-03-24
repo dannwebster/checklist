@@ -1,6 +1,7 @@
 
 # To do <!-- sec:e91b0cfa -->
 - [x] add urLs - http: any http should create a link by default with the URL itself as a link. Any link following markdown standard link syntax [link text](URL) should show up the way it would show in markdown <!-- id:bb0f7537 -->
+- [ ] up and down arrows in the text widget should move up and down in the text, unless at the first or last line of the text <!-- id:13e4fa33 -->
 - [ ] add due dates: http://google.com: a small calendar widget should exist at the end of every todo item. when clicking on that date widget, it should add a date at the end of the markdown text in ISO=8601 format (e.g. 2026-03-13). The first date found in isO-8601 format in any todo item's markdown text should be treated as that item's due date, and highlighted and shown persistently in the task's UI http://google.com <!-- id:b2ee1645 -->
 - [ ] make sure it doesn't overwrite files [google](http://google.com) <!-- id:98a69187 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
@@ -8,7 +9,6 @@
 - [ ] bulk import/copy paste <!-- id:a2dce8cb -->
   - [ ] csv <!-- id:0b2a21f5 -->
   - [ ] enter-delimited text <!-- id:f8b442a1 -->
-- [ ] up and down arrows in the text widget should move up and down in the text, unless at the first or last line of the text <!-- id:13e4fa33 -->
 
 # Completed <!-- sec:582c2227 -->
 - [x] fix URLs: when a URL is typed into a todo, it breaks over the : in the URL. We should except the : in common url patterns (http:// and https:// case insensitive) from being the delemiter  Additionally, we should bring back the functionality where the typing the delimiter (:) automatically moves to the context (exempting a preceeding http or https) <!-- id:a1c9f4d5 -->

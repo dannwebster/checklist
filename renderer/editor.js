@@ -458,36 +458,11 @@ const Editor = (() => {
     contextArea.className = 'item-context-area';
     contextArea.hidden = !item.contextExpanded;
 
-    const contextDisplayEl = document.createElement('div');
-    contextDisplayEl.className = 'item-context-text item-context-display';
-    renderItemText(contextDisplayEl, item.context || '');
-
     const contextTextEl = document.createElement('textarea');
     contextTextEl.className = 'item-context-text';
     contextTextEl.placeholder = 'Add context...';
     contextTextEl.value = item.context || '';
     contextTextEl.rows = 2;
-    contextTextEl.hidden = true;
-    contextTextEl.addEventListener('focus', () => {
-      contextDisplayEl.hidden = true;
-      contextTextEl.hidden = false;
-    });
-    contextTextEl.addEventListener('blur', () => {
-      renderItemText(contextDisplayEl, items[index].context || '');
-      contextDisplayEl.hidden = false;
-      contextTextEl.hidden = true;
-    });
-    contextDisplayEl.addEventListener('mousedown', (e) => {
-      const link = e.target.closest('.item-link');
-      if (link) {
-        e.preventDefault();
-        window.checklistAPI.openExternal(link.href);
-        return;
-      }
-      contextTextEl.hidden = false;
-      contextDisplayEl.hidden = true;
-      focusAtEnd(contextTextEl);
-    });
     contextTextEl.addEventListener('input', () => {
       items[index].context = contextTextEl.value || undefined;
       contextBtn.textContent = items[index].context ? '▾' : '▸';
@@ -513,7 +488,6 @@ const Editor = (() => {
       if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, -1); }
       if (e.key === 'ArrowDown' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, 1); }
     });
-    contextArea.appendChild(contextDisplayEl);
     contextArea.appendChild(contextTextEl);
 
     function focusAtEnd(el) {
@@ -535,11 +509,7 @@ const Editor = (() => {
       contextArea.hidden = !items[index].contextExpanded;
       contextBtn.textContent = items[index].contextExpanded ? '▾' : '▸';
       li.classList.toggle('has-context', items[index].contextExpanded || !!items[index].context);
-      if (items[index].contextExpanded) {
-        contextTextEl.hidden = false;
-        contextDisplayEl.hidden = true;
-        focusAtEnd(contextTextEl);
-      }
+      if (items[index].contextExpanded) focusAtEnd(contextTextEl);
     }
 
     // Drag events
