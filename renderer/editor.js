@@ -274,6 +274,24 @@ const Editor = (() => {
     render();
   }
 
+  function renderItemText(el, text) {
+    let html = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    // Replace markdown links [label](url) before bare URLs to avoid double-linking
+    html = html.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<a class="item-link" href="$2">$1</a>'
+    );
+    // Replace remaining bare URLs
+    html = html.replace(
+      /(?<!href=")(https?:\/\/[^\s<>"]+)/g,
+      '<a class="item-link" href="$1">$1</a>'
+    );
+    el.innerHTML = html;
+  }
+
   function buildItemRow(item, index) {
     item.contextExpanded = item.contextExpanded ?? !!item.context;
 
@@ -302,10 +320,29 @@ const Editor = (() => {
     textEl.className = 'item-text';
     textEl.contentEditable = 'true';
     textEl.spellcheck = true;
-    textEl.textContent = item.text;
+    renderItemText(textEl, item.text);
     textEl.addEventListener('input', () => {
       items[index].text = textEl.textContent;
       scheduleSave();
+    });
+    textEl.addEventListener('focus', () => {
+      textEl.textContent = items[index].text;
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(textEl);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+    textEl.addEventListener('blur', () => {
+      renderItemText(textEl, items[index].text);
+    });
+    textEl.addEventListener('mousedown', (e) => {
+      const link = e.target.closest('.item-link');
+      if (link) {
+        e.preventDefault(); // prevents focus from firing, keeping link rendering intact
+        window.checklistAPI.openExternal(link.href);
+      }
     });
     textEl.addEventListener('keydown', (e) => {
       if (e.key === ':' && !items[index].contextExpanded) {
@@ -421,11 +458,36 @@ const Editor = (() => {
     contextArea.className = 'item-context-area';
     contextArea.hidden = !item.contextExpanded;
 
+    const contextDisplayEl = document.createElement('div');
+    contextDisplayEl.className = 'item-context-text item-context-display';
+    renderItemText(contextDisplayEl, item.context || '');
+
     const contextTextEl = document.createElement('textarea');
     contextTextEl.className = 'item-context-text';
     contextTextEl.placeholder = 'Add context...';
     contextTextEl.value = item.context || '';
     contextTextEl.rows = 2;
+    contextTextEl.hidden = true;
+    contextTextEl.addEventListener('focus', () => {
+      contextDisplayEl.hidden = true;
+      contextTextEl.hidden = false;
+    });
+    contextTextEl.addEventListener('blur', () => {
+      renderItemText(contextDisplayEl, items[index].context || '');
+      contextDisplayEl.hidden = false;
+      contextTextEl.hidden = true;
+    });
+    contextDisplayEl.addEventListener('mousedown', (e) => {
+      const link = e.target.closest('.item-link');
+      if (link) {
+        e.preventDefault();
+        window.checklistAPI.openExternal(link.href);
+        return;
+      }
+      contextTextEl.hidden = false;
+      contextDisplayEl.hidden = true;
+      focusAtEnd(contextTextEl);
+    });
     contextTextEl.addEventListener('input', () => {
       items[index].context = contextTextEl.value || undefined;
       contextBtn.textContent = items[index].context ? '▾' : '▸';
@@ -451,6 +513,7 @@ const Editor = (() => {
       if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, -1); }
       if (e.key === 'ArrowDown' && !e.shiftKey) { e.preventDefault(); moveFocus(contextTextEl, 1); }
     });
+    contextArea.appendChild(contextDisplayEl);
     contextArea.appendChild(contextTextEl);
 
     function focusAtEnd(el) {
@@ -472,7 +535,11 @@ const Editor = (() => {
       contextArea.hidden = !items[index].contextExpanded;
       contextBtn.textContent = items[index].contextExpanded ? '▾' : '▸';
       li.classList.toggle('has-context', items[index].contextExpanded || !!items[index].context);
-      if (items[index].contextExpanded) focusAtEnd(contextTextEl);
+      if (items[index].contextExpanded) {
+        contextTextEl.hidden = false;
+        contextDisplayEl.hidden = true;
+        focusAtEnd(contextTextEl);
+      }
     }
 
     // Drag events

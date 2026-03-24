@@ -13,6 +13,7 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 - Indent items up to 6 levels deep with Tab / Shift+Tab
 - Drag and drop to reorder items within a section; drag section headers to reorder entire sections (with all their items); drag any item or section to a different file in the sidebar to copy or move it
 - Navigate between items with arrow keys
+- URLs in item text are rendered as clickable links; bare `https://...` URLs become links automatically, and `[label](url)` Markdown syntax renders as a styled link — clicking opens the URL in your default browser
 
 ### Sections and hierarchy
 

@@ -1,4 +1,4 @@
-const { ipcMain, dialog } = require('electron');
+const { ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const fm = require('./file-manager');
 const watcher = require('./watcher');
@@ -88,6 +88,8 @@ function registerHandlers() {
   ipcMain.handle('git:status', (_, filePath) => git.getGitStatus(filePath));
   ipcMain.handle('git:commit', (_, filePath) => git.gitCommit(filePath));
   ipcMain.handle('git:revert', (_, filePath) => git.gitRevert(filePath));
+
+  ipcMain.handle('app:open-external', (_, url) => shell.openExternal(url));
 }
 
 module.exports = { registerHandlers };

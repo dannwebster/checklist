@@ -27,4 +27,6 @@ contextBridge.exposeInMainWorld('checklistAPI', {
 
   onDirChanged:  (cb) => ipcRenderer.on('watcher:dir-changed', cb),
   onFileChanged: (cb) => ipcRenderer.on('watcher:file-changed', (_event, filePath) => cb(filePath)),
+
+  openExternal: (url) => ipcRenderer.invoke('app:open-external', url),
 });

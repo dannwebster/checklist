@@ -310,6 +310,13 @@ body {
 
 .item-text:focus { color: var(--text-title); }
 
+.item-link {
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.item-link:hover { opacity: 0.8; }
+
 .item-row.checked .item-text {
   text-decoration: line-through;
   color: var(--text-dim);
@@ -367,6 +374,12 @@ body {
 .item-context-text:focus {
   color: var(--text);
   border-left-color: var(--accent);
+}
+.item-context-display {
+  cursor: text;
+  min-height: 1.5em;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .section-header {
