@@ -65,6 +65,15 @@ The renderer uses plain globals (no bundler, no ES module imports). Script load 
 
 Sidebar and editor communicate via a `checklist-selected` CustomEvent dispatched on `window`.
 
+### Due dates
+
+Items can have a due date stored as an ISO-8601 date string (e.g., `2026-03-24`) anywhere in `item.text`. Key details:
+
+- `extractDueDate(text)` and `stripDueDate(text)` in `parser.js` are the canonical helpers for reading/removing the date
+- `renderItemText()` in `editor.js` calls `stripDueDate` before rendering, so the date doesn't appear in the contenteditable span — it's shown as a separate badge instead
+- The date is appended to `item.text` (not a separate field) and round-trips transparently through `parse`/`serialize`
+- The calendar button uses `<input type="date">` with `showPicker()` (Chromium-only API) to open the native date picker without showing the input element
+
 ### Key constraint
 
 `prompt()` and `confirm()` are disabled in Electron's renderer. Use `window.checklistAPI.showConfirm()` for confirmation dialogs (backed by `dialog.showMessageBoxSync` in the main process). For text input from the user, inject an inline input element into the DOM.

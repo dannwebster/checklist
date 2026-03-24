@@ -15,6 +15,14 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 - Navigate between items with arrow keys
 - URLs in item text are rendered as clickable links; bare `https://...` URLs become links automatically, and `[label](url)` Markdown syntax renders as a styled link — clicking opens the URL in your default browser
 
+### Due dates
+
+- Click the 📅 calendar icon at the end of any item to set a due date
+- Dates are stored in ISO-8601 format (`YYYY-MM-DD`) directly in the item text — they're visible if you open the file in a text editor
+- The due date shows as a persistent badge, color-coded by urgency: green (future), yellow (today), red (overdue)
+- To change a due date, click the calendar icon again — the picker opens pre-filled with the current date
+- To remove a due date, edit the item text and delete the date manually
+
 ### Sections and hierarchy
 
 - Organize items under H1, H2, and H3 section headers
