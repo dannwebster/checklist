@@ -2,7 +2,7 @@
 # To do <!-- sec:e91b0cfa -->
 - [x] add urLs - http: any http should create a link by default with the URL itself as a link. Any link following markdown standard link syntax [link text](URL) should show up the way it would show in markdown <!-- id:bb0f7537 -->
 - [x] up and down arrows in the text widget should move up and down in the text, unless at the first or last line of the text <!-- id:13e4fa33 -->
-- [ ] add due dates 2026-03-24: http://google.com: a small calendar widget should exist at the end of every todo item. when clicking on that date widget, it should add a date at the end of the markdown text in ISO=8601 format (e.g. 2026-03-13). The first date found in isO-8601 format in any todo item's markdown text should be treated as that item's due date, and highlighted and shown persistently in the task's UI http://google.com <!-- id:b2ee1645 -->
+- [x] add due dates: http://google.com: a small calendar widget should exist at the end of every todo item. when clicking on that date widget, it should add a date at the end of the markdown text in ISO=8601 format (e.g. 2026-03-13). The first date found in isO-8601 format in any todo item's markdown text should be treated as that item's due date, and highlighted and shown persistently in the task's UI http://google.com <!-- id:b2ee1645 -->
 - [ ] make sure it doesn't overwrite files [google](http://google.com) <!-- id:98a69187 -->
 - [ ] get a good icon <!-- id:c9c8953c -->
 - [ ] add a test plan: how would I test this <!-- id:8024592b -->
@@ -12,9 +12,11 @@
   - [ ] enter-delimited text <!-- id:f8b442a1 -->
 - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
 - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
+- [ ] dates in context area should result in due dates <!-- id:278b11ec -->
+- [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
 - [x] colon parsing should automatically create and open the context area <!-- id:7dd5db7a -->
 
-# Completed 2026-04-03 <!-- sec:582c2227 -->
+# Completed <!-- sec:582c2227 -->
 - [x] fix URLs: when a URL is typed into a todo, it breaks over the : in the URL. We should except the : in common url patterns (http:// and https:// case insensitive) from being the delemiter  Additionally, we should bring back the functionality where the typing the delimiter (:) automatically moves to the context (exempting a preceeding http or https) <!-- id:a1c9f4d5 -->
 - [x] shift-down should not move to the next item, but highlight to the end of line <!-- id:95f2dcbe -->
 - [x] hot keys in tool tips: all tool tips should include the correct associated hotkey <!-- id:2d071dbc -->
