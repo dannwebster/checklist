@@ -128,8 +128,24 @@ const Editor = (() => {
 
     const secDateBadge = document.createElement('span');
     secDateBadge.className = 'item-due-badge';
+    const secBadgeText = document.createElement('span');
+    const secRemoveBtn = document.createElement('button');
+    secRemoveBtn.className = 'item-due-remove';
+    secRemoveBtn.textContent = '×';
+    secRemoveBtn.title = 'Remove due date';
+    secRemoveBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const confirmed = await window.checklistAPI.showDialog('Remove due date?', 'Remove');
+      if (!confirmed) return;
+      items[index].text = stripDueDate(items[index].text).trimEnd();
+      secDateBadge.hidden = true;
+      secTitleEl.textContent = items[index].text;
+      scheduleSave();
+    });
+    secDateBadge.appendChild(secBadgeText);
+    secDateBadge.appendChild(secRemoveBtn);
     if (secDueDate) {
-      secDateBadge.textContent = secDueDate;
+      secBadgeText.textContent = secDueDate;
       applyDueDateStyling(secDateBadge, secDueDate);
     } else {
       secDateBadge.hidden = true;
@@ -156,7 +172,7 @@ const Editor = (() => {
       if (!newDate) return;
       items[index].text = stripDueDate(items[index].text).trimEnd() + ' ' + newDate;
       secTitleEl.textContent = stripDueDate(items[index].text);
-      secDateBadge.textContent = newDate;
+      secBadgeText.textContent = newDate;
       secDateBadge.hidden = false;
       applyDueDateStyling(secDateBadge, newDate);
       scheduleSave();
@@ -173,7 +189,7 @@ const Editor = (() => {
       items[index].text = secTitleEl.textContent;
       const d = extractDueDate(secTitleEl.textContent);
       if (d) {
-        secDateBadge.textContent = d;
+        secBadgeText.textContent = d;
         secDateBadge.hidden = false;
         applyDueDateStyling(secDateBadge, d);
       } else {
