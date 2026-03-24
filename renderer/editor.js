@@ -124,14 +124,61 @@ const Editor = (() => {
     cfBtn.dataset.state = cf;
     cfBtn.addEventListener('click', () => cycleCompletedFilter(index));
 
+    const secDueDate = extractDueDate(item.text);
+
+    const secDateBadge = document.createElement('span');
+    secDateBadge.className = 'item-due-badge';
+    if (secDueDate) {
+      secDateBadge.textContent = secDueDate;
+      applyDueDateStyling(secDateBadge, secDueDate);
+    } else {
+      secDateBadge.hidden = true;
+    }
+
+    const secCalBtn = document.createElement('button');
+    secCalBtn.className = 'item-cal-btn';
+    secCalBtn.title = 'Set due date';
+    secCalBtn.textContent = '📅';
+
+    const secDateInput = document.createElement('input');
+    secDateInput.type = 'date';
+    secDateInput.className = 'item-date-input';
+
+    secCalBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const existing = extractDueDate(items[index].text);
+      if (existing) secDateInput.value = existing;
+      secDateInput.showPicker();
+    });
+
+    secDateInput.addEventListener('change', () => {
+      const newDate = secDateInput.value;
+      if (!newDate) return;
+      items[index].text = stripDueDate(items[index].text).trimEnd() + ' ' + newDate;
+      secTitleEl.textContent = stripDueDate(items[index].text);
+      secDateBadge.textContent = newDate;
+      secDateBadge.hidden = false;
+      applyDueDateStyling(secDateBadge, newDate);
+      scheduleSave();
+      secDateInput.value = '';
+    });
+
     const tag = ['h1', 'h2', 'h3'][item.level - 1];
     const secTitleEl = document.createElement(tag);
     secTitleEl.className = 'section-title';
     secTitleEl.contentEditable = 'true';
     secTitleEl.spellcheck = true;
-    secTitleEl.textContent = item.text;
+    secTitleEl.textContent = stripDueDate(item.text);
     secTitleEl.addEventListener('input', () => {
       items[index].text = secTitleEl.textContent;
+      const d = extractDueDate(secTitleEl.textContent);
+      if (d) {
+        secDateBadge.textContent = d;
+        secDateBadge.hidden = false;
+        applyDueDateStyling(secDateBadge, d);
+      } else {
+        secDateBadge.hidden = true;
+      }
       scheduleSave();
     });
     secTitleEl.addEventListener('keydown', (e) => {
@@ -210,6 +257,9 @@ const Editor = (() => {
     li.appendChild(toggle);
     li.appendChild(cfBtn);
     li.appendChild(secTitleEl);
+    li.appendChild(secDateBadge);
+    li.appendChild(secCalBtn);
+    li.appendChild(secDateInput);
 
     if (item.level < 3) {
       const addBtn = document.createElement('button');
@@ -335,8 +385,24 @@ const Editor = (() => {
 
     const dateBadge = document.createElement('span');
     dateBadge.className = 'item-due-badge';
+    const badgeText = document.createElement('span');
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'item-due-remove';
+    removeBtn.textContent = '×';
+    removeBtn.title = 'Remove due date';
+    removeBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const confirmed = await window.checklistAPI.showDialog('Remove due date?', 'Remove');
+      if (!confirmed) return;
+      items[index].text = stripDueDate(items[index].text).trimEnd();
+      dateBadge.hidden = true;
+      renderItemText(textEl, items[index].text);
+      scheduleSave();
+    });
+    dateBadge.appendChild(badgeText);
+    dateBadge.appendChild(removeBtn);
     if (dueDate) {
-      dateBadge.textContent = dueDate;
+      badgeText.textContent = dueDate;
       applyDueDateStyling(dateBadge, dueDate);
     } else {
       dateBadge.hidden = true;
@@ -363,7 +429,7 @@ const Editor = (() => {
       const newDate = dateInput.value;
       if (!newDate) return;
       items[index].text = stripDueDate(items[index].text).trimEnd() + ' ' + newDate;
-      dateBadge.textContent = newDate;
+      badgeText.textContent = newDate;
       dateBadge.hidden = false;
       applyDueDateStyling(dateBadge, newDate);
       renderItemText(textEl, items[index].text);
@@ -375,7 +441,7 @@ const Editor = (() => {
       items[index].text = textEl.textContent;
       const d = extractDueDate(items[index].text);
       if (d) {
-        dateBadge.textContent = d;
+        badgeText.textContent = d;
         dateBadge.hidden = false;
         applyDueDateStyling(dateBadge, d);
       } else {
