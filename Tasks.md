@@ -11,7 +11,7 @@
   - [ ] csv <!-- id:0b2a21f5 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
-  - [ ] main checklist area should expand right as the window expands, not have fixed width <!-- id:2c43202d -->
+  - [x] main checklist area should expand right as the window expands, not have fixed width <!-- id:2c43202d -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
