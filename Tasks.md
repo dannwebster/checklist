@@ -1,18 +1,21 @@
 
 # To do <!-- sec:e91b0cfa -->
-- [ ] make sure it doesn't overwrite files [google](http://google.com) <!-- id:98a69187 -->
-- [ ] get a good icon <!-- id:c9c8953c -->
-- [ ] add a test plan: how would I test this <!-- id:8024592b -->
-- [ ]  <!-- id:6862489a -->
+- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
+- [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
+- [ ] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
+- [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
+- [ ] add an automated test plan: how would I test this <!-- id:8024592b -->
 - [ ] bulk import/copy paste <!-- id:a2dce8cb -->
-  - [ ] csv <!-- id:0b2a21f5 -->
   - [ ] enter-delimited text <!-- id:f8b442a1 -->
-- [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
-- [ ] URLs in item context area should be clickable <!-- id:14222082 -->
-- [ ] dates in context area should result in due dates <!-- id:278b11ec -->
-- [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
+  - [ ] csv <!-- id:0b2a21f5 -->
+- [ ] minor Bugs <!-- id:706a4a92 -->
+  - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
+  - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
+  - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
+  - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] get a good icon <!-- id:c9c8953c -->
 - [x] add due dates: http://google.com: a small calendar widget should exist at the end of every todo item. when clicking on that date widget, it should add a date at the end of the markdown text in ISO=8601 format (e.g. 2026-03-13). The first date found in isO-8601 format in any todo item's markdown text should be treated as that item's due date, and highlighted and shown persistently in the task's UI http://google.com <!-- id:b2ee1645 -->
 - [x] colon parsing should automatically create and open the context area <!-- id:7dd5db7a -->
 - [x] add urLs - http: any http should create a link by default with the URL itself as a link. Any link following markdown standard link syntax [link text](URL) should show up the way it would show in markdown <!-- id:bb0f7537 -->
