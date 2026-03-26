@@ -541,6 +541,23 @@ const Editor = (() => {
           moveFocus(textEl, 1);
         }
       }
+      if (e.key === 'ArrowLeft' && !e.shiftKey) {
+        if (isCaretAtStart(textEl)) {
+          e.preventDefault();
+          const els = Array.from(getFocusableEls());
+          const i = els.indexOf(textEl);
+          const target = els[i - 1];
+          if (target) {
+            target.focus();
+            const sel = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      }
       if (e.key === 'ArrowRight' && !e.shiftKey) {
         if (isCaretAtEnd(textEl)) {
           e.preventDefault();
@@ -774,6 +791,16 @@ const Editor = (() => {
     if (!rects.length) return true;
     const caretRect = rects[0];
     return caretRect.bottom > el.getBoundingClientRect().bottom - caretRect.height;
+  }
+
+  function isCaretAtStart(el) {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return false;
+    const range = sel.getRangeAt(0);
+    if (!range.collapsed) return false;
+    if (range.startOffset !== 0) return false;
+    const container = range.startContainer;
+    return container === el || container === el.firstChild;
   }
 
   function isCaretAtEnd(el) {
