@@ -541,6 +541,23 @@ const Editor = (() => {
           moveFocus(textEl, 1);
         }
       }
+      if (e.key === 'ArrowRight' && !e.shiftKey) {
+        if (isCaretAtEnd(textEl)) {
+          e.preventDefault();
+          const els = Array.from(getFocusableEls());
+          const i = els.indexOf(textEl);
+          const target = els[i + 1];
+          if (target) {
+            target.focus();
+            const sel = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(target);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      }
       if (e.key === 'Enter' && !e.ctrlKey) {
         e.preventDefault();
         const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
@@ -757,6 +774,17 @@ const Editor = (() => {
     if (!rects.length) return true;
     const caretRect = rects[0];
     return caretRect.bottom > el.getBoundingClientRect().bottom - caretRect.height;
+  }
+
+  function isCaretAtEnd(el) {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return false;
+    const range = sel.getRangeAt(0);
+    if (!range.collapsed) return false;
+    const endRange = document.createRange();
+    endRange.selectNodeContents(el);
+    endRange.collapse(false);
+    return range.compareBoundaryPoints(Range.END_TO_END, endRange) === 0;
   }
 
   function moveFocus(currentEl, delta) {

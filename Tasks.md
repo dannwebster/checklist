@@ -2,7 +2,7 @@
 # To do <!-- sec:e91b0cfa -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
-- [ ] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
+- [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] add an automated test plan: how would I test this <!-- id:8024592b -->
 - [ ] bulk import/copy paste <!-- id:a2dce8cb -->
@@ -10,6 +10,7 @@
   - [ ] csv <!-- id:0b2a21f5 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
+  - [ ] should expand right, not have fixed width <!-- id:2c43202d -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
