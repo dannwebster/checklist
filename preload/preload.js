@@ -29,4 +29,7 @@ contextBridge.exposeInMainWorld('checklistAPI', {
   onFileChanged: (cb) => ipcRenderer.on('watcher:file-changed', (_event, filePath) => cb(filePath)),
 
   openExternal: (url) => ipcRenderer.invoke('app:open-external', url),
+
+  getSetting: (key, defaultValue) => ipcRenderer.invoke('app:get-setting', key, defaultValue),
+  setSetting: (key, value) => ipcRenderer.invoke('app:set-setting', key, value),
 });

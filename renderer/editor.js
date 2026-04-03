@@ -12,13 +12,16 @@ const Editor = (() => {
   let isGitDirty = false;
   let isCommitting = false;
   let lastEditorFocusEl = null;
+  let spacesPerIndent = 4;
+  window.checklistAPI.getSetting('spacesPerIndent', 4).then(v => {
+    if (typeof v === 'number' && v > 0) spacesPerIndent = v;
+  });
 
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
 
   // --- Paste import helper ---
   function parsePastedLines(rawLines, baseIndent) {
-    const SPACES_PER_INDENT = 4;
     const parsed = rawLines.map(line => {
       let i = 0;
       while (i < line.length && line[i] === '\t') i++;
@@ -27,7 +30,7 @@ const Editor = (() => {
       if (tabCount === 0) {
         while (i < line.length && line[i] === ' ') { spaceCount++; i++; }
       }
-      const rawIndent = tabCount > 0 ? tabCount : Math.floor(spaceCount / SPACES_PER_INDENT);
+      const rawIndent = tabCount > 0 ? tabCount : Math.floor(spaceCount / spacesPerIndent);
       let content = line.slice(i);
       content = content.replace(/^(\d+\.|[-*+•◦▪▸►▶])\s+/, '');
       return { rawIndent, content: content.trim() };
@@ -223,7 +226,15 @@ const Editor = (() => {
       scheduleSave();
     });
     secTitleEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') { e.preventDefault(); }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const newItem = { id: genId(), checked: false, text: '', indent: 0 };
+        items.splice(index + 1, 0, newItem);
+        render();
+        scheduleSave();
+        const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
+        if (newRow) newRow.focus();
+      }
       if (e.key === 'ArrowUp' && !e.shiftKey) { e.preventDefault(); moveFocus(secTitleEl, -1); }
       if (e.key === 'ArrowDown' && !e.shiftKey) { e.preventDefault(); moveFocus(secTitleEl, 1); }
       if (e.key === 'Backspace' && e.ctrlKey) {

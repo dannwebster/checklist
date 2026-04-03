@@ -134,6 +134,17 @@ function createChecklist(dirPath, name) {
   return filePath;
 }
 
+function getSetting(key, defaultValue) {
+  const s = readSettings();
+  return s[key] !== undefined ? s[key] : defaultValue;
+}
+
+function setSetting(key, value) {
+  const s = readSettings();
+  s[key] = value;
+  writeSettings(s);
+}
+
 module.exports = {
   getDataDir,
   setDataDir,
@@ -146,4 +157,6 @@ module.exports = {
   deleteChecklist,
   renameChecklist,
   createChecklist,
+  getSetting,
+  setSetting,
 };

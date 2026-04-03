@@ -90,6 +90,9 @@ function registerHandlers() {
   ipcMain.handle('git:revert', (_, filePath) => git.gitRevert(filePath));
 
   ipcMain.handle('app:open-external', (_, url) => shell.openExternal(url));
+
+  ipcMain.handle('app:get-setting', (_e, key, defaultValue) => fm.getSetting(key, defaultValue));
+  ipcMain.handle('app:set-setting', (_e, key, value) => fm.setSetting(key, value));
 }
 
 module.exports = { registerHandlers };

@@ -15,7 +15,7 @@
     - [x] etc <!-- id:e40995c9 -->
   - [x] multiple spaces at start of line should also equal an indent <!-- id:d41f2596 -->
     - [x] default number of spaces that equals 1 indent is 4  <!-- id:f50e128d -->
-    - [ ] number of spaces should be a config parameter in settings <!-- id:166b086e -->
+    - [x] number of spaces should be a config parameter in settings <!-- id:166b086e -->
 - [x] bulk import/copy paste <!-- id:a2dce8cb -->
   - [x] enter-delimited text <!-- id:f8b442a1 -->
   - [x] csv <!-- id:0b2a21f5 -->
