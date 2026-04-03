@@ -4,7 +4,7 @@
 - [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [x] purge button: add a top level "purge" button (at the same level as commit or revert) that deletes all completed tasks <!-- id:963961f8 -->
-  - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
+  - [x] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
