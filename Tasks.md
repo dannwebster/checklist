@@ -3,7 +3,7 @@
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [ ] purge button: add a top level "purge" button (at the same level as commit or revert) that moves all completed tasks to a completed section, it creates a complete section one if it doesn't exist <!-- id:963961f8 -->
+- [ ] purge button: add a top level "purge" button (at the same level as commit or revert) that deletes all completed tasks <!-- id:963961f8 -->
   - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
