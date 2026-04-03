@@ -5,7 +5,11 @@
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [ ] add a top level "complete" button (at the same level as commit or revert) that moves all completed tasks to a completed section, or creates a complete section one if it doesn't exist <!-- id:fd21a9ed -->
+- [ ] complete button: add a top level "complete" button (at the same level as commit or revert) that moves all completed tasks to a completed section, <!-- id:fd21a9ed -->
+  - [ ]  it creates a complete section one if it doesn't exist <!-- id:f985df24 -->
+  - [ ] it has a confirm dialog before making the change <!-- id:e1cdcd1c -->
+- [ ] purge button:  add a top level "purge" button (at the same level as commit or revert) that moves all completed tasks to a completed section, it creates a complete section one if it doesn't exist <!-- id:963961f8 -->
+  - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [x] Add Unit testing: implement Layer 1 of the plan in TESTING.md <!-- id:8024592b -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [x] bulk copy/paste import should support indentation <!-- id:782b42cc -->
@@ -27,6 +31,7 @@
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
+  - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
 - [x] get a good icon <!-- id:c9c8953c -->
