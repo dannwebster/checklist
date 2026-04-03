@@ -12,7 +12,9 @@
     "dist:win": "electron-builder --win",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux",
-    "icons": "node scripts/generate-icons.js"
+    "icons": "node scripts/generate-icons.js",
+    "test": "vitest run tests/unit",
+    "test:watch": "vitest tests/unit"
   },
   "build": {
     "appId": "com.dannwebster.punchcard",
@@ -55,6 +57,7 @@
     "electron-builder": "^25.1.8",
     "electron-icon-builder": "^2.0.1",
     "nodemon": "^3.1.14",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vitest": "^3.2.4"
   }
 }

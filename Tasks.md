@@ -5,7 +5,7 @@
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [ ] Add Unit testing: implement Layer 1 of the plan in TESTING.md <!-- id:8024592b -->
+- [x] Add Unit testing: implement Layer 1 of the plan in TESTING.md <!-- id:8024592b -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [x] bulk copy/paste import should support indentation <!-- id:782b42cc -->
   - [x] tab should always equal 1 indent <!-- id:67ee5e7c -->
