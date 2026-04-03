@@ -5,4 +5,5 @@ module.exports = defineConfig({
   timeout: 30_000,
   workers: 1, // Electron tests must not run in parallel
   use: { headless: false },
+  globalTeardown: './e2e/global-teardown.js',
 });

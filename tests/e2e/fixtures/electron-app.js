@@ -1,23 +1,25 @@
 const { test: base, expect } = require('@playwright/test');
 const { _electron: electron } = require('playwright');
 const { mkdtempSync, writeFileSync, mkdirSync, rmSync } = require('fs');
-const { tmpdir } = require('os');
 const path = require('path');
 
 const appRoot = path.resolve(__dirname, '../../..');
+const e2eDataBase = path.join(appRoot, 'test-results', 'e2e-data');
 
 const test = base.extend({
   electronApp: async ({}, use) => {
-    const tmpBase = mkdtempSync(path.join(tmpdir(), 'punchcard-test-'));
+    mkdirSync(e2eDataBase, { recursive: true });
+    const tmpBase = mkdtempSync(path.join(e2eDataBase, 'run-'));
+    const tmpBaseNorm = tmpBase.replace(/\\/g, '/'); // forward slashes for Electron on Windows
     const checklistDir = path.join(tmpBase, 'checklists');
     mkdirSync(checklistDir);
     writeFileSync(
       path.join(tmpBase, 'settings.json'),
-      JSON.stringify({ dataDirs: [checklistDir] })
+      JSON.stringify({ dataDirs: [checklistDir.replace(/\\/g, '/')] })
     );
 
     const app = await electron.launch({
-      args: [appRoot, `--user-data-dir=${tmpBase}`],
+      args: [appRoot, `--user-data-dir=${tmpBaseNorm}`],
       env: { ...process.env, ELECTRON_ENABLE_LOGGING: '1' },
     });
 
