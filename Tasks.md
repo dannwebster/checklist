@@ -1,12 +1,10 @@
 
 # To do <!-- sec:e91b0cfa -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
-- [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [x] purge button: add a top level "purge" button (at the same level as commit or revert) that deletes all completed tasks <!-- id:963961f8 -->
-  - [x] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
+  - [ ] copy-paste of text with URL should stay a URL <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
@@ -14,6 +12,8 @@
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] purge button: add a top level "purge" button (at the same level as commit or revert) that deletes all completed tasks <!-- id:963961f8 -->
+  - [x] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [x] complete button: add a top level "complete" button (at the same level as commit or revert) that moves all completed tasks to a completed section, <!-- id:fd21a9ed -->
