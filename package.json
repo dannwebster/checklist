@@ -14,7 +14,9 @@
     "dist:linux": "electron-builder --linux",
     "icons": "node scripts/generate-icons.js",
     "test": "vitest run tests/unit",
-    "test:watch": "vitest tests/unit"
+    "test:watch": "vitest tests/unit",
+    "test:e2e": "playwright test --config tests/playwright.config.js",
+    "test:all": "vitest run tests/unit && playwright test --config tests/playwright.config.js"
   },
   "build": {
     "appId": "com.dannwebster.punchcard",
@@ -53,10 +55,12 @@
     }
   },
   "devDependencies": {
+    "@playwright/test": "1.59.1",
     "electron": "34.5.8",
     "electron-builder": "25.1.8",
     "electron-icon-builder": "2.0.1",
     "nodemon": "3.1.14",
+    "playwright": "1.59.1",
     "sharp": "0.34.5",
     "vitest": "3.2.4"
   }
