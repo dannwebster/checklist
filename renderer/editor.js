@@ -16,6 +16,31 @@ const Editor = (() => {
   const titleEl = document.getElementById('editor-title');
   const itemListEl = document.getElementById('item-list');
 
+  // --- Paste import helper ---
+  function parsePastedLines(rawLines, baseIndent) {
+    const SPACES_PER_INDENT = 4;
+    const parsed = rawLines.map(line => {
+      let i = 0;
+      while (i < line.length && line[i] === '\t') i++;
+      const tabCount = i;
+      let spaceCount = 0;
+      if (tabCount === 0) {
+        while (i < line.length && line[i] === ' ') { spaceCount++; i++; }
+      }
+      const rawIndent = tabCount > 0 ? tabCount : Math.floor(spaceCount / SPACES_PER_INDENT);
+      let content = line.slice(i);
+      content = content.replace(/^(\d+\.|[-*+•◦▪▸►▶])\s+/, '');
+      return { rawIndent, content: content.trim() };
+    });
+    const nonEmpty = parsed.filter(p => p.content);
+    if (nonEmpty.length === 0) return [];
+    const minIndent = Math.min(...nonEmpty.map(p => p.rawIndent));
+    return nonEmpty.map(p => ({
+      text: p.content,
+      indent: Math.min(6, baseIndent + (p.rawIndent - minIndent)),
+    }));
+  }
+
   // --- Load ---
   async function loadChecklist(cl) {
     if (!cl) {
@@ -481,18 +506,22 @@ const Editor = (() => {
       const text = e.clipboardData.getData('text/plain');
       if (!text.includes('\n')) return;
       e.preventDefault();
-      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-      if (lines.length === 0) return;
+      const rawLines = text.split('\n').filter(l => l.trim());
+      if (rawLines.length === 0) return;
+      const baseIndent = items[index].indent || 0;
+      const parsed = parsePastedLines(rawLines, baseIndent);
+      if (parsed.length === 0) return;
       let firstLine = 0;
       if (!items[index].text.trim()) {
-        items[index].text = lines[0];
+        items[index].text = parsed[0].text;
+        items[index].indent = parsed[0].indent;
         firstLine = 1;
       }
-      const newItems = lines.slice(firstLine).map(line => ({
+      const newItems = parsed.slice(firstLine).map(p => ({
         id: genId(),
         checked: false,
-        text: line,
-        indent: items[index].indent || 0,
+        text: p.text,
+        indent: p.indent,
       }));
       items.splice(index + 1, 0, ...newItems);
       render();
