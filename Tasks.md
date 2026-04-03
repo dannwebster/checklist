@@ -2,16 +2,24 @@
 # To do <!-- sec:e91b0cfa -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
+- [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
+- [ ] purge button: add a top level "purge" button (at the same level as commit or revert) that moves all completed tasks to a completed section, it creates a complete section one if it doesn't exist <!-- id:963961f8 -->
+  - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
+- [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
+- [ ] minor Bugs <!-- id:706a4a92 -->
+  - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
+  - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
+  - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
+  - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
+  - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
+
+# Completed <!-- sec:582c2227 -->
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
-- [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [x] complete button: add a top level "complete" button (at the same level as commit or revert) that moves all completed tasks to a completed section, <!-- id:fd21a9ed -->
-  - [x]  it creates a complete section one if it doesn't exist <!-- id:f985df24 -->
+  - [x] it creates a complete section one if it doesn't exist <!-- id:f985df24 -->
   - [x] it has a confirm dialog before making the change <!-- id:e1cdcd1c -->
-- [ ] purge button:  add a top level "purge" button (at the same level as commit or revert) that moves all completed tasks to a completed section, it creates a complete section one if it doesn't exist <!-- id:963961f8 -->
-  - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [x] Add Unit testing: implement Layer 1 of the plan in TESTING.md <!-- id:8024592b -->
-- [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [x] bulk copy/paste import should support indentation <!-- id:782b42cc -->
   - [x] tab should always equal 1 indent <!-- id:67ee5e7c -->
   - [x] bulk copy paste should handle typical bulleted list prefixes, such as those found in markdown or document files. When one of those is a prefix, it should be deleted <!-- id:17a565ff -->
@@ -25,15 +33,7 @@
 - [x] bulk import/copy paste <!-- id:a2dce8cb -->
   - [x] enter-delimited text <!-- id:f8b442a1 -->
   - [x] csv <!-- id:0b2a21f5 -->
-- [ ] minor Bugs <!-- id:706a4a92 -->
-  - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [x] main checklist area should expand right as the window expands, not have fixed width <!-- id:2c43202d -->
-  - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
-  - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
-  - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
-  - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
-
-# Completed <!-- sec:582c2227 -->
 - [x] get a good icon <!-- id:c9c8953c -->
 - [x] add due dates: http://google.com: a small calendar widget should exist at the end of every todo item. when clicking on that date widget, it should add a date at the end of the markdown text in ISO=8601 format (e.g. 2026-03-13). The first date found in isO-8601 format in any todo item's markdown text should be treated as that item's due date, and highlighted and shown persistently in the task's UI http://google.com <!-- id:b2ee1645 -->
 - [x] colon parsing should automatically create and open the context area <!-- id:7dd5db7a -->
