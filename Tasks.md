@@ -6,9 +6,14 @@
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] add an automated test plan: how would I test this <!-- id:8024592b -->
-- [ ] bulk import/copy paste <!-- id:a2dce8cb -->
-  - [ ] enter-delimited text <!-- id:f8b442a1 -->
-  - [ ] csv <!-- id:0b2a21f5 -->
+- [ ] bulk copy/paste import should support indentation <!-- id:782b42cc -->
+  - [ ] tab should always equal 1 indent <!-- id:67ee5e7c -->
+  - [ ] multiple spaces at start of line should also equal an indent <!-- id:d41f2596 -->
+    - [ ] default # of spaces is 4 <!-- id:f50e128d -->
+    - [ ] # of spaces should be a config parameter in settings <!-- id:166b086e -->
+- [x] bulk import/copy paste <!-- id:a2dce8cb -->
+  - [x] enter-delimited text <!-- id:f8b442a1 -->
+  - [x] csv <!-- id:0b2a21f5 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [x] main checklist area should expand right as the window expands, not have fixed width <!-- id:2c43202d -->

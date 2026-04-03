@@ -477,6 +477,30 @@ const Editor = (() => {
     textEl.addEventListener('blur', () => {
       renderItemText(textEl, items[index].text);
     });
+    textEl.addEventListener('paste', (e) => {
+      const text = e.clipboardData.getData('text/plain');
+      if (!text.includes('\n')) return;
+      e.preventDefault();
+      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+      if (lines.length === 0) return;
+      let firstLine = 0;
+      if (!items[index].text.trim()) {
+        items[index].text = lines[0];
+        firstLine = 1;
+      }
+      const newItems = lines.slice(firstLine).map(line => ({
+        id: genId(),
+        checked: false,
+        text: line,
+        indent: items[index].indent || 0,
+      }));
+      items.splice(index + 1, 0, ...newItems);
+      render();
+      scheduleSave();
+      const lastItem = newItems.length > 0 ? newItems[newItems.length - 1] : items[index];
+      const lastEl = itemListEl.querySelector(`[data-id="${lastItem.id}"] .item-text`);
+      if (lastEl) lastEl.focus();
+    });
     textEl.addEventListener('mousedown', (e) => {
       const link = e.target.closest('.item-link');
       if (link) {
