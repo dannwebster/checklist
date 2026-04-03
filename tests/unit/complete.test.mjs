@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { collectCompleted } from '../../renderer/complete.js';
+import { collectCompleted, purgeCompleted } from '../../renderer/complete.js';
 
 // Helpers
 const fakeId = (() => { let n = 0; return () => `test${String(n++).padStart(4, '0')}`; })();
@@ -164,5 +164,58 @@ describe('collectCompleted — multiple checked items', () => {
     ];
     const result = collectCompleted(items, makeId());
     expect(result[0].text).toBe('keep');
+  });
+});
+
+// ─── purgeCompleted ───────────────────────────────────────────────────────────
+
+describe('purgeCompleted — no checked items', () => {
+  it('returns equivalent items when nothing is checked', () => {
+    const items = [task({ text: 'a' }), task({ text: 'b' })];
+    const result = purgeCompleted(items);
+    expect(result.map(i => i.text)).toEqual(['a', 'b']);
+  });
+
+  it('returns a new array (does not mutate original)', () => {
+    const items = [task()];
+    const result = purgeCompleted(items);
+    expect(result).not.toBe(items);
+  });
+});
+
+describe('purgeCompleted — removes checked items', () => {
+  it('removes a single checked item', () => {
+    const items = [task({ text: 'gone', checked: true })];
+    const result = purgeCompleted(items);
+    expect(result).toHaveLength(0);
+  });
+
+  it('removes all checked items', () => {
+    const items = [
+      task({ text: 'a', checked: true }),
+      task({ text: 'b', checked: true }),
+    ];
+    const result = purgeCompleted(items);
+    expect(result).toHaveLength(0);
+  });
+
+  it('preserves unchecked items in order', () => {
+    const items = [
+      task({ text: 'keep1' }),
+      task({ text: 'gone', checked: true }),
+      task({ text: 'keep2' }),
+    ];
+    const result = purgeCompleted(items);
+    expect(result.map(i => i.text)).toEqual(['keep1', 'keep2']);
+  });
+
+  it('does not remove section items', () => {
+    const items = [
+      section({ text: 'My Section' }),
+      task({ text: 'gone', checked: true }),
+    ];
+    const result = purgeCompleted(items);
+    expect(result).toHaveLength(1);
+    expect(result[0].type).toBe('section');
   });
 });

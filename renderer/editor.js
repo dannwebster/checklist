@@ -57,6 +57,7 @@ const Editor = (() => {
       document.title = 'Punchcard';
       addH1Btn.style.display = 'none';
       completeBtn.style.display = 'none';
+      purgeBtn.style.display = 'none';
       applyGitUI();
       render();
       return;
@@ -76,6 +77,7 @@ const Editor = (() => {
     document.title = currentTitle + ' — Punchcard';
     addH1Btn.style.display = '';
     completeBtn.style.display = '';
+    purgeBtn.style.display = '';
     updateDocFilterBtn();
     render();
     if (parsed.hadMissingIds) scheduleSave();
@@ -1062,6 +1064,28 @@ const Editor = (() => {
     scheduleSave();
   });
   document.getElementById('title-row').appendChild(completeBtn);
+
+  // --- Purge button ---
+  const purgeBtn = document.createElement('button');
+  purgeBtn.id = 'purge-btn';
+  purgeBtn.textContent = 'purge';
+  purgeBtn.title = 'Permanently delete all completed tasks';
+  purgeBtn.style.display = 'none';
+  purgeBtn.addEventListener('click', async () => {
+    if (!currentPath) return;
+
+    const confirmed = await window.checklistAPI.showDialog(
+      'Permanently delete all completed tasks? This cannot be undone.',
+      'Delete'
+    );
+    if (!confirmed) return;
+
+    if (!items.some(it => !it.type && it.checked)) return;
+    items = purgeCompleted(items);
+    render();
+    scheduleSave();
+  });
+  document.getElementById('title-row').appendChild(purgeBtn);
 
   // --- Reload from disk ---
   async function reloadCurrent() {

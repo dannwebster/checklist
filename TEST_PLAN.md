@@ -281,7 +281,37 @@ This plan covers all features described in README.md. Tests are grouped by featu
 
 ---
 
-## 11. Keyboard shortcut reference
+## 11. Purge button
+
+### 11.1 Button visibility
+1. Open a checklist file.
+- **Expected:** `purge` button appears in the title row alongside complete/commit/revert.
+2. Close the file (select nothing in the sidebar).
+- **Expected:** `purge` button is hidden.
+
+### 11.2 Confirm dialog — cancel
+1. Check one or more items, then click `purge`.
+2. Click Cancel in the confirmation dialog.
+- **Expected:** No items are deleted. List is unchanged.
+
+### 11.3 Permanently deletes checked items
+1. Check several items, then click `purge` and confirm.
+- **Expected:** All checked items are removed from the file entirely. Unchecked items remain.
+- — automated: tests/unit/complete.test.mjs
+
+### 11.4 No-op when nothing is checked
+1. Ensure no items are checked. Click `purge` and confirm.
+- **Expected:** Dialog appears, confirm is clicked, but no changes occur.
+- — automated: tests/unit/complete.test.mjs
+
+### 11.5 Sections are not deleted
+1. Have a section with only checked items beneath it. Click `purge` and confirm.
+- **Expected:** The section header remains; only the checked task items are removed.
+- — automated: tests/unit/complete.test.mjs
+
+---
+
+## 12. Keyboard shortcut reference
 
 Verify each shortcut from the README table works end-to-end:
 

@@ -40,6 +40,11 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 - If no "Completed" section exists, one is created automatically
 - A confirmation dialog is shown before any changes are made
 
+### Purge button
+
+- Click `purge` in the title row to permanently delete all checked items from the file
+- A confirmation dialog is shown before deletion — this action cannot be undone
+
 ### Multiple folders
 
 - Watch multiple root folders simultaneously

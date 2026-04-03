@@ -27,6 +27,12 @@ function collectCompleted(items, genIdFn) {
   return remaining;
 }
 
+// Pure function: permanently remove all checked task items.
+// Returns a new items array; the original is not mutated.
+function purgeCompleted(items) {
+  return items.filter(it => it.type || !it.checked);
+}
+
 if (typeof module !== 'undefined') {
-  module.exports = { collectCompleted };
+  module.exports = { collectCompleted, purgeCompleted };
 }
