@@ -249,7 +249,39 @@ This plan covers all features described in README.md. Tests are grouped by featu
 
 ---
 
-## 10. Keyboard shortcut reference
+## 10. Complete button
+
+### 10.1 Button visibility
+1. Open a checklist file.
+- **Expected:** `complete` button appears in the title row alongside commit/revert.
+2. Close the file (select nothing in the sidebar).
+- **Expected:** `complete` button is hidden.
+
+### 10.2 Confirm dialog — cancel
+1. Check one or more items, then click `complete`.
+2. Click Cancel in the confirmation dialog.
+- **Expected:** No items are moved. List is unchanged.
+
+### 10.3 Move to new Completed section
+1. Open a file with no existing "Completed" section. Check several items.
+2. Click `complete` and confirm.
+- **Expected:** All checked items are removed from their original positions and placed under a new "Completed" H1 section at the bottom of the file.
+- — automated: tests/unit/complete.test.mjs
+
+### 10.4 Append to existing Completed section
+1. Open a file that already has a "Completed" H1 section with some items. Check additional items elsewhere.
+2. Click `complete` and confirm.
+- **Expected:** Newly checked items are appended after the existing items in the "Completed" section. Nothing is duplicated.
+- — automated: tests/unit/complete.test.mjs
+
+### 10.5 No-op when nothing is checked
+1. Ensure no items are checked. Click `complete` and confirm.
+- **Expected:** Dialog appears, confirm is clicked, but no changes occur (no section created, list unchanged).
+- — automated: tests/unit/complete.test.mjs
+
+---
+
+## 11. Keyboard shortcut reference
 
 Verify each shortcut from the README table works end-to-end:
 
