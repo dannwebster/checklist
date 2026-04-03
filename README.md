@@ -34,6 +34,12 @@ A desktop task manager built with Electron. Lists are stored as standard GitHub 
 - Toggle completed items visible or hidden per section or globally
 - The setting is stored in the file itself, so it persists across restarts
 
+### Complete button
+
+- Click `complete` in the title row to move all checked items into a "Completed" section at the bottom of the file
+- If no "Completed" section exists, one is created automatically
+- A confirmation dialog is shown before any changes are made
+
 ### Multiple folders
 
 - Watch multiple root folders simultaneously

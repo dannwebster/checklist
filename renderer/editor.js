@@ -56,6 +56,7 @@ const Editor = (() => {
       titleEl.textContent = '';
       document.title = 'Punchcard';
       addH1Btn.style.display = 'none';
+      completeBtn.style.display = 'none';
       applyGitUI();
       render();
       return;
@@ -74,6 +75,7 @@ const Editor = (() => {
     titleEl.textContent = currentTitle;
     document.title = currentTitle + ' — Punchcard';
     addH1Btn.style.display = '';
+    completeBtn.style.display = '';
     updateDocFilterBtn();
     render();
     if (parsed.hadMissingIds) scheduleSave();
@@ -1038,6 +1040,28 @@ const Editor = (() => {
     }
   });
   document.getElementById('title-row').appendChild(gitRevertBtn);
+
+  // --- Complete button ---
+  const completeBtn = document.createElement('button');
+  completeBtn.id = 'complete-btn';
+  completeBtn.textContent = 'complete';
+  completeBtn.title = 'Move all completed tasks into a Completed section';
+  completeBtn.style.display = 'none';
+  completeBtn.addEventListener('click', async () => {
+    if (!currentPath) return;
+
+    const confirmed = await window.checklistAPI.showDialog(
+      'Move all completed tasks into a "Completed" section?',
+      'Move'
+    );
+    if (!confirmed) return;
+
+    if (!items.some(it => !it.type && it.checked)) return;
+    items = collectCompleted(items, genId);
+    render();
+    scheduleSave();
+  });
+  document.getElementById('title-row').appendChild(completeBtn);
 
   // --- Reload from disk ---
   async function reloadCurrent() {
