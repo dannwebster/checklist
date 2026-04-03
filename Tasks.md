@@ -5,7 +5,8 @@
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [ ] add an automated test plan: how would I test this <!-- id:8024592b -->
+- [ ] Add Unit testing: implement Layer 1 of the plan in TESTING.md <!-- id:8024592b -->
+- [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [x] bulk copy/paste import should support indentation <!-- id:782b42cc -->
   - [x] tab should always equal 1 indent <!-- id:67ee5e7c -->
   - [x] bulk copy paste should handle typical bulleted list prefixes, such as those found in markdown or document files. When one of those is a prefix, it should be deleted <!-- id:17a565ff -->
@@ -14,7 +15,7 @@
     - [x] bullet unicode characters <!-- id:0c4084b6 -->
     - [x] etc <!-- id:e40995c9 -->
   - [x] multiple spaces at start of line should also equal an indent <!-- id:d41f2596 -->
-    - [x] default number of spaces that equals 1 indent is 4  <!-- id:f50e128d -->
+    - [x] default number of spaces that equals 1 indent is 4 <!-- id:f50e128d -->
     - [x] number of spaces should be a config parameter in settings <!-- id:166b086e -->
 - [x] bulk import/copy paste <!-- id:a2dce8cb -->
   - [x] enter-delimited text <!-- id:f8b442a1 -->
