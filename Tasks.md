@@ -2,6 +2,8 @@
 # To do <!-- sec:e91b0cfa -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
+- [ ] complete and purge should ask you to commit first, and balk on uncommitted changes <!-- id:2a37c9df -->
+- [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] copy-paste of text with URL should stay a URL <!-- id:2a942cd7 -->
