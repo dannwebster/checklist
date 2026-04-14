@@ -3,7 +3,7 @@
 - [x] make "add new" by <!-- id:172a659e -->
   - [x] when the cursor is at the beginning of the item, it adds an item before the current item, and moves the cursor to that item <!-- id:938514fa -->
   - [x] when the cursor is at the end of an item, it adds an item after the current item, and the cursor moves to that item <!-- id:6fad71d5 -->
-  - [ ] when the cursor is in the middle of the item, it adds an item after, and splits the text - all text before the cursor remains in the previous item, all text after the cursor is in the new item after the first item. The cursor is moved to the beginning of the new item <!-- id:2ec63ba5 -->
+  - [x] when the cursor is in the middle of the item, it adds an item after, and splits the text - all text before the cursor remains in the previous item, all text after the cursor is in the new item after the first item. The cursor is moved to the beginning of the new item <!-- id:2ec63ba5 -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
 - [ ] watch the video about Gridley's new system - https://drive.google.com/file/d/1CV0GOpFawBM-Hz6s8PkV6x-Brqt207-d/view?t=1.035 <!-- id:1e61545c -->
 - [ ] Dann Webster (2K)  [3: 15 PM] <!-- id:0cbab602 -->
