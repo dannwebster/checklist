@@ -645,12 +645,58 @@ const Editor = (() => {
       }
       if (e.key === 'Enter' && !e.ctrlKey) {
         e.preventDefault();
-        const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
-        items.splice(index + 1, 0, newItem);
-        render();
-        scheduleSave();
-        const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
-        if (newRow) newRow.focus();
+        const currentText = items[index].text;
+        const atEnd = isCaretAtEnd(textEl);
+        const atStart = isCaretAtStart(textEl) && currentText.length > 0;
+
+        if (atStart) {
+          // Insert empty item BEFORE current
+          const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
+          items.splice(index, 0, newItem);
+          render();
+          scheduleSave();
+          const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
+          if (newRow) newRow.focus();
+        } else if (atEnd) {
+          // Insert empty item AFTER current (original behavior)
+          const newItem = { id: genId(), checked: false, text: '', indent: items[index].indent || 0 };
+          items.splice(index + 1, 0, newItem);
+          render();
+          scheduleSave();
+          const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
+          if (newRow) newRow.focus();
+        } else {
+          // Middle: split text at cursor position
+          const sel = window.getSelection();
+          const range = sel.getRangeAt(0);
+          const preRange = document.createRange();
+          preRange.selectNodeContents(textEl);
+          preRange.setEnd(range.startContainer, range.startOffset);
+          const cursorOffset = preRange.toString().length;
+
+          items[index].text = currentText.substring(0, cursorOffset);
+          const newItem = {
+            id: genId(),
+            checked: false,
+            text: currentText.substring(cursorOffset),
+            indent: items[index].indent || 0,
+          };
+          items.splice(index + 1, 0, newItem);
+          render();
+          scheduleSave();
+          const newRow = itemListEl.querySelector(`[data-id="${newItem.id}"] .item-text`);
+          if (newRow) {
+            newRow.focus();
+            // Override cursor to start of new item (focus event puts it at end)
+            const startRange = document.createRange();
+            const startSel = window.getSelection();
+            const node = newRow.firstChild || newRow;
+            startRange.setStart(node, 0);
+            startRange.collapse(true);
+            startSel.removeAllRanges();
+            startSel.addRange(startRange);
+          }
+        }
       }
       if (e.key === 'Enter' && e.ctrlKey) {
         e.preventDefault();

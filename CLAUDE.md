@@ -74,6 +74,15 @@ Items can have a due date stored as an ISO-8601 date string (e.g., `2026-03-24`)
 - The date is appended to `item.text` (not a separate field) and round-trips transparently through `parse`/`serialize`
 - The calendar button uses `<input type="date">` with `showPicker()` (Chromium-only API) to open the native date picker without showing the input element
 
+### Enter key behavior in item text
+
+Pressing Enter in an item's text field is cursor-position-aware (`editor.js` ~line 644):
+- **Cursor at start** of non-empty text → inserts a new empty item *before* the current one
+- **Cursor at end** (or item is empty) → inserts a new empty item *after* (standard behavior)
+- **Cursor in middle** → splits the item: text before cursor stays, text after cursor becomes a new item; cursor lands at the start of the new item
+
+The focus event on `.item-text` always moves the cursor to the end. For the split case, cursor is explicitly reset to position 0 immediately after `newRow.focus()`.
+
 ### Key constraint
 
 `prompt()` and `confirm()` are disabled in Electron's renderer. Use `window.checklistAPI.showConfirm()` for confirmation dialogs (backed by `dialog.showMessageBoxSync` in the main process). For text input from the user, inject an inline input element into the DOM.
