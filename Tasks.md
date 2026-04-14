@@ -1,12 +1,25 @@
 
 # To do <!-- sec:e91b0cfa -->
 - [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
-- [ ] copy-paste of text with URL should stay a UrL <!-- id:2a942cd7 -->
+- [ ] watch the video about Gridley's new system - https://drive.google.com/file/d/1CV0GOpFawBM-Hz6s8PkV6x-Brqt207-d/view?t=1.035 <!-- id:1e61545c -->
+- [ ] Dann Webster (2K)  [3: 15 PM] <!-- id:0cbab602 -->
+- [ ] Brett: make a callout for a single Tech QA in your spreadsheet <!-- id:e10c0916 -->
+- [ ] Dann: Dann + Matt + Polaris team support a polaris integration test project for yoshi, matt, rian, nathan (2026-05-01) <!-- id:10dfaffa -->
+- [ ] Who is good at this stuff, what kind of support <!-- id:f2158c06 -->
+- [ ] Is this tool usable by this audience <!-- id:eb0b7e12 -->
+- [ ] Potenentially identify a prime candidate for teh Tech QA lead <!-- id:c6acc7be -->
+- [ ] Brett: Once we have done #2, brett can put forth a candidate for the Tech QA LEad that dann can interview for the role. That candidate may be one of yoshi/matt/rian/nathan, OR may be a completely different person (2026-06-01) (edited) <!-- id:f698b1b5 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
-- [ ] purge button: add a top level "purge" button (at the same level as commit or revert) that moves all completed tasks to a completed section, it creates a complete section one if it doesn't exist <!-- id:963961f8 -->
-  - [ ] it has  a confirm dialog before making the change <!-- id:e253c262 -->
+- [ ] complete and purge should ask you to commit first, and balk on uncommitted changes <!-- id:2a37c9df -->
+- [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
+- [ ] Brett Schmidt - by end of month, training/test for Medusa QA 2026-05-01 <!-- id:2bc44c72 -->
+  - [ ] Stephen Florida (Yoshi) - associate feature lead <!-- id:adca2001 -->
+  - [ ] Matt Abog <!-- id:de8b4dea -->
+  - [ ] Nathan Antolin - works for FXS, but dotted lines into 2k - vfx support <!-- id:66700ba5 -->
+  - [ ] Rian Gonzalez(they/them) <!-- id:6bf8a031 -->
 - [ ] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
+  - [ ] copy-paste of text with URL should stay a URL <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
@@ -14,6 +27,12 @@
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] make "add new" by hitting return in an item positional <!-- id:172a659e -->
+  - [x] when the cursor is at the beginning of the item, it adds an item before the current item, and moves the cursor to that item <!-- id:938514fa -->
+  - [x] when the cursor is at the end of an item, it adds an item after the current item, and the cursor moves to that item <!-- id:6fad71d5 -->
+  - [x] when the cursor is in the middle of the item, it adds an item after, and splits the text - all text before the cursor remains in the previous item, all text after the cursor is in the new item after the first item. The cursor is moved to the beginning of the new item <!-- id:2ec63ba5 -->
+- [x] purge button: add a top level "purge" button (at the same level as commit or revert) that deletes all completed tasks <!-- id:963961f8 -->
+  - [x] it has  a confirm dialog before making the change <!-- id:e253c262 -->
 - [x] left arrow at the beginning of an item goes to the end of the previous item <!-- id:cd696106 -->
 - [x] right arrow at end of item goes to begining of next item <!-- id:cc1244ba -->
 - [x] complete button: add a top level "complete" button (at the same level as commit or revert) that moves all completed tasks to a completed section, <!-- id:fd21a9ed -->
