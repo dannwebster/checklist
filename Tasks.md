@@ -1,5 +1,6 @@
 
 # To do <!-- sec:e91b0cfa -->
+- [ ] mobile access? <!-- id:f4c078e9 -->
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
