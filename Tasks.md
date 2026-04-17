@@ -1,6 +1,6 @@
 
 # To do <!-- sec:e91b0cfa -->
-- [ ] make sure it doesn't overwrite files <!-- id:98a69187 -->
+- [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
