@@ -1,6 +1,8 @@
 
 # To do <!-- sec:e91b0cfa -->
 - [ ] mobile access? <!-- id:f4c078e9 -->
+- [ ] be able to collapse and move items that have sub items (just like headers) <!-- id:5fd0ccf2 -->
+- [ ] Allow a Promote to header or Insert header Above <!-- id:024d8d3e -->
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
@@ -10,6 +12,7 @@
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
+  - [ ]  <!-- id:44d91232 -->
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
