@@ -12,7 +12,7 @@
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
-  - [ ]  <!-- id:44d91232 -->
+  - [ ] sidebar titles stay yellow long after the file has been commmitted <!-- id:44d91232 -->
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
