@@ -6,6 +6,7 @@
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
+- [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] copy-paste of text with URL should stay a URL <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
