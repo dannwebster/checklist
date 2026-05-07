@@ -1,5 +1,6 @@
 
 # To do <!-- sec:e91b0cfa -->
+- [ ] get punchcard icon showing during running of standalone <!-- id:362d4dcd -->
 - [ ] mobile access? <!-- id:f4c078e9 -->
 - [ ] be able to collapse and move items that have sub items (just like headers) <!-- id:5fd0ccf2 -->
 - [ ] Allow a Promote to header or Insert header Above <!-- id:024d8d3e -->
