@@ -9,7 +9,7 @@
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
-  - [ ] copy-paste of text with URL should stay a URL <!-- id:2a942cd7 -->
+  - [ ] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
