@@ -2,12 +2,24 @@
 # To do <!-- sec:e91b0cfa -->
 - [ ] get punchcard icon showing during running of standalone <!-- id:362d4dcd -->
 - [ ] mobile access? <!-- id:f4c078e9 -->
+- [ ] return before is broken <!-- id:8c6b572b -->
+- [ ] dates are broken <!-- id:2b5f60d8 -->
+- [ ] resolve error at shutdown:  
+A JavaScript error occurred in the main process
+
+Uncaught Exception:
+TypeError: Object has been destroyed
+    at FSWatcher.<anonymous>
+    (C:\git\checklist\dist\win-unpacked\resources\app.asar\main\watcher.js:30:17)
+    at FSWatcher.emit (node:events:524:28)
+    at FSWatcher._handle.onchange (node:internal/fs/watchers:215:12) <!-- id:11da6779 -->
 - [ ] be able to collapse and move items that have sub items (just like headers) <!-- id:5fd0ccf2 -->
 - [ ] Allow a Promote to header or Insert header Above <!-- id:024d8d3e -->
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
+- [ ] add resolution date <!-- id:259c9142 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
