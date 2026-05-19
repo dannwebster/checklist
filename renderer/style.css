@@ -604,6 +604,19 @@ body {
 .item-due-badge.due-today   { color: #d7ba7d; border-color: #d7ba7d; background: rgba(215,186,125,0.12); }
 .item-due-badge.due-future  { color: var(--check-color); border-color: var(--check-color); background: rgba(78,201,176,0.08); }
 
+/* Resolved-on badge — informational, no interactive controls */
+.item-resolved-badge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  color: var(--text-dim);
+  background: transparent;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+  opacity: 0.75;
+}
+
 /* Calendar button — hidden until hover or date exists */
 .item-cal-btn {
   opacity: 0;

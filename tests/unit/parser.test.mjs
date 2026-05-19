@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parse, serialize, genId, extractDueDate, stripDueDate } from '../../renderer/parser.js';
+import { parse, serialize, genId, extractDueDate, stripDueDate, extractResolutionDate, stripResolutionDate, nowResolutionStamp, formatResolutionDate } from '../../renderer/parser.js';
 
 // ─── genId ────────────────────────────────────────────────────────────────────
 
@@ -51,6 +51,82 @@ describe('stripDueDate', () => {
 
   it('handles date-only string', () => {
     expect(stripDueDate('2026-03-24')).toBe('');
+  });
+});
+
+// ─── extractResolutionDate ────────────────────────────────────────────────────
+
+describe('extractResolutionDate', () => {
+  it('returns null when no timestamp present', () => {
+    expect(extractResolutionDate('buy milk')).toBeNull();
+  });
+
+  it('returns the ISO datetime string when present', () => {
+    expect(extractResolutionDate('done 2026-05-19T1430')).toBe('2026-05-19T1430');
+  });
+
+  it('does not match a date-only string', () => {
+    expect(extractResolutionDate('2026-05-19')).toBeNull();
+  });
+
+  it('finds timestamp embedded in middle of text', () => {
+    expect(extractResolutionDate('finished 2026-05-19T1430 today')).toBe('2026-05-19T1430');
+  });
+});
+
+// ─── stripResolutionDate ──────────────────────────────────────────────────────
+
+describe('stripResolutionDate', () => {
+  it('returns text unchanged when no timestamp present', () => {
+    expect(stripResolutionDate('buy milk')).toBe('buy milk');
+  });
+
+  it('removes trailing timestamp and trims', () => {
+    expect(stripResolutionDate('buy milk 2026-05-19T1430')).toBe('buy milk');
+  });
+
+  it('removes mid-text timestamp and collapses double spaces', () => {
+    expect(stripResolutionDate('done 2026-05-19T1430 today')).toBe('done today');
+  });
+});
+
+// ─── non-interference between date and datetime helpers ───────────────────────
+
+describe('due-date / resolution-date non-interference', () => {
+  it('extractDueDate ignores an ISO datetime', () => {
+    expect(extractDueDate('task 2026-05-19T1430')).toBeNull();
+  });
+
+  it('extractDueDate still finds a date when both date and datetime are present', () => {
+    expect(extractDueDate('task 2026-03-24 done 2026-05-19T1430')).toBe('2026-03-24');
+  });
+
+  it('extractResolutionDate ignores a bare ISO date', () => {
+    expect(extractResolutionDate('task 2026-03-24')).toBeNull();
+  });
+
+  it('stripDueDate leaves a datetime intact', () => {
+    expect(stripDueDate('task 2026-03-24 done 2026-05-19T1430')).toBe('task done 2026-05-19T1430');
+  });
+
+  it('stripResolutionDate leaves a bare date intact', () => {
+    expect(stripResolutionDate('task 2026-03-24 done 2026-05-19T1430')).toBe('task 2026-03-24 done');
+  });
+});
+
+// ─── nowResolutionStamp ───────────────────────────────────────────────────────
+
+describe('nowResolutionStamp', () => {
+  it('returns a YYYY-MM-DDTHHMM string', () => {
+    expect(nowResolutionStamp()).toMatch(/^\d{4}-\d{2}-\d{2}T\d{4}$/);
+  });
+});
+
+// ─── formatResolutionDate ─────────────────────────────────────────────────────
+
+describe('formatResolutionDate', () => {
+  it('formats a stored stamp as date and HH:MM for display', () => {
+    expect(formatResolutionDate('2026-05-19T1430')).toBe('2026-05-19 14:30');
   });
 });
 
@@ -261,6 +337,28 @@ describe('round-trip: parse(serialize(...)) === original', () => {
   it('round-trips docCompletedFilter:hide', () => {
     const { docCompletedFilter } = parse(serialize('', [], 'hide'));
     expect(docCompletedFilter).toBe('hide');
+  });
+
+  it('round-trips a checked item with an appended resolution datetime', () => {
+    const items = [{ id: 'aabb1122', checked: true, text: 'done task 2026-05-19T1430', indent: 0 }];
+    const { items: result } = parse(serialize('', items));
+    expect(result[0]).toMatchObject(items[0]);
+    expect(extractResolutionDate(result[0].text)).toBe('2026-05-19T1430');
+  });
+
+  it('round-trips a legacy checked item without a resolution datetime', () => {
+    const items = [{ id: 'aabb1122', checked: true, text: 'old task', indent: 0 }];
+    const { items: result } = parse(serialize('', items));
+    expect(result[0]).toMatchObject(items[0]);
+    expect(extractResolutionDate(result[0].text)).toBeNull();
+  });
+
+  it('round-trips an item with both a due date and a resolution datetime', () => {
+    const items = [{ id: 'aabb1122', checked: true, text: 'task 2026-03-24 2026-05-19T1430', indent: 0 }];
+    const { items: result } = parse(serialize('', items));
+    expect(result[0]).toMatchObject(items[0]);
+    expect(extractDueDate(result[0].text)).toBe('2026-03-24');
+    expect(extractResolutionDate(result[0].text)).toBe('2026-05-19T1430');
   });
 
   it('round-trips mixed items and sections', () => {

@@ -387,7 +387,7 @@ const Editor = (() => {
   }
 
   function renderItemText(el, text) {
-    let html = stripDueDate(text)
+    let html = stripResolutionDate(stripDueDate(text))
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
@@ -460,6 +460,16 @@ const Editor = (() => {
       applyDueDateStyling(dateBadge, dueDate);
     } else {
       dateBadge.hidden = true;
+    }
+
+    // --- Resolved-on badge ---
+    const resolvedBadge = document.createElement('span');
+    resolvedBadge.className = 'item-resolved-badge';
+    const initialResolved = extractResolutionDate(item.text);
+    if (item.checked && initialResolved) {
+      resolvedBadge.textContent = 'Resolved ' + formatResolutionDate(initialResolved);
+    } else {
+      resolvedBadge.hidden = true;
     }
 
     const calBtn = document.createElement('button');
@@ -803,6 +813,7 @@ const Editor = (() => {
     itemMain.appendChild(checkbox);
     itemMain.appendChild(textEl);
     itemMain.appendChild(dateBadge);
+    itemMain.appendChild(resolvedBadge);
     itemMain.appendChild(calBtn);
     itemMain.appendChild(contextBtn);
     itemMain.appendChild(delBtn);
@@ -813,11 +824,29 @@ const Editor = (() => {
 
   // --- Item mutations ---
   function toggleItem(index) {
-    items[index].checked = !items[index].checked;
-    const row = itemListEl.querySelector(`[data-id="${items[index].id}"]`);
+    const it = items[index];
+    it.checked = !it.checked;
+    if (it.checked) {
+      it.text = stripResolutionDate(it.text).trimEnd() + ' ' + nowResolutionStamp();
+    } else {
+      it.text = stripResolutionDate(it.text).trimEnd();
+    }
+    const row = itemListEl.querySelector(`[data-id="${it.id}"]`);
     if (row) {
-      row.classList.toggle('checked', items[index].checked);
-      row.querySelector('.item-checkbox').checked = items[index].checked;
+      row.classList.toggle('checked', it.checked);
+      row.querySelector('.item-checkbox').checked = it.checked;
+      const badge = row.querySelector('.item-resolved-badge');
+      const stamp = extractResolutionDate(it.text);
+      if (badge) {
+        if (it.checked && stamp) {
+          badge.textContent = 'Resolved ' + formatResolutionDate(stamp);
+          badge.hidden = false;
+        } else {
+          badge.hidden = true;
+        }
+      }
+      const textEl = row.querySelector('.item-text');
+      if (textEl && document.activeElement !== textEl) renderItemText(textEl, it.text);
     }
     scheduleSave();
   }
