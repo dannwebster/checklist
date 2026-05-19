@@ -1,27 +1,16 @@
 
 # To do <!-- sec:e91b0cfa -->
-- [ ] get punchcard icon showing during running of standalone <!-- id:362d4dcd -->
-- [ ] mobile access? <!-- id:f4c078e9 -->
-- [ ] return before is broken <!-- id:8c6b572b -->
-- [ ] dates are broken <!-- id:2b5f60d8 -->
-- [ ] resolve error at shutdown:  
-A JavaScript error occurred in the main process
-
-Uncaught Exception:
-TypeError: Object has been destroyed
-    at FSWatcher.<anonymous>
-    (C:\git\checklist\dist\win-unpacked\resources\app.asar\main\watcher.js:30:17)
-    at FSWatcher.emit (node:events:524:28)
-    at FSWatcher._handle.onchange (node:internal/fs/watchers:215:12) <!-- id:11da6779 -->
-- [ ] be able to collapse and move items that have sub items (just like headers) <!-- id:5fd0ccf2 -->
+- [x] add resolution date 2026-05-19T1410: when an item is checked off, the date and time the bug was resolved should be noted, and visible in the checked off item. Unchecking an item removes that date <!-- id:259c9142 -->
+- [ ] be able to visually collapse the sub items within a parent items (like you can collapse a header) <!-- id:5fd0ccf2 -->
+- [ ] when you move an item that has sub items, all the sub items move with the parent item (just like headers) <!-- id:18e59dd4 -->
+- [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] Allow a Promote to header or Insert header Above <!-- id:024d8d3e -->
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
-- [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
-- [ ] add resolution date <!-- id:259c9142 -->
+- [ ] mobile access? <!-- id:f4c078e9 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
-  - [ ] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context <!-- id:2a942cd7 -->
+  - [x] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context - https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355: https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355 <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
@@ -30,6 +19,10 @@ TypeError: Object has been destroyed
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] get punchcard icon showing during running of standalone <!-- id:362d4dcd -->
+- [x] return before is broken <!-- id:8c6b572b -->
+- [x] dates are broken  2026-05-18 <!-- id:2b5f60d8 -->
+- [x] resolve error at shutdown <!-- id:b0121bce -->
 - [x] complete and purge should ask you to commit first, and balk on uncommitted changes <!-- id:2a37c9df -->
 - [x] Add End to End Testing: implement Layer 2 of the plan in TESTING.md <!-- id:9d1930b7 -->
 - [x] make "add new" by <!-- id:172a659e -->
