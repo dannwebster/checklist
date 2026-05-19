@@ -5,6 +5,7 @@ const ITEM_RE = /^(\s*)- \[(x| )\] (.+?)(?:\s*<!-- id:([a-f0-9]{8}) -->)?$/i;
 const SECTION_RE = /^(#{1,3}) (.+?)(?:\s*<!-- sec:([a-f0-9]{8})(?:\s+cf:(show|hide))? -->)?$/;
 const DOC_FILTER_RE = /^<!-- cf:(show|hide) -->$/;
 const ISO_DATE_RE = /\b(\d{4}-\d{2}-\d{2})\b/;
+const ISO_DATETIME_RE = /\b(\d{4}-\d{2}-\d{2}T\d{4})\b/;
 
 function extractDueDate(text) {
   const m = text.match(ISO_DATE_RE);
@@ -13,6 +14,25 @@ function extractDueDate(text) {
 
 function stripDueDate(text) {
   return text.replace(ISO_DATE_RE, '').replace(/\s{2,}/g, ' ').trim();
+}
+
+function extractResolutionDate(text) {
+  const m = text.match(ISO_DATETIME_RE);
+  return m ? m[1] : null;
+}
+
+function stripResolutionDate(text) {
+  return text.replace(ISO_DATETIME_RE, '').replace(/\s{2,}/g, ' ').trim();
+}
+
+function nowResolutionStamp() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}`;
+}
+
+function formatResolutionDate(stamp) {
+  return `${stamp.slice(0, 10)} ${stamp.slice(11, 13)}:${stamp.slice(13, 15)}`;
 }
 
 function genId() {
@@ -76,5 +96,5 @@ function serialize(title, items, docCompletedFilter) {
 
 // Export for ES module usage in renderer
 if (typeof module !== 'undefined') {
-  module.exports = { parse, serialize, genId, extractDueDate, stripDueDate };
+  module.exports = { parse, serialize, genId, extractDueDate, stripDueDate, extractResolutionDate, stripResolutionDate, nowResolutionStamp, formatResolutionDate };
 }

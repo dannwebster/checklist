@@ -1,8 +1,15 @@
-const { readFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const path = require('path');
 const { test, expect } = require('./fixtures/electron-app');
 
 const waitForSave = (page) => page.waitForTimeout(450);
+
+async function seedAndOpen(page, checklistDir, name, content) {
+  writeFileSync(path.join(checklistDir, `${name}.cl.md`), content);
+  await page.waitForTimeout(400);
+  await page.locator('.checklist-item', { hasText: name }).click();
+  await page.waitForTimeout(200);
+}
 
 test.describe('§1 Lists and items', () => {
   test('1.1 Create a checklist', async ({ electronApp: { app, page, checklistDir } }) => {
@@ -129,11 +136,41 @@ test.describe('§1 Lists and items', () => {
 
     let content = readFileSync(path.join(checklistDir, 'Check.cl.md'), 'utf8');
     expect(content).toContain('- [x]');
+    expect(content).toMatch(/- \[x\] task \d{4}-\d{2}-\d{2}T\d{4} <!-- id:/);
 
     await page.locator('.item-checkbox').first().click();
     await waitForSave(page);
 
     content = readFileSync(path.join(checklistDir, 'Check.cl.md'), 'utf8');
     expect(content).toContain('- [ ]');
+    expect(content).not.toMatch(/\d{4}-\d{2}-\d{2}T\d{4}/);
+  });
+
+  test('1.8a Resolved badge appears on check and disappears on uncheck', async ({ electronApp: { page, checklistDir } }) => {
+    await page.locator('.tree-dir-add').first().click();
+    await page.locator('.new-checklist-input').fill('Resolved');
+    await page.locator('.new-checklist-input').press('Enter');
+    await page.locator('.checklist-item', { hasText: 'Resolved' }).click();
+
+    await page.locator('.item-text').first().fill('task');
+    const badge = page.locator('.item-resolved-badge').first();
+    await expect(badge).toBeHidden();
+
+    await page.locator('.item-checkbox').first().click();
+    await waitForSave(page);
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveText(/^Resolved \d{4}-\d{2}-\d{2} \d{2}:\d{2}$/);
+
+    await page.locator('.item-checkbox').first().click();
+    await waitForSave(page);
+    await expect(badge).toBeHidden();
+  });
+
+  test('1.8b Legacy checked item without resolution timestamp still loads', async ({ electronApp: { page, checklistDir } }) => {
+    await seedAndOpen(page, checklistDir, 'Legacy', '- [x] legacy task <!-- id:deadbeef -->\n');
+
+    const checkbox = page.locator('.item-checkbox').first();
+    await expect(checkbox).toBeChecked();
+    await expect(page.locator('.item-resolved-badge').first()).toBeHidden();
   });
 });
