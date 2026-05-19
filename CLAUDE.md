@@ -83,6 +83,18 @@ Pressing Enter in an item's text field is cursor-position-aware (`editor.js` ~li
 
 The focus event on `.item-text` always moves the cursor to the end. For the split case, cursor is explicitly reset to position 0 immediately after `newRow.focus()`.
 
+### Collapsible items (and sections)
+
+Both section headers and items can be collapsed to hide their children:
+
+- **Sections** track collapse via `localStorage` key `sec-collapsed:<id>`; the render loop (`editor.js`) uses `collapsedLevel` to skip everything under a collapsed section
+- **Items** with sub-items (any next-item at a deeper indent) use `localStorage` key `item-collapsed:<id>`; the render loop uses a parallel `itemCollapsedIndent` tracker, **reset on every section boundary** so a collapsed item never bleeds across sections
+- `collapsed` is purely renderer state — it is never written to the markdown file by `serialize`
+- Helpers: `hasSubItems(index)` (peek at the next item's indent), `toggleItemCollapse(index)` (mirrors `toggleSection`)
+- Chevron slot in `buildItemRow` is **always created** but set to `visibility: hidden` for leaf items, so checkbox columns stay aligned across all rows
+- `Ctrl+E` checks for item focus first; if the focused item has sub-items it toggles that item, otherwise it falls through to the section toggle
+- `Tab` indent walks back to the nearest ancestor — if that ancestor is collapsed it auto-expands, so a newly-indented child never silently disappears
+
 ### Key constraint
 
 `prompt()` and `confirm()` are disabled in Electron's renderer. Use `window.checklistAPI.showConfirm()` for confirmation dialogs (backed by `dialog.showMessageBoxSync` in the main process). For text input from the user, inject an inline input element into the DOM.

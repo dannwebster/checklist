@@ -71,6 +71,8 @@ const Editor = (() => {
     for (const item of items) {
       if (item.type === 'section') {
         item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
+      } else {
+        item.collapsed = localStorage.getItem('item-collapsed:' + item.id) === '1';
       }
     }
     titleEl.textContent = currentTitle;
@@ -88,6 +90,7 @@ const Editor = (() => {
   function render() {
     itemListEl.innerHTML = '';
     let collapsedLevel = Infinity;
+    let itemCollapsedIndent = Infinity;
     let currentZoneId = 'root';
     const docEffective = docCompletedFilter === 'hide' ? 'hide' : 'show';
     const effectiveByLevel = [docEffective];
@@ -95,6 +98,7 @@ const Editor = (() => {
 
     items.forEach((item, i) => {
       if (item.type === 'section') {
+        itemCollapsedIndent = Infinity;
         if (item.level <= collapsedLevel) {
           collapsedLevel = item.collapsed ? item.level : Infinity;
           currentZoneId = item.id;
@@ -107,10 +111,12 @@ const Editor = (() => {
           currentEffectiveFilter = thisFilter;
         }
       } else {
-        if (collapsedLevel === Infinity) {
-          if (item.checked && currentEffectiveFilter === 'hide') return;
-          itemListEl.appendChild(buildItemRow(item, i));
-        }
+        if (collapsedLevel !== Infinity) return;
+        if (item.indent > itemCollapsedIndent) return;
+        itemCollapsedIndent = Infinity;
+        if (item.checked && currentEffectiveFilter === 'hide') return;
+        itemListEl.appendChild(buildItemRow(item, i));
+        if (item.collapsed && hasSubItems(i)) itemCollapsedIndent = item.indent;
       }
     });
 
@@ -348,6 +354,24 @@ const Editor = (() => {
     return items.length;
   }
 
+  function hasSubItems(index) {
+    const next = items[index + 1];
+    if (!next || next.type === 'section') return false;
+    return next.indent > items[index].indent;
+  }
+
+  function toggleItemCollapse(index) {
+    items[index].collapsed = !items[index].collapsed;
+    if (items[index].collapsed) {
+      localStorage.setItem('item-collapsed:' + items[index].id, '1');
+    } else {
+      localStorage.removeItem('item-collapsed:' + items[index].id);
+    }
+    const id = items[index].id;
+    render();
+    itemListEl.querySelector(`[data-id="${id}"] .item-text`)?.focus();
+  }
+
   function getInsertionIndex(headerIndex) {
     const level = items[headerIndex].level;
     for (let i = headerIndex + 1; i < items.length; i++) {
@@ -423,6 +447,16 @@ const Editor = (() => {
     handle.className = 'drag-handle';
     handle.textContent = '⠿';
     handle.title = 'Drag to reorder';
+
+    const itemToggle = document.createElement('button');
+    itemToggle.className = 'item-toggle';
+    itemToggle.textContent = item.collapsed ? '▶' : '▼';
+    itemToggle.title = item.collapsed ? 'Expand sub-items (Ctrl+E)' : 'Collapse sub-items (Ctrl+E)';
+    if (!hasSubItems(index)) itemToggle.style.visibility = 'hidden';
+    itemToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleItemCollapse(index);
+    });
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -581,7 +615,25 @@ const Editor = (() => {
         } else {
           items[index].indent = Math.min(6, (items[index].indent || 0) + 1);
         }
-        li.style.paddingLeft = items[index].indent ? (6 + items[index].indent * 20) + 'px' : '';
+        let expanded = false;
+        for (let j = index - 1; j >= 0; j--) {
+          if (items[j].type === 'section') break;
+          if (items[j].indent < items[index].indent) {
+            if (items[j].collapsed) {
+              items[j].collapsed = false;
+              localStorage.removeItem('item-collapsed:' + items[j].id);
+              expanded = true;
+            }
+            break;
+          }
+        }
+        if (expanded) {
+          const id = items[index].id;
+          render();
+          itemListEl.querySelector(`[data-id="${id}"] .item-text`)?.focus();
+        } else {
+          li.style.paddingLeft = items[index].indent ? (6 + items[index].indent * 20) + 'px' : '';
+        }
         scheduleSave();
         return;
       }
@@ -858,6 +910,7 @@ const Editor = (() => {
     });
 
     itemMain.appendChild(handle);
+    itemMain.appendChild(itemToggle);
     itemMain.appendChild(checkbox);
     itemMain.appendChild(textEl);
     itemMain.appendChild(dateBadge);
@@ -1173,6 +1226,8 @@ const Editor = (() => {
     for (const item of items) {
       if (item.type === 'section') {
         item.collapsed = localStorage.getItem('sec-collapsed:' + item.id) === '1';
+      } else {
+        item.collapsed = localStorage.getItem('item-collapsed:' + item.id) === '1';
       }
     }
     titleEl.textContent = currentTitle;
@@ -1249,6 +1304,16 @@ const Editor = (() => {
     }
     if (e.key === 'e' && e.ctrlKey && !e.shiftKey) {
       e.preventDefault();
+      const active = document.activeElement;
+      const itemRow = active?.closest('.item-row');
+      if (itemRow) {
+        const id = itemRow.dataset.id;
+        const itemIdx = items.findIndex(it => it.id === id && it.type !== 'section');
+        if (itemIdx !== -1 && hasSubItems(itemIdx)) {
+          toggleItemCollapse(itemIdx);
+          return;
+        }
+      }
       const idx = findSectionIndexForFocus();
       if (idx === -1) return;
       const secId = items[idx].id;
