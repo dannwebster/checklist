@@ -1,7 +1,5 @@
 
 # To do <!-- sec:e91b0cfa -->
-- [x] add resolution date 2026-05-19T1410: when an item is checked off, the date and time the bug was resolved should be noted, and visible in the checked off item. Unchecking an item removes that date <!-- id:259c9142 -->
-- [ ] be able to visually collapse the sub items within a parent items (like you can collapse a header) <!-- id:5fd0ccf2 -->
 - [ ] when you move an item that has sub items, all the sub items move with the parent item (just like headers) <!-- id:18e59dd4 -->
 - [ ] Make date format and colon delimiter both configs in settings <!-- id:ba9f3966 -->
 - [ ] Allow a Promote to header or Insert header Above <!-- id:024d8d3e -->
@@ -10,7 +8,6 @@
 - [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
 - [ ] mobile access? <!-- id:f4c078e9 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
-  - [x] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context - https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355: https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355 <!-- id:2a942cd7 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
   - [ ] dates in context area should result in due dates <!-- id:278b11ec -->
@@ -19,6 +16,9 @@
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
 
 # Completed <!-- sec:582c2227 -->
+- [x] add resolution date 2026-05-19T1410: when an item is checked off, the date and time the bug was resolved should be noted, and visible in the checked off item. Unchecking an item removes that date <!-- id:259c9142 -->
+- [x] be able to visually collapse the sub items within a parent items (like you can collapse a header) <!-- id:5fd0ccf2 -->
+  - [x] copy-paste of text with URL should stay a URL - colons currently are treated as delimiters for extra context - https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355: https://docs.google.com/presentation/d/1BEg8XUH-0PfgKDVquHXbFhfeKp4JsHgaV2DTbmCnOvo/edit?slide=id.g3e301420976_0_355#slide=id.g3e301420976_0_355 <!-- id:2a942cd7 -->
 - [x] get punchcard icon showing during running of standalone <!-- id:362d4dcd -->
 - [x] return before is broken <!-- id:8c6b572b -->
 - [x] dates are broken  2026-05-18 <!-- id:2b5f60d8 -->
