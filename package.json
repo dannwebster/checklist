@@ -56,12 +56,11 @@
   },
   "devDependencies": {
     "@playwright/test": "1.59.1",
-    "electron": "34.5.8",
-    "electron-builder": "25.1.8",
-    "electron-icon-builder": "2.0.1",
+    "electron": "^41.5.0",
+    "electron-builder": "^26.8.1",
     "nodemon": "3.1.14",
     "playwright": "1.59.1",
     "sharp": "0.34.5",
-    "vitest": "3.2.4"
+    "vitest": "^4.1.5"
   }
 }
