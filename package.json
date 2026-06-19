@@ -7,7 +7,7 @@
   "main": "main/main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon --exec \"node scripts/generate-icons.js && electron .\" --watch main --watch renderer --watch preload --watch build/icon.svg --ext js,html,css,svg --ignore node_modules",
+    "dev": "node scripts/dev.js",
     "dist": "electron-builder",
     "dist:win": "electron-builder --win",
     "dist:mac": "electron-builder --mac",
