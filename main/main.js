@@ -72,6 +72,8 @@ function buildMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
+app.disableHardwareAcceleration();
+
 app.whenReady().then(() => {
   registerHandlers();
   createWindow();
