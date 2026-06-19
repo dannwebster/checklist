@@ -6,7 +6,6 @@
 - [ ] make sure it doesn't overwrite file <!-- id:98a69187 -->
 - [ ] commit should have a dropdown that allows you to put in a commit message <!-- id:c85045ce -->
 - [ ] add a "Move" option which allows you to select a section from the section headers <!-- id:6140491f -->
-- [ ] mobile access? <!-- id:f4c078e9 -->
 - [ ] minor Bugs <!-- id:706a4a92 -->
   - [ ] up/down in context area should change lines, not change to next item (unless on first or last item) <!-- id:d4693d41 -->
   - [ ] URLs in item context area should be clickable <!-- id:14222082 -->
@@ -14,6 +13,7 @@
   - [ ] state should be clearer about when due dates are visible from what is typed vs what was input via date widget <!-- id:d1cefc3b -->
   - [ ] sidebar titles stay yellow long after the file has been commmitted <!-- id:44d91232 -->
   - [ ] inserting a colon in the middle should break it into the context space <!-- id:32288854 -->
+- [ ] mobile access? <!-- id:f4c078e9 -->
 
 # Completed <!-- sec:582c2227 -->
 - [x] add resolution date 2026-05-19T1410: when an item is checked off, the date and time the bug was resolved should be noted, and visible in the checked off item. Unchecking an item removes that date <!-- id:259c9142 -->
