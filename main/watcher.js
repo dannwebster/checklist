@@ -18,6 +18,7 @@ function watchDir(dirPath) {
   try {
     const w = fs.watch(dirPath, { recursive: true }, (event, filename) => {
       if (!filename || !mainWin) return;
+      if (filename.endsWith('.tmp')) return;
       const fullPath = path.join(dirPath, filename);
       if (ownWrites.has(fullPath)) return;
 

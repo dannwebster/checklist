@@ -4,9 +4,11 @@ const os = require('os');
 const { app } = require('electron');
 
 const SETTINGS_FILE = path.join(app.getPath('userData'), 'settings.json');
-const DEFAULT_DATA_DIR = path.join(os.homedir(), 'Documents', 'Punchcard');
+const DEFAULT_DATA_DIR = process.platform === 'win32'
+  ? path.join(process.env.LOCALAPPDATA || path.join(os.homedir(), 'AppData', 'Local'), app.getName())
+  : app.getPath('userData');
 const DEFAULT_FILE_PATTERNS = ['*Tasks*.md', '*Checklist*.md', '*.cl.md'];
-const DEFAULT_IGNORE_DIR_PATTERNS = ['.*'];
+const DEFAULT_IGNORE_DIR_PATTERNS = ['.*', 'node_modules', 'dist', 'build', 'target', 'vendor', 'out', '.cache'];
 
 function globToRegex(pattern) {
   const escaped = pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*');
@@ -76,52 +78,52 @@ function ensureDataDir(dirPath) {
   }
 }
 
-function listChecklists(dirPath) {
+async function listChecklists(dirPath) {
   ensureDataDir(dirPath);
   const settings = readSettings();
   const patterns = settings.filePatterns || DEFAULT_FILE_PATTERNS;
   const ignoreDirs = settings.ignoreDirPatterns || DEFAULT_IGNORE_DIR_PATTERNS;
   const results = [];
 
-  function walk(dir) {
+  async function walk(dir) {
     let entries;
-    try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    try { entries = await fs.promises.readdir(dir, { withFileTypes: true }); } catch { return; }
     for (const entry of entries) {
       const fullPath = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        if (!matchesAnyPattern(entry.name, ignoreDirs)) walk(fullPath);
+        if (!matchesAnyPattern(entry.name, ignoreDirs)) await walk(fullPath);
       } else if (entry.isFile() && matchesAnyPattern(entry.name, patterns)) {
-        const stat = fs.statSync(fullPath);
+        const stat = await fs.promises.stat(fullPath);
         const relPath = path.relative(dirPath, fullPath).replace(/\\/g, '/');
         results.push({ name: relPath, path: fullPath, mtime: stat.mtimeMs });
       }
     }
   }
 
-  walk(dirPath);
+  await walk(dirPath);
   results.sort((a, b) => b.mtime - a.mtime);
   return results;
 }
 
-function readChecklist(filePath) {
-  return fs.readFileSync(filePath, 'utf8');
+async function readChecklist(filePath) {
+  return fs.promises.readFile(filePath, 'utf8');
 }
 
-function writeChecklist(filePath, content) {
+async function writeChecklist(filePath, content) {
   const tmpPath = filePath + '.tmp';
-  fs.writeFileSync(tmpPath, content, 'utf8');
-  fs.renameSync(tmpPath, filePath);
+  await fs.promises.writeFile(tmpPath, content, 'utf8');
+  await fs.promises.rename(tmpPath, filePath);
 }
 
-function deleteChecklist(filePath) {
-  fs.unlinkSync(filePath);
+async function deleteChecklist(filePath) {
+  await fs.promises.unlink(filePath);
 }
 
-function renameChecklist(oldPath, newPath) {
-  fs.renameSync(oldPath, newPath);
+async function renameChecklist(oldPath, newPath) {
+  await fs.promises.rename(oldPath, newPath);
 }
 
-function createChecklist(dirPath, name) {
+async function createChecklist(dirPath, name) {
   ensureDataDir(dirPath);
   const settings = readSettings();
   const patterns = settings.filePatterns || DEFAULT_FILE_PATTERNS;
@@ -130,7 +132,7 @@ function createChecklist(dirPath, name) {
   const filename = matchesAnyPattern(candidate, patterns) ? candidate : name + '.' + defaultExt + '.md';
   const filePath = path.join(dirPath, filename);
   const content = `# ${name}\n- [ ]  \n`;
-  writeChecklist(filePath, content);
+  await writeChecklist(filePath, content);
   return filePath;
 }
 

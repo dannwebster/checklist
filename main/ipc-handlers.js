@@ -45,19 +45,19 @@ function registerHandlers() {
     return fm.readChecklist(filePath);
   });
 
-  ipcMain.handle('checklist:write', (event, filePath, content) => {
+  ipcMain.handle('checklist:write', async (event, filePath, content) => {
     watcher.markOwnWrite(filePath);
-    fm.writeChecklist(filePath, content);
+    await fm.writeChecklist(filePath, content);
   });
 
-  ipcMain.handle('checklist:delete', (event, filePath) => {
-    fm.deleteChecklist(filePath);
+  ipcMain.handle('checklist:delete', async (event, filePath) => {
+    await fm.deleteChecklist(filePath);
   });
 
-  ipcMain.handle('checklist:rename', (event, oldPath, newName) => {
+  ipcMain.handle('checklist:rename', async (event, oldPath, newName) => {
     const dir = path.dirname(oldPath);
     const newPath = path.join(dir, newName + '.md');
-    fm.renameChecklist(oldPath, newPath);
+    await fm.renameChecklist(oldPath, newPath);
     return newPath;
   });
 
